@@ -1,0 +1,8 @@
+This directory contains property images for the Peterborough apartment.
+Place your actual property images here with the naming convention:
+image-0-1024x1024.webp
+image-1-1024x1024.webp
+...
+image-24-1024x1024.webp
+
+For now, you can use placeholder images or actual property photos.

@@ -1,0 +1,1499 @@
+{
+  "blogPosts": [
+    {
+      "id": "1",
+      "title": "10 Essential Tips for First-Time Real Estate Investors",
+      "slug": "10-essential-tips-first-time-real-estate-investors",
+      "excerpt": "Discover the fundamental strategies that every new real estate investor should know before making their first purchase.",
+      "content": {
+        "time": 1642248000000,
+        "blocks": [
+          {
+            "id": "1",
+            "type": "header",
+            "data": {
+              "text": "Introduction to Real Estate Investment",
+              "level": 2
+            }
+          },
+          {
+            "id": "2",
+            "type": "paragraph",
+            "data": {
+              "text": "Real estate investment can be one of the most rewarding ways to build wealth over time. However, for first-time investors, the process can seem overwhelming. This comprehensive guide will walk you through the essential tips and strategies you need to know before making your first property investment."
+            }
+          },
+          {
+            "id": "3",
+            "type": "header",
+            "data": {
+              "text": "1. Start with Education",
+              "level": 3
+            }
+          },
+          {
+            "id": "4",
+            "type": "paragraph",
+            "data": {
+              "text": "Before investing a single dollar, invest in your education. Understanding the fundamentals of real estate investment is crucial for long-term success."
+            }
+          },
+          {
+            "id": "5",
+            "type": "list",
+            "data": {
+              "style": "ordered",
+              "items": [
+                "Read books by successful real estate investors",
+                "Take online courses on property investment",
+                "Attend local real estate investment meetups",
+                "Follow industry blogs and podcasts",
+                "Learn about local market conditions"
+              ]
+            }
+          },
+          {
+            "id": "6",
+            "type": "header",
+            "data": {
+              "text": "2. Set Clear Investment Goals",
+              "level": 3
+            }
+          },
+          {
+            "id": "7",
+            "type": "paragraph",
+            "data": {
+              "text": "Define what you want to achieve with your real estate investments. Are you looking for monthly cash flow, long-term appreciation, or tax benefits?"
+            }
+          },
+          {
+            "id": "8",
+            "type": "quote",
+            "data": {
+              "text": "The best investment on earth is earth itself. - Louis Glickman",
+              "caption": "Real Estate Investment Philosophy"
+            }
+          },
+          {
+            "id": "9",
+            "type": "header",
+            "data": {
+              "text": "3. Build Your Team",
+              "level": 3
+            }
+          },
+          {
+            "id": "10",
+            "type": "paragraph",
+            "data": {
+              "text": "Real estate investment is not a solo endeavor. You'll need a team of professionals to help you succeed."
+            }
+          },
+          {
+            "id": "11",
+            "type": "list",
+            "data": {
+              "style": "unordered",
+              "items": [
+                "Real estate agent specializing in investment properties",
+                "Property manager (if investing out of state)",
+                "Real estate attorney",
+                "Accountant familiar with real estate tax laws",
+                "Contractor for property renovations",
+                "Insurance agent"
+              ]
+            }
+          },
+          {
+            "id": "12",
+            "type": "header",
+            "data": {
+              "text": "4. Analyze the Numbers",
+              "level": 3
+            }
+          },
+          {
+            "id": "13",
+            "type": "paragraph",
+            "data": {
+              "text": "Every investment decision should be based on solid financial analysis. Use our BMV Analyzer tool to evaluate potential properties."
+            }
+          },
+          {
+            "id": "14",
+            "type": "table",
+            "data": {
+              "withHeadings": true,
+              "content": [
+                ["Metric", "Target", "Why It Matters"],
+                ["Cash Flow", "Positive", "Ensures property pays for itself"],
+                ["Cap Rate", "8%+", "Indicates good return on investment"],
+                ["Cash-on-Cash Return", "12%+", "Measures return on your cash investment"],
+                ["Debt Service Coverage Ratio", "1.25+", "Shows ability to cover mortgage payments"]
+              ]
+            }
+          },
+          {
+            "id": "15",
+            "type": "header",
+            "data": {
+              "text": "5. Start Small and Scale",
+              "level": 3
+            }
+          },
+          {
+            "id": "16",
+            "type": "paragraph",
+            "data": {
+              "text": "Begin with a single property to learn the ropes before expanding your portfolio. This approach minimizes risk while building experience."
+            }
+          },
+          {
+            "id": "17",
+            "type": "header",
+            "data": {
+              "text": "Conclusion",
+              "level": 2
+            }
+          },
+          {
+            "id": "18",
+            "type": "paragraph",
+            "data": {
+              "text": "Real estate investment success comes from education, careful planning, and consistent execution. Start with these fundamentals, and you'll be well on your way to building a profitable real estate portfolio."
+            }
+          }
+        ]
+      },
+      "featuredImage": "/blog/real-estate-tips.jpg",
+      "author": {
+        "id": "1",
+        "name": "Sarah Johnson",
+        "email": "sarah@noornest.com",
+        "avatar": "/authors/sarah-johnson.jpg",
+        "bio": "Senior Real Estate Analyst with 10+ years experience helping investors build successful portfolios."
+      },
+      "categories": [
+        { "id": "1", "name": "Investment Tips", "slug": "investment-tips", "color": "#3B82F6" },
+        { "id": "2", "name": "Beginner Guide", "slug": "beginner-guide", "color": "#10B981" }
+      ],
+      "tags": [
+        { "id": "1", "name": "Real Estate", "slug": "real-estate" },
+        { "id": "2", "name": "Investment", "slug": "investment" },
+        { "id": "3", "name": "Tips", "slug": "tips" },
+        { "id": "4", "name": "Beginner", "slug": "beginner" }
+      ],
+      "status": "published",
+      "publishedAt": "2024-01-15T10:00:00Z",
+      "seo": {
+        "title": "10 Essential Tips for First-Time Real Estate Investors | Noornest Properties",
+        "description": "Learn the fundamental strategies every new real estate investor needs to know. Expert tips from industry professionals.",
+        "keywords": ["real estate investment", "first time investor", "property investment tips", "real estate guide"],
+        "ogImage": "/blog/real-estate-tips-og.jpg"
+      },
+      "createdAt": "2024-01-15T10:00:00Z",
+      "updatedAt": "2024-01-15T10:00:00Z",
+      "readingTime": "8 min read"
+    },
+    {
+      "id": "2",
+      "title": "Understanding Below Market Value (BMV) Properties",
+      "slug": "understanding-below-market-value-bmv-properties",
+      "excerpt": "Learn how to identify and evaluate below market value properties to maximize your investment returns.",
+      "content": {
+        "time": 1642248000000,
+        "blocks": [
+          {
+            "id": "1",
+            "type": "header",
+            "data": {
+              "text": "What are BMV Properties?",
+              "level": 2
+            }
+          },
+          {
+            "id": "2",
+            "type": "paragraph",
+            "data": {
+              "text": "Below Market Value (BMV) properties are real estate investments that can be purchased for less than their true market value. These properties offer investors the opportunity to acquire assets at a discount, potentially leading to higher returns and faster appreciation."
+            }
+          },
+          {
+            "id": "3",
+            "type": "header",
+            "data": {
+              "text": "How to Identify BMV Properties",
+              "level": 3
+            }
+          },
+          {
+            "id": "4",
+            "type": "list",
+            "data": {
+              "style": "ordered",
+              "items": [
+                "Look for distressed properties",
+                "Check for motivated sellers",
+                "Analyze comparable sales in the area",
+                "Consider properties that need renovation",
+                "Look for off-market opportunities"
+              ]
+            }
+          }
+        ]
+      },
+      "featuredImage": "/blog/bmv-properties.jpg",
+      "author": {
+        "id": "2",
+        "name": "Michael Chen",
+        "email": "michael@noornest.com",
+        "avatar": "/authors/michael-chen.jpg",
+        "bio": "BMV Analysis Expert and Property Investment Consultant"
+      },
+      "categories": [
+        { "id": "3", "name": "BMV Analysis", "slug": "bmv-analysis", "color": "#F59E0B" }
+      ],
+      "tags": [
+        { "id": "4", "name": "BMV", "slug": "bmv" },
+        { "id": "5", "name": "Market Analysis", "slug": "market-analysis" },
+        { "id": "6", "name": "Investment Strategy", "slug": "investment-strategy" }
+      ],
+      "status": "published",
+      "publishedAt": "2024-01-10T14:30:00Z",
+      "seo": {
+        "title": "Understanding Below Market Value (BMV) Properties | Noornest Properties",
+        "description": "Complete guide to identifying and evaluating below market value properties for maximum investment returns.",
+        "keywords": ["BMV properties", "below market value", "property investment", "market analysis"],
+        "ogImage": "/blog/bmv-properties-og.jpg"
+      },
+      "createdAt": "2024-01-10T14:30:00Z",
+      "updatedAt": "2024-01-10T14:30:00Z",
+      "readingTime": "6 min read"
+    },
+    {
+      "id": "3",
+      "title": "Market Trends: What to Expect in 2024",
+      "slug": "market-trends-what-to-expect-2024",
+      "excerpt": "Our experts analyze the current real estate market trends and predictions for the upcoming year.",
+      "content": {
+        "time": 1642248000000,
+        "blocks": [
+          {
+            "id": "1",
+            "type": "header",
+            "data": {
+              "text": "2024 Real Estate Market Outlook",
+              "level": 2
+            }
+          },
+          {
+            "id": "2",
+            "type": "paragraph",
+            "data": {
+              "text": "As we move into 2024, the real estate market continues to evolve with new trends and opportunities for investors. Our team of experts has analyzed market data to provide you with insights into what to expect this year."
+            }
+          }
+        ]
+      },
+      "featuredImage": "/blog/market-trends-2024.jpg",
+      "author": {
+        "id": "3",
+        "name": "Emily Rodriguez",
+        "email": "emily@noornest.com",
+        "avatar": "/authors/emily-rodriguez.jpg",
+        "bio": "Market Research Director and Real Estate Economist"
+      },
+      "categories": [
+        { "id": "4", "name": "Market Analysis", "slug": "market-analysis", "color": "#8B5CF6" }
+      ],
+      "tags": [
+        { "id": "7", "name": "Market Trends", "slug": "market-trends" },
+        { "id": "8", "name": "2024", "slug": "2024" },
+        { "id": "9", "name": "Forecasting", "slug": "forecasting" }
+      ],
+      "status": "published",
+      "publishedAt": "2024-01-05T09:15:00Z",
+      "seo": {
+        "title": "Real Estate Market Trends 2024 | Noornest Properties",
+        "description": "Expert analysis of real estate market trends and predictions for 2024. Stay ahead of the market.",
+        "keywords": ["real estate trends 2024", "market analysis", "property market forecast"],
+        "ogImage": "/blog/market-trends-2024-og.jpg"
+      },
+      "createdAt": "2024-01-05T09:15:00Z",
+      "updatedAt": "2024-01-05T09:15:00Z",
+      "readingTime": "10 min read"
+    },
+    {
+      "id": "4",
+      "title": "Property Management Best Practices for Investors",
+      "slug": "property-management-best-practices-investors",
+      "excerpt": "Essential property management strategies to maximize your rental income and minimize headaches.",
+      "content": {
+        "time": 1642248000000,
+        "blocks": [
+          {
+            "id": "1",
+            "type": "header",
+            "data": {
+              "text": "Effective Property Management",
+              "level": 2
+            }
+          },
+          {
+            "id": "2",
+            "type": "paragraph",
+            "data": {
+              "text": "Successful property management is crucial for maintaining and growing your real estate investment portfolio. Here are the best practices every investor should follow."
+            }
+          }
+        ]
+      },
+      "featuredImage": "/blog/property-management.jpg",
+      "author": {
+        "id": "4",
+        "name": "David Thompson",
+        "email": "david@noornest.com",
+        "avatar": "/authors/david-thompson.jpg",
+        "bio": "Property Management Specialist with 15+ years experience"
+      },
+      "categories": [
+        { "id": "5", "name": "Property Management", "slug": "property-management", "color": "#EF4444" }
+      ],
+      "tags": [
+        { "id": "10", "name": "Property Management", "slug": "property-management" },
+        { "id": "11", "name": "Rental Income", "slug": "rental-income" },
+        { "id": "12", "name": "Tenant Relations", "slug": "tenant-relations" }
+      ],
+      "status": "published",
+      "publishedAt": "2024-01-01T08:00:00Z",
+      "seo": {
+        "title": "Property Management Best Practices for Investors | Noornest Properties",
+        "description": "Learn essential property management strategies to maximize rental income and minimize management headaches.",
+        "keywords": ["property management", "rental income", "tenant management", "investment properties"],
+        "ogImage": "/blog/property-management-og.jpg"
+      },
+      "createdAt": "2024-01-01T08:00:00Z",
+      "updatedAt": "2024-01-01T08:00:00Z",
+      "readingTime": "7 min read"
+    },
+    {
+      "id": "5",
+      "title": "How to Finance Your First Buy-to-Let Property in London",
+      "slug": "how-to-finance-first-buy-to-let-property-london",
+      "excerpt": "Complete guide to financing options for first-time buy-to-let investors in London, including buy-to-let mortgages, stamp duty, and government schemes.",
+      "content": {
+        "time": 1642248000000,
+        "blocks": [
+          {
+            "id": "1",
+            "type": "header",
+            "data": {
+              "text": "Financing Your Buy-to-Let Investment Journey in London",
+              "level": 2
+            }
+          },
+          {
+            "id": "2",
+            "type": "paragraph",
+            "data": {
+              "text": "One of the biggest barriers to entry for new buy-to-let investors in London is securing financing. This comprehensive guide will walk you through all the available options to fund your first investment property in the UK capital."
+            }
+          },
+          {
+            "id": "3",
+            "type": "header",
+            "data": {
+              "text": "UK Buy-to-Let Financing Options",
+              "level": 3
+            }
+          },
+          {
+            "id": "4",
+            "type": "list",
+            "data": {
+              "style": "ordered",
+              "items": [
+                "Buy-to-let mortgages (25% minimum deposit)",
+                "Limited company buy-to-let mortgages",
+                "HMO (House in Multiple Occupation) mortgages",
+                "Commercial mortgages for larger properties",
+                "Bridging loans for quick purchases"
+              ]
+            }
+          }
+        ]
+      },
+      "featuredImage": "/blog/financing-guide.jpg",
+      "author": {
+        "id": "5",
+        "name": "Jennifer Martinez",
+        "email": "jennifer@noornest.com",
+        "avatar": "/authors/jennifer-martinez.jpg",
+        "bio": "Mortgage Specialist and Real Estate Finance Expert"
+      },
+      "categories": [
+        { "id": "6", "name": "Buyer's Guide", "slug": "buyers-guide", "color": "#06B6D4" }
+      ],
+      "tags": [
+        { "id": "14", "name": "Buy-to-Let", "slug": "buy-to-let" },
+        { "id": "15", "name": "Mortgages", "slug": "mortgages" },
+        { "id": "16", "name": "First Time Buyer", "slug": "first-time-buyer" }
+      ],
+      "status": "published",
+      "publishedAt": "2023-12-28T11:30:00Z",
+      "seo": {
+        "title": "How to Finance Your First Buy-to-Let Property in London | Noornest Properties",
+        "description": "Complete guide to financing options for first-time buy-to-let investors in London. Learn about buy-to-let mortgages, stamp duty, and UK property investment.",
+        "keywords": ["buy to let financing", "london property investment", "buy to let mortgages", "uk property investment", "stamp duty"],
+        "ogImage": "/blog/financing-guide-og.jpg"
+      },
+      "createdAt": "2023-12-28T11:30:00Z",
+      "updatedAt": "2023-12-28T11:30:00Z",
+      "readingTime": "12 min read"
+    },
+    {
+      "id": "6",
+      "title": "The Complete Guide to UK Property Due Diligence",
+      "slug": "complete-guide-uk-property-due-diligence",
+      "excerpt": "Learn the essential steps of due diligence before purchasing any UK investment property, including searches, surveys, and legal checks.",
+      "content": {
+        "time": 1642248000000,
+        "blocks": [
+          {
+            "id": "1",
+            "type": "header",
+            "data": {
+              "text": "Why UK Property Due Diligence Matters",
+              "level": 2
+            }
+          },
+          {
+            "id": "2",
+            "type": "paragraph",
+            "data": {
+              "text": "Due diligence is crucial when purchasing UK investment properties. It's your protection against hidden problems and your key to making informed buy-to-let investment decisions in London and across the UK."
+            }
+          },
+          {
+            "id": "3",
+            "type": "header",
+            "data": {
+              "text": "UK Property Due Diligence Checklist",
+              "level": 3
+            }
+          },
+          {
+            "id": "4",
+            "type": "list",
+            "data": {
+              "style": "unordered",
+              "items": [
+                "Local Authority searches",
+                "Environmental searches",
+                "Flood risk assessment",
+                "Energy Performance Certificate (EPC)",
+                "Building survey and structural assessment",
+                "Rental yield analysis",
+                "Stamp duty calculation"
+              ]
+            }
+          }
+        ]
+      },
+      "featuredImage": "/blog/due-diligence-guide.jpg",
+      "author": {
+        "id": "6",
+        "name": "Robert Kim",
+        "email": "robert@noornest.com",
+        "avatar": "/authors/robert-kim.jpg",
+        "bio": "Real Estate Attorney and Due Diligence Specialist"
+      },
+      "categories": [
+        { "id": "6", "name": "Buyer's Guide", "slug": "buyers-guide", "color": "#06B6D4" },
+        { "id": "1", "name": "Investment Tips", "slug": "investment-tips", "color": "#3B82F6" }
+      ],
+      "tags": [
+        { "id": "17", "name": "Due Diligence", "slug": "due-diligence" },
+        { "id": "18", "name": "Property Inspection", "slug": "property-inspection" },
+        { "id": "19", "name": "Legal", "slug": "legal" }
+      ],
+      "status": "published",
+      "publishedAt": "2023-12-20T14:15:00Z",
+      "seo": {
+        "title": "Complete Guide to Real Estate Due Diligence | Noornest Properties",
+        "description": "Learn the essential steps of due diligence before purchasing investment properties. Avoid costly mistakes with our comprehensive guide.",
+        "keywords": ["real estate due diligence", "property inspection", "investment property checklist", "property analysis"],
+        "ogImage": "/blog/due-diligence-guide-og.jpg"
+      },
+      "createdAt": "2023-12-20T14:15:00Z",
+      "updatedAt": "2023-12-20T14:15:00Z",
+      "readingTime": "15 min read"
+    },
+    {
+      "id": "7",
+      "title": "UK Tax Benefits of Buy-to-Let Investment",
+      "slug": "uk-tax-benefits-buy-to-let-investment",
+      "excerpt": "Discover the tax advantages of UK buy-to-let investing, including mortgage interest relief, wear and tear allowance, and other strategies to minimize your tax burden.",
+      "content": {
+        "time": 1642248000000,
+        "blocks": [
+          {
+            "id": "1",
+            "type": "header",
+            "data": {
+              "text": "Maximizing Tax Benefits in UK Buy-to-Let",
+              "level": 2
+            }
+          },
+          {
+            "id": "2",
+            "type": "paragraph",
+            "data": {
+              "text": "UK buy-to-let investment offers several tax advantages that can significantly improve your returns. Understanding these benefits and recent changes to the tax system is crucial for maximizing your investment potential."
+            }
+          },
+          {
+            "id": "3",
+            "type": "header",
+            "data": {
+              "text": "Key UK Buy-to-Let Tax Benefits",
+              "level": 3
+            }
+          },
+          {
+            "id": "4",
+            "type": "list",
+            "data": {
+              "style": "unordered",
+              "items": [
+                "Mortgage interest relief (basic rate)",
+                "Wear and tear allowance",
+                "Deductible letting expenses",
+                "Capital gains tax reliefs",
+                "Stamp duty surcharge considerations",
+                "Limited company tax benefits"
+              ]
+            }
+          }
+        ]
+      },
+      "featuredImage": "/blog/tax-benefits.jpg",
+      "author": {
+        "id": "7",
+        "name": "Lisa Thompson",
+        "email": "lisa@noornest.com",
+        "avatar": "/authors/lisa-thompson.jpg",
+        "bio": "CPA and Real Estate Tax Specialist"
+      },
+      "categories": [
+        { "id": "1", "name": "Investment Tips", "slug": "investment-tips", "color": "#3B82F6" }
+      ],
+      "tags": [
+        { "id": "20", "name": "Tax Benefits", "slug": "tax-benefits" },
+        { "id": "21", "name": "Depreciation", "slug": "depreciation" },
+        { "id": "22", "name": "1031 Exchange", "slug": "1031-exchange" }
+      ],
+      "status": "published",
+      "publishedAt": "2023-12-15T09:45:00Z",
+      "seo": {
+        "title": "Tax Benefits of Real Estate Investment | Noornest Properties",
+        "description": "Discover the powerful tax advantages of real estate investing including depreciation, 1031 exchanges, and other tax strategies.",
+        "keywords": ["real estate tax benefits", "depreciation", "1031 exchange", "investment property taxes"],
+        "ogImage": "/blog/tax-benefits-og.jpg"
+      },
+      "createdAt": "2023-12-15T09:45:00Z",
+      "updatedAt": "2023-12-15T09:45:00Z",
+      "readingTime": "11 min read"
+    },
+    {
+      "id": "8",
+      "title": "Choosing the Best London Areas for Buy-to-Let Investment",
+      "slug": "choosing-best-london-areas-buy-to-let-investment",
+      "excerpt": "Location is everything in London property investment. Learn how to identify the best London areas for buy-to-let properties based on rental yields, transport links, and growth potential.",
+      "content": {
+        "time": 1642248000000,
+        "blocks": [
+          {
+            "id": "1",
+            "type": "header",
+            "data": {
+              "text": "The Golden Rule: Location, Location, Location in London",
+              "level": 2
+            }
+          },
+          {
+            "id": "2",
+            "type": "paragraph",
+            "data": {
+              "text": "In London's competitive property market, location is everything. A great property in the wrong London area will struggle to achieve good rental yields, while a modest property in the right location can provide excellent returns. Understanding London's diverse boroughs and their investment potential is crucial for buy-to-let success."
+            }
+          }
+        ]
+      },
+      "featuredImage": "/blog/location-guide.jpg",
+      "author": {
+        "id": "8",
+        "name": "Marcus Johnson",
+        "email": "marcus@noornest.com",
+        "avatar": "/authors/marcus-johnson.jpg",
+        "bio": "Market Research Analyst and Location Strategy Expert"
+      },
+      "categories": [
+        { "id": "6", "name": "Buyer's Guide", "slug": "buyers-guide", "color": "#06B6D4" },
+        { "id": "4", "name": "Market Analysis", "slug": "market-analysis", "color": "#8B5CF6" }
+      ],
+      "tags": [
+        { "id": "23", "name": "Location Analysis", "slug": "location-analysis" },
+        { "id": "24", "name": "Market Research", "slug": "market-research" },
+        { "id": "25", "name": "Demographics", "slug": "demographics" }
+      ],
+      "status": "published",
+      "publishedAt": "2023-12-10T16:20:00Z",
+      "seo": {
+        "title": "Choosing the Right Location for Investment Properties | Noornest Properties",
+        "description": "Learn how to identify the best locations for investment properties based on market trends, demographics, and growth potential.",
+        "keywords": ["investment property location", "real estate market analysis", "property location factors", "market research"],
+        "ogImage": "/blog/location-guide-og.jpg"
+      },
+      "createdAt": "2023-12-10T16:20:00Z",
+      "updatedAt": "2023-12-10T16:20:00Z",
+      "readingTime": "9 min read"
+    },
+    {
+      "id": "9",
+      "title": "UK Buy-to-Let Investment Strategies for 2024",
+      "slug": "uk-buy-to-let-investment-strategies-2024",
+      "excerpt": "Explore the most effective UK buy-to-let investment strategies for 2024, including HMO investments, limited company structures, and emerging London areas.",
+      "content": {
+        "time": 1642248000000,
+        "blocks": [
+          {
+            "id": "1",
+            "type": "header",
+            "data": {
+              "text": "UK Buy-to-Let Investment Strategies for 2024",
+              "level": 2
+            }
+          },
+          {
+            "id": "2",
+            "type": "paragraph",
+            "data": {
+              "text": "The UK buy-to-let market continues to evolve with changing regulations and market conditions. Successful London property investors adapt their strategies accordingly. Here are the most effective investment approaches for 2024 and beyond."
+            }
+          }
+        ]
+      },
+      "featuredImage": "/blog/investment-strategies-2024.jpg",
+      "author": {
+        "id": "9",
+        "name": "Amanda Foster",
+        "email": "amanda@noornest.com",
+        "avatar": "/authors/amanda-foster.jpg",
+        "bio": "Real Estate Investment Strategist and Portfolio Manager"
+      },
+      "categories": [
+        { "id": "1", "name": "Investment Tips", "slug": "investment-tips", "color": "#3B82F6" },
+        { "id": "4", "name": "Market Analysis", "slug": "market-analysis", "color": "#8B5CF6" }
+      ],
+      "tags": [
+        { "id": "26", "name": "Investment Strategies", "slug": "investment-strategies" },
+        { "id": "27", "name": "HMO", "slug": "hmo" },
+        { "id": "28", "name": "Limited Company", "slug": "limited-company" }
+      ],
+      "status": "published",
+      "publishedAt": "2023-12-05T13:10:00Z",
+      "seo": {
+        "title": "UK Buy-to-Let Investment Strategies for 2024 | Noornest Properties",
+        "description": "Explore the most effective UK buy-to-let investment strategies for 2024 including HMO investments, limited company structures, and London areas.",
+        "keywords": ["uk buy to let strategies", "hmo investment", "limited company buy to let", "london property investment"],
+        "ogImage": "/blog/investment-strategies-2024-og.jpg"
+      },
+      "createdAt": "2023-12-05T13:10:00Z",
+      "updatedAt": "2023-12-05T13:10:00Z",
+      "readingTime": "13 min read"
+    },
+    {
+      "id": "10",
+      "title": "Common UK Buy-to-Let Investment Mistakes to Avoid",
+      "slug": "common-uk-buy-to-let-investment-mistakes-avoid",
+      "excerpt": "Learn from the mistakes of others. Discover the most common pitfalls in UK buy-to-let investing and how to avoid them to protect your investment and maximize returns.",
+      "content": {
+        "time": 1642248000000,
+        "blocks": [
+          {
+            "id": "1",
+            "type": "header",
+            "data": {
+              "text": "Learning from UK Buy-to-Let Mistakes",
+              "level": 2
+            }
+          },
+          {
+            "id": "2",
+            "type": "paragraph",
+            "data": {
+              "text": "Every UK buy-to-let investor makes mistakes, but the smart ones learn from others' errors before making their own. Here are the most common pitfalls in UK property investment and how to avoid them."
+            }
+          }
+        ]
+      },
+      "featuredImage": "/blog/investment-mistakes.jpg",
+      "author": {
+        "id": "10",
+        "name": "Kevin Wilson",
+        "email": "kevin@noornest.com",
+        "avatar": "/authors/kevin-wilson.jpg",
+        "bio": "Real Estate Investment Coach and Portfolio Manager"
+      },
+      "categories": [
+        { "id": "2", "name": "Beginner Guide", "slug": "beginner-guide", "color": "#10B981" },
+        { "id": "6", "name": "Buyer's Guide", "slug": "buyers-guide", "color": "#06B6D4" }
+      ],
+      "tags": [
+        { "id": "29", "name": "Mistakes", "slug": "mistakes" },
+        { "id": "30", "name": "Learning", "slug": "learning" },
+        { "id": "31", "name": "Best Practices", "slug": "best-practices" }
+      ],
+      "status": "published",
+      "publishedAt": "2023-11-28T10:30:00Z",
+      "seo": {
+        "title": "Common UK Buy-to-Let Investment Mistakes to Avoid | Noornest Properties",
+        "description": "Learn from common UK buy-to-let investment mistakes. Discover pitfalls to avoid and protect your London property investment portfolio.",
+        "keywords": ["uk buy to let mistakes", "london property investment pitfalls", "buy to let errors", "uk property investment lessons"],
+        "ogImage": "/blog/investment-mistakes-og.jpg"
+      },
+      "createdAt": "2023-11-28T10:30:00Z",
+      "updatedAt": "2023-11-28T10:30:00Z",
+      "readingTime": "8 min read"
+    }
+  ],
+  "blogCategories": [
+    {
+      "id": "1",
+      "name": "Investment Tips",
+      "slug": "investment-tips",
+      "description": "Essential tips for real estate investors",
+      "color": "#3B82F6"
+    },
+    {
+      "id": "2",
+      "name": "Beginner Guide",
+      "slug": "beginner-guide",
+      "description": "Guides for new investors",
+      "color": "#10B981"
+    },
+    {
+      "id": "3",
+      "name": "BMV Analysis",
+      "slug": "bmv-analysis",
+      "description": "Below Market Value property analysis",
+      "color": "#F59E0B"
+    },
+    {
+      "id": "4",
+      "name": "Market Analysis",
+      "slug": "market-analysis",
+      "description": "Market trends and analysis",
+      "color": "#8B5CF6"
+    },
+    {
+      "id": "5",
+      "name": "Property Management",
+      "slug": "property-management",
+      "description": "Managing your investment properties",
+      "color": "#EF4444"
+    },
+    {
+      "id": "6",
+      "name": "Buyer's Guide",
+      "slug": "buyers-guide",
+      "description": "Comprehensive guides for property buyers",
+      "color": "#06B6D4"
+    }
+  ],
+  "blogTags": [
+    { "id": "1", "name": "Real Estate", "slug": "real-estate" },
+    { "id": "2", "name": "Investment", "slug": "investment" },
+    { "id": "3", "name": "Tips", "slug": "tips" },
+    { "id": "4", "name": "BMV", "slug": "bmv" },
+    { "id": "5", "name": "Market Analysis", "slug": "market-analysis" },
+    { "id": "6", "name": "Investment Strategy", "slug": "investment-strategy" },
+    { "id": "7", "name": "Market Trends", "slug": "market-trends" },
+    { "id": "8", "name": "2024", "slug": "2024" },
+    { "id": "9", "name": "Forecasting", "slug": "forecasting" },
+    { "id": "10", "name": "Property Management", "slug": "property-management" },
+    { "id": "11", "name": "Rental Income", "slug": "rental-income" },
+    { "id": "12", "name": "Tenant Relations", "slug": "tenant-relations" },
+    { "id": "13", "name": "Beginner", "slug": "beginner" },
+    { "id": "14", "name": "Financing", "slug": "financing" },
+    { "id": "15", "name": "Loans", "slug": "loans" },
+    { "id": "16", "name": "First Time Buyer", "slug": "first-time-buyer" },
+    { "id": "17", "name": "Due Diligence", "slug": "due-diligence" },
+    { "id": "18", "name": "Property Inspection", "slug": "property-inspection" },
+    { "id": "19", "name": "Legal", "slug": "legal" },
+    { "id": "20", "name": "Tax Benefits", "slug": "tax-benefits" },
+    { "id": "21", "name": "Depreciation", "slug": "depreciation" },
+    { "id": "22", "name": "1031 Exchange", "slug": "1031-exchange" },
+    { "id": "23", "name": "Location Analysis", "slug": "location-analysis" },
+    { "id": "24", "name": "Market Research", "slug": "market-research" },
+    { "id": "25", "name": "Demographics", "slug": "demographics" },
+    { "id": "26", "name": "Investment Strategies", "slug": "investment-strategies" },
+    { "id": "27", "name": "BRRRR", "slug": "brrrr" },
+    { "id": "28", "name": "House Hacking", "slug": "house-hacking" },
+    { "id": "29", "name": "Mistakes", "slug": "mistakes" },
+    { "id": "30", "name": "Learning", "slug": "learning" },
+    { "id": "31", "name": "Best Practices", "slug": "best-practices" }
+  ],
+  "dashboardData": {
+    "savedProperties": 12,
+    "upcomingBookingsCount": 3,
+    "bmvAnalysesCount": 8,
+    "recentSearches": 5,
+    "recentProperties": [
+      {
+        "id": 1,
+        "title": "Modern 3BR Apartment in Downtown",
+        "price": "$450,000",
+        "location": "Downtown, City",
+        "image": "/properties/property-1.jpg",
+        "bedrooms": 3,
+        "bathrooms": 2,
+        "sqft": 1200,
+        "saved": true,
+        "viewed": "2 hours ago"
+      },
+      {
+        "id": 2,
+        "title": "Luxury Villa with Pool",
+        "price": "$850,000",
+        "location": "Suburbs, City",
+        "image": "/properties/property-2.jpg",
+        "bedrooms": 4,
+        "bathrooms": 3,
+        "sqft": 2500,
+        "saved": false,
+        "viewed": "1 day ago"
+      },
+      {
+        "id": 3,
+        "title": "Cozy 2BR Condo",
+        "price": "$320,000",
+        "location": "Midtown, City",
+        "image": "/properties/property-3.jpg",
+        "bedrooms": 2,
+        "bathrooms": 2,
+        "sqft": 900,
+        "saved": true,
+        "viewed": "3 days ago"
+      }
+    ],
+    "upcomingBookings": [
+      {
+        "id": 1,
+        "property": "Modern 3BR Apartment",
+        "date": "2024-01-15",
+        "time": "2:00 PM",
+        "agent": "Sarah Johnson",
+        "status": "confirmed"
+      },
+      {
+        "id": 2,
+        "property": "Luxury Villa with Pool",
+        "date": "2024-01-18",
+        "time": "10:00 AM",
+        "agent": "Mike Chen",
+        "status": "pending"
+      }
+    ],
+    "bmvAnalyses": [
+      {
+        "id": 1,
+        "property": "123 Main Street",
+        "bmvScore": 85,
+        "estimatedValue": "$420,000",
+        "marketPrice": "$450,000",
+        "savings": "$30,000",
+        "date": "2024-01-10"
+      },
+      {
+        "id": 2,
+        "property": "456 Oak Avenue",
+        "bmvScore": 72,
+        "estimatedValue": "$380,000",
+        "marketPrice": "$420,000",
+        "savings": "$40,000",
+        "date": "2024-01-08"
+      }
+    ]
+  },
+  "bmvAnalyses": [
+    {
+      "id": 1,
+      "property": {
+        "address": "123 Baker Street, Marylebone",
+        "city": "London",
+        "state": "England",
+        "zipCode": "NW1 6XE",
+        "propertyType": "Flat",
+        "bedrooms": 3,
+        "bathrooms": 2,
+        "sqft": 1200,
+        "yearBuilt": 2020
+      },
+      "analysis": {
+        "bmvScore": 85,
+        "estimatedValue": 620000,
+        "marketPrice": 650000,
+        "potentialSavings": 30000,
+        "confidence": 92,
+        "riskLevel": "Low",
+        "investmentGrade": "A"
+      },
+      "factors": [
+        { "name": "Location", "score": 90, "weight": 25 },
+        { "name": "Condition", "score": 85, "weight": 20 },
+        { "name": "Market Trends", "score": 80, "weight": 20 },
+        { "name": "Comparable Sales", "score": 88, "weight": 15 },
+        { "name": "Future Development", "score": 75, "weight": 10 },
+        { "name": "Rental Potential", "score": 82, "weight": 10 }
+      ],
+      "status": "completed",
+      "createdAt": "2024-01-10T14:30:00Z",
+      "completedAt": "2024-01-10T14:45:00Z",
+      "notes": "Excellent investment opportunity with strong rental potential and good location."
+    },
+    {
+      "id": 2,
+      "property": {
+        "address": "456 King's Road, Chelsea",
+        "city": "London",
+        "state": "England",
+        "zipCode": "SW3 4LY",
+        "propertyType": "House",
+        "bedrooms": 4,
+        "bathrooms": 3,
+        "sqft": 2500,
+        "yearBuilt": 2018
+      },
+      "analysis": {
+        "bmvScore": 72,
+        "estimatedValue": 850000,
+        "marketPrice": 950000,
+        "potentialSavings": 100000,
+        "confidence": 78,
+        "riskLevel": "Medium",
+        "investmentGrade": "B"
+      },
+      "factors": [
+        { "name": "Location", "score": 70, "weight": 25 },
+        { "name": "Condition", "score": 75, "weight": 20 },
+        { "name": "Market Trends", "score": 65, "weight": 20 },
+        { "name": "Comparable Sales", "score": 80, "weight": 15 },
+        { "name": "Future Development", "score": 60, "weight": 10 },
+        { "name": "Rental Potential", "score": 85, "weight": 10 }
+      ],
+      "status": "completed",
+      "createdAt": "2024-01-08T10:15:00Z",
+      "completedAt": "2024-01-08T10:30:00Z",
+      "notes": "Good value but requires some renovation work."
+    },
+    {
+      "id": 3,
+      "property": {
+        "address": "789 Canary Wharf, Tower Hamlets",
+        "city": "London",
+        "state": "England",
+        "zipCode": "E14 5AB",
+        "propertyType": "Flat",
+        "bedrooms": 2,
+        "bathrooms": 2,
+        "sqft": 900,
+        "yearBuilt": 2019
+      },
+      "analysis": {
+        "bmvScore": 68,
+        "estimatedValue": 450000,
+        "marketPrice": 520000,
+        "potentialSavings": 70000,
+        "confidence": 65,
+        "riskLevel": "Medium",
+        "investmentGrade": "C"
+      },
+      "factors": [
+        { "name": "Location", "score": 75, "weight": 25 },
+        { "name": "Condition", "score": 70, "weight": 20 },
+        { "name": "Market Trends", "score": 60, "weight": 20 },
+        { "name": "Comparable Sales", "score": 65, "weight": 15 },
+        { "name": "Future Development", "score": 55, "weight": 10 },
+        { "name": "Rental Potential", "score": 70, "weight": 10 }
+      ],
+      "status": "completed",
+      "createdAt": "2024-01-05T16:20:00Z",
+      "completedAt": "2024-01-05T16:35:00Z",
+      "notes": "Decent investment but market conditions are uncertain."
+    },
+    {
+      "id": 4,
+      "property": {
+        "address": "321 Skyline Drive, Uptown",
+        "city": "Miami",
+        "state": "FL",
+        "zipCode": "33101",
+        "propertyType": "Penthouse",
+        "bedrooms": 3,
+        "bathrooms": 3,
+        "sqft": 2000,
+        "yearBuilt": 2021
+      },
+      "analysis": {
+        "bmvScore": 91,
+        "estimatedValue": 1100000,
+        "marketPrice": 1200000,
+        "potentialSavings": 100000,
+        "confidence": 95,
+        "riskLevel": "Low",
+        "investmentGrade": "A+"
+      },
+      "factors": [
+        { "name": "Location", "score": 95, "weight": 25 },
+        { "name": "Condition", "score": 90, "weight": 20 },
+        { "name": "Market Trends", "score": 88, "weight": 20 },
+        { "name": "Comparable Sales", "score": 92, "weight": 15 },
+        { "name": "Future Development", "score": 85, "weight": 10 },
+        { "name": "Rental Potential", "score": 90, "weight": 10 }
+      ],
+      "status": "completed",
+      "createdAt": "2024-01-03T09:45:00Z",
+      "completedAt": "2024-01-03T10:00:00Z",
+      "notes": "Premium investment opportunity with excellent potential returns."
+    }
+  ],
+  "bmvUsageStats": {
+    "totalAnalyses": 15,
+    "thisMonth": 8,
+    "remaining": 7,
+    "limit": 15,
+    "nextReset": "2024-02-01"
+  },
+  "userProfile": {
+    "id": 1,
+    "name": "James Smith",
+    "email": "james@example.com",
+    "phone": "+44 20 7123 4567",
+    "avatar": "/avatars/james-smith.jpg",
+    "role": "Client",
+    "memberSince": "2023-06-15",
+    "lastLogin": "2024-01-12T10:30:00Z",
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "sms": false,
+        "push": true,
+        "marketing": true,
+        "propertyAlerts": true,
+        "bookingReminders": true,
+        "bmvUpdates": true
+      },
+      "privacy": {
+        "profileVisibility": "public",
+        "showEmail": true,
+        "showPhone": false,
+        "showActivity": true
+      },
+      "search": {
+        "priceRange": { "min": 200000, "max": 800000 },
+        "propertyTypes": ["apartment", "house", "condo"],
+        "locations": ["Downtown", "Midtown", "Suburbs"],
+        "bedrooms": { "min": 2, "max": 4 },
+        "bathrooms": { "min": 2, "max": 3 }
+      }
+    },
+    "stats": {
+      "savedProperties": 12,
+      "completedBookings": 8,
+      "bmvAnalyses": 15,
+      "totalSearches": 45
+    }
+  },
+  "savedProperties": [
+    {
+      "id": 1,
+      "title": "Modern 3BR Flat in Marylebone",
+      "price": 650000,
+      "location": "Marylebone, London",
+      "image": "/properties/property-1.jpg",
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "sqft": 1200,
+      "yearBuilt": 2020,
+      "propertyType": "Flat",
+      "bmvScore": 85,
+      "agent": {
+        "name": "Sarah Johnson",
+        "email": "sarah@noornest.com",
+        "phone": "+44 20 7123 4567",
+        "avatar": "/agents/sarah-johnson.jpg"
+      },
+      "savedAt": "2024-01-10T14:30:00Z",
+      "lastViewed": "2024-01-12T10:30:00Z",
+      "notes": "Great investment potential with strong rental income"
+    },
+    {
+      "id": 2,
+      "title": "Luxury Villa with Pool",
+      "price": 850000,
+      "location": "Suburbs, City",
+      "image": "/properties/property-2.jpg",
+      "bedrooms": 4,
+      "bathrooms": 3,
+      "sqft": 2500,
+      "yearBuilt": 2018,
+      "propertyType": "House",
+      "bmvScore": 72,
+      "agent": {
+        "name": "Mike Chen",
+        "email": "mike@noornest.com",
+        "phone": "+1 (555) 234-5678",
+        "avatar": "/agents/mike-chen.jpg"
+      },
+      "savedAt": "2024-01-08T16:20:00Z",
+      "lastViewed": "2024-01-11T09:15:00Z",
+      "notes": "Needs some renovation but good location"
+    }
+  ],
+  "bookings": {
+    "upcoming": [
+      {
+        "id": 1,
+        "property": {
+          "id": 1,
+          "title": "Modern 3BR Apartment in Downtown",
+          "address": "123 Main Street, Downtown",
+          "image": "/properties/property-1.jpg"
+        },
+        "type": "in-person",
+        "date": "2024-01-15",
+        "time": "2:00 PM",
+        "duration": 60,
+        "agent": {
+          "name": "Sarah Johnson",
+          "email": "sarah@noornest.com",
+          "phone": "+1 (555) 123-4567",
+          "avatar": "/agents/sarah-johnson.jpg"
+        },
+        "status": "confirmed",
+        "notes": "Please bring ID and any questions about the property",
+        "createdAt": "2024-01-10T14:30:00Z"
+      },
+      {
+        "id": 2,
+        "property": {
+          "id": 2,
+          "title": "Luxury Villa with Pool",
+          "address": "456 Oak Avenue, Suburbs",
+          "image": "/properties/property-2.jpg"
+        },
+        "type": "virtual",
+        "date": "2024-01-18",
+        "time": "10:00 AM",
+        "duration": 45,
+        "agent": {
+          "name": "Mike Chen",
+          "email": "mike@noornest.com",
+          "phone": "+1 (555) 234-5678",
+          "avatar": "/agents/mike-chen.jpg"
+        },
+        "status": "pending",
+        "notes": "Virtual tour link will be sent 15 minutes before",
+        "createdAt": "2024-01-12T09:15:00Z"
+      }
+    ],
+    "past": [
+      {
+        "id": 3,
+        "property": {
+          "id": 3,
+          "title": "Cozy 2BR Condo",
+          "address": "789 Pine Street, Midtown",
+          "image": "/properties/property-3.jpg"
+        },
+        "type": "in-person",
+        "date": "2024-01-05",
+        "time": "3:00 PM",
+        "duration": 60,
+        "agent": {
+          "name": "Emily Rodriguez",
+          "email": "emily@noornest.com",
+          "phone": "+1 (555) 345-6789",
+          "avatar": "/agents/emily-rodriguez.jpg"
+        },
+        "status": "completed",
+        "notes": "Property was nice but too small for our needs",
+        "createdAt": "2024-01-03T11:20:00Z",
+        "completedAt": "2024-01-05T16:00:00Z"
+      }
+    ]
+  },
+  "properties": [
+    {
+      "id": 1,
+      "title": "Luxury 3-Bedroom Flat in Marylebone",
+      "slug": "luxury-3-bedroom-flat-marylebone",
+      "price": 650000,
+      "pricePerSqft": 541,
+      "location": "Marylebone, London",
+      "address": "123 Baker Street, Marylebone, London NW1 6XE",
+      "propertyType": "Flat",
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "sqft": 1200,
+      "yearBuilt": 2020,
+      "status": "For Sale",
+      "description": "Stunning 3-bedroom flat in the heart of Marylebone with modern finishes and excellent transport links. This beautifully presented property offers spacious living accommodation with high ceilings and large windows.",
+      "features": [
+        "Modern kitchen with integrated appliances",
+        "Master bedroom with en-suite",
+        "Private balcony",
+        "Concierge service",
+        "Underground parking",
+        "High-speed internet",
+        "Central heating",
+        "Double glazing"
+      ],
+      "images": [
+        "/img/properties/peterborough/apt4/image-0-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-1-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-2-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-3-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-4-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-5-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-6-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-7-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-8-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-9-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-10-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-11-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-12-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-13-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-14-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-15-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-16-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-17-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-18-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-19-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-20-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-21-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-22-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-23-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-24-1024x1024.webp"
+      ],
+      "agent": {
+        "id": 1,
+        "name": "Sarah Johnson",
+        "email": "sarah@noornest.com",
+        "phone": "+44 20 7123 4567",
+        "avatar": "/agents/sarah-johnson.jpg",
+        "rating": 4.8,
+        "reviews": 127
+      },
+      "coordinates": {
+        "latitude": 51.5208,
+        "longitude": -0.1556,
+        "postcode": "NW1 6XE",
+        "borough": "Westminster"
+      },
+      "transport": [
+        { "name": "Baker Street", "type": "Underground", "lines": ["Bakerloo", "Circle", "Hammersmith & City", "Metropolitan"], "distance": "2 min walk" },
+        { "name": "Regent's Park", "type": "Underground", "lines": ["Bakerloo"], "distance": "5 min walk" },
+        { "name": "Marylebone", "type": "Rail", "lines": ["Chiltern"], "distance": "8 min walk" }
+      ],
+      "nearby": [
+        { "name": "Regent's Park", "type": "Park", "distance": "0.3 miles" },
+        { "name": "Oxford Street", "type": "Shopping", "distance": "0.5 miles" },
+        { "name": "Madame Tussauds", "type": "Attraction", "distance": "0.2 miles" },
+        { "name": "Sainsbury's Local", "type": "Supermarket", "distance": "0.1 miles" }
+      ],
+      "energyRating": "B",
+      "councilTax": "Band G",
+      "groundRent": 0,
+      "serviceCharge": 2500,
+      "leaseLength": 125,
+      "createdAt": "2024-01-01T10:00:00Z",
+      "updatedAt": "2024-01-15T14:30:00Z"
+    },
+    {
+      "id": 2,
+      "title": "Elegant 4-Bedroom House in Chelsea",
+      "slug": "elegant-4-bedroom-house-chelsea",
+      "price": 950000,
+      "pricePerSqft": 380,
+      "location": "Chelsea, London",
+      "address": "456 King's Road, Chelsea, London SW3 4LY",
+      "propertyType": "House",
+      "bedrooms": 4,
+      "bathrooms": 3,
+      "sqft": 2500,
+      "yearBuilt": 2018,
+      "status": "For Sale",
+      "description": "Magnificent 4-bedroom Victorian house in the heart of Chelsea. This stunning property has been beautifully renovated while retaining period features and offers exceptional living space.",
+      "features": [
+        "Victorian period features",
+        "Open plan kitchen/dining",
+        "Private garden",
+        "Master suite with dressing room",
+        "Home office",
+        "Wine cellar",
+        "Original fireplaces",
+        "High ceilings"
+      ],
+      "images": [
+        "/img/properties/peterborough/apt4/image-0-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-1-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-2-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-3-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-4-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-5-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-6-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-7-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-8-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-9-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-10-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-11-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-12-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-13-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-14-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-15-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-16-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-17-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-18-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-19-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-20-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-21-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-22-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-23-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-24-1024x1024.webp"
+      ],
+      "agent": {
+        "id": 2,
+        "name": "Michael Brown",
+        "email": "michael@noornest.com",
+        "phone": "+44 20 7123 4568",
+        "avatar": "/agents/michael-brown.jpg",
+        "rating": 4.9,
+        "reviews": 89
+      },
+      "coordinates": {
+        "latitude": 51.4875,
+        "longitude": -0.1687,
+        "postcode": "SW3 4LY",
+        "borough": "Kensington and Chelsea"
+      },
+      "transport": [
+        { "name": "South Kensington", "type": "Underground", "lines": ["District", "Circle", "Piccadilly"], "distance": "8 min walk" },
+        { "name": "Sloane Square", "type": "Underground", "lines": ["District", "Circle"], "distance": "5 min walk" },
+        { "name": "Imperial Wharf", "type": "Rail", "lines": ["Overground"], "distance": "12 min walk" }
+      ],
+      "nearby": [
+        { "name": "Hyde Park", "type": "Park", "distance": "0.8 miles" },
+        { "name": "King's Road", "type": "Shopping", "distance": "0.1 miles" },
+        { "name": "Saatchi Gallery", "type": "Gallery", "distance": "0.3 miles" },
+        { "name": "Waitrose", "type": "Supermarket", "distance": "0.2 miles" }
+      ],
+      "energyRating": "C",
+      "councilTax": "Band H",
+      "groundRent": 0,
+      "serviceCharge": 0,
+      "leaseLength": 0,
+      "createdAt": "2024-01-02T11:00:00Z",
+      "updatedAt": "2024-01-16T09:15:00Z"
+    },
+    {
+      "id": 3,
+      "title": "Modern 2-Bedroom Flat in Canary Wharf",
+      "slug": "modern-2-bedroom-flat-canary-wharf",
+      "price": 520000,
+      "pricePerSqft": 578,
+      "location": "Canary Wharf, London",
+      "address": "789 Canary Wharf, Tower Hamlets, London E14 5AB",
+      "propertyType": "Flat",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "sqft": 900,
+      "yearBuilt": 2019,
+      "status": "For Sale",
+      "description": "Contemporary 2-bedroom flat in the heart of Canary Wharf with stunning river views. This modern property offers excellent connectivity and luxury amenities.",
+      "features": [
+        "River views",
+        "Modern kitchen with island",
+        "Floor-to-ceiling windows",
+        "Gym and spa facilities",
+        "24/7 concierge",
+        "Underground parking",
+        "Balcony",
+        "Smart home technology"
+      ],
+      "images": [
+        "/img/properties/peterborough/apt4/image-0-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-1-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-2-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-3-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-4-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-5-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-6-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-7-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-8-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-9-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-10-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-11-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-12-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-13-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-14-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-15-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-16-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-17-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-18-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-19-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-20-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-21-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-22-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-23-1024x1024.webp",
+        "/img/properties/peterborough/apt4/image-24-1024x1024.webp"
+      ],
+      "agent": {
+        "id": 3,
+        "name": "Emma Wilson",
+        "email": "emma@noornest.com",
+        "phone": "+44 20 7123 4569",
+        "avatar": "/agents/emma-wilson.jpg",
+        "rating": 4.7,
+        "reviews": 156
+      },
+      "coordinates": {
+        "latitude": 51.5054,
+        "longitude": -0.0235,
+        "postcode": "E14 5AB",
+        "borough": "Tower Hamlets"
+      },
+      "transport": [
+        { "name": "Canary Wharf", "type": "Underground", "lines": ["Jubilee"], "distance": "3 min walk" },
+        { "name": "Heron Quays", "type": "DLR", "lines": ["DLR"], "distance": "5 min walk" },
+        { "name": "Canary Wharf", "type": "Rail", "lines": ["Elizabeth Line"], "distance": "2 min walk" }
+      ],
+      "nearby": [
+        { "name": "Mudchute Park", "type": "Park", "distance": "0.4 miles" },
+        { "name": "Canary Wharf Shopping Centre", "type": "Shopping", "distance": "0.1 miles" },
+        { "name": "Museum of London Docklands", "type": "Museum", "distance": "0.3 miles" },
+        { "name": "Tesco Express", "type": "Supermarket", "distance": "0.2 miles" }
+      ],
+      "energyRating": "A",
+      "councilTax": "Band F",
+      "groundRent": 500,
+      "serviceCharge": 3200,
+      "leaseLength": 99,
+      "createdAt": "2024-01-03T14:00:00Z",
+      "updatedAt": "2024-01-17T16:45:00Z"
+    }
+  ]
+}
