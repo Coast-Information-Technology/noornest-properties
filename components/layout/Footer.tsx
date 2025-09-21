@@ -12,6 +12,7 @@ import {
   Mail,
   Phone,
   MapPin,
+  Clock,
 } from "lucide-react";
 import { SOCIAL_LINKS, CONTACT_INFO } from "@/constants";
 import { disableHeaderWithFooter } from "@/utils/disableHeaderWithFooter";
@@ -41,7 +42,7 @@ export default function Footer() {
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundAttachment: "fixed",
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        backgroundColor: "rgba(0, 0, 0, 0.7)",
         backgroundBlendMode: "overlay",
       }}
     >
@@ -55,37 +56,27 @@ export default function Footer() {
               width={150}
               height={150}
             />
-            <p className="text-muted-foreground text-sm">
-              Your trusted partner in real estate investment. Discover
-              below-market-value properties and make smart investment decisions
-              with our advanced BMV analyzer.
+            <p className="text-sm text-white">
+              Making Property Simple, Secure & Smarter
             </p>
           </div>
 
           {/* Quick Links */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Quick Links</h3>
-            <ul className="space-y-2">
+            <h3 className="text-lg font-semibold text-primary">Quick Links</h3>
+            <ul className="space-y-2 ">
               <li>
                 <Link
                   href="/properties"
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                  className="text-white hover:text-primary transition-colors text-sm"
                 >
                   Properties
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/tools/bmv-analyzer"
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
-                >
-                  BMV Analyzer
-                </Link>
-              </li>
-              <li>
-                <Link
                   href="/about"
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                  className="text-white hover:text-primary transition-colors text-sm"
                 >
                   About Us
                 </Link>
@@ -93,7 +84,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/services"
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                  className="text-white hover:text-primary transition-colors text-sm"
                 >
                   Services
                 </Link>
@@ -101,9 +92,17 @@ export default function Footer() {
               <li>
                 <Link
                   href="/blog"
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                  className="text-white hover:text-primary transition-colors text-sm"
                 >
                   Blog
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/tools/bmv-analyzer"
+                  className="text-white hover:text-primary transition-colors text-sm"
+                >
+                  BMV Analyzer
                 </Link>
               </li>
             </ul>
@@ -111,81 +110,82 @@ export default function Footer() {
 
           {/* Services */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Services</h3>
-            <ul className="space-y-2">
+            <h3 className="text-lg font-semibold text-primary">Services</h3>
+            <ul className="space-y-2 ">
               <li>
                 <Link
                   href="/services/property-investment"
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
-                >
-                  Property Investment
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/services/bmv-analysis"
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
-                >
-                  BMV Analysis
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/services/property-management"
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                  className="text-white hover:text-primary transition-colors text-sm"
                 >
                   Property Management
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/services/investment-consulting"
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                  href="/services/bmv-analysis"
+                  className="text-white hover:text-primary transition-colors text-sm"
                 >
-                  Investment Consulting
+                  Property Sourcing
                 </Link>
               </li>
               <li>
                 <Link
+                  href="/services/property-management"
+                  className="text-white hover:text-primary transition-colors text-sm"
+                >
+                  Property Renovation
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/services/investment-consulting"
+                  className="text-white hover:text-primary transition-colors text-sm"
+                >
+                  Property Consultancy
+                </Link>
+              </li>
+              {/* <li>
+                <Link
                   href="/services/market-research"
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                  className="text-white hover:text-primary transition-colors text-sm"
                 >
                   Market Research
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
 
           {/* Contact Info */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Contact Info</h3>
+            <h3 className="text-lg font-semibold text-primary">Contact Info</h3>
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
-                <Mail className="h-4 w-4 text-muted-foreground" />
-                <a
+                <Mail className="h-5 w-5 text-primary" />
+                <Link
                   href={`mailto:${CONTACT_INFO.email}`}
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                  className="text-white hover:text-primary transition-colors text-sm"
                 >
                   {CONTACT_INFO.email}
-                </a>
+                </Link>
               </div>
               <div className="flex items-center space-x-3">
-                <Phone className="h-4 w-4 text-muted-foreground" />
-                <a
+                <Phone className="h-5 w-5 text-primary" />
+                <Link
                   href={`tel:${CONTACT_INFO.phone}`}
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                  className="text-white hover:text-primary transition-colors text-sm"
                 >
                   {CONTACT_INFO.phone}
-                </a>
+                </Link>
               </div>
               <div className="flex items-start space-x-3">
-                <MapPin className="h-4 w-4 text-muted-foreground mt-0.5" />
-                <span className="text-muted-foreground text-sm">
+                <MapPin className="h-5 w-5 text-primary mt-0.5" />
+                <span className="text-white text-sm">
                   {CONTACT_INFO.address}
                 </span>
               </div>
-              <div className="text-muted-foreground text-sm">
-                {CONTACT_INFO.hours}
+              <div className="flex items-start space-x-3">
+                <Clock className="h-5 w-5 text-primary mt-0.5" />
+                <div className="text-white text-sm">{CONTACT_INFO.hours}</div>
               </div>
             </div>
           </div>
@@ -194,61 +194,62 @@ export default function Footer() {
         <div className="flex justify-center mt-8 space-x-2">
           <Link
             href={SOCIAL_LINKS.facebook}
-            className="text-muted-foreground hover:text-primary transition-colors p-2 rounded-lg hover:bg-accent"
+            className="text-primary hover:text-primary transition-colors p-2 rounded-lg hover:bg-accent"
           >
-            <Facebook className="h-5 w-5" />
+            <Facebook className="h-7 w-7" />
           </Link>
           <Link
             href={SOCIAL_LINKS.twitter}
-            className="text-muted-foreground hover:text-primary transition-colors p-2 rounded-lg hover:bg-accent"
+            className="text-primary hover:text-primary transition-colors p-2 rounded-lg hover:bg-accent"
           >
-            <Twitter className="h-5 w-5" />
+            <Twitter className="h-7 w-7" />
           </Link>
           <Link
             href={SOCIAL_LINKS.instagram}
-            className="text-muted-foreground hover:text-primary transition-colors p-2 rounded-lg hover:bg-accent"
+            className="text-primary hover:text-primary transition-colors p-2 rounded-lg hover:bg-accent"
           >
-            <Instagram className="h-5 w-5" />
+            <Instagram className="h-7 w-7" />
           </Link>
           <Link
             href={SOCIAL_LINKS.linkedin}
-            className="text-muted-foreground hover:text-primary transition-colors p-2 rounded-lg hover:bg-accent"
+            className="text-primary hover:text-primary transition-colors p-2 rounded-lg hover:bg-accent"
           >
-            <Linkedin className="h-5 w-5" />
+            <Linkedin className="h-7 w-7" />
           </Link>
           <Link
             href={SOCIAL_LINKS.youtube}
-            className="text-muted-foreground hover:text-primary transition-colors p-2 rounded-lg hover:bg-accent"
+            className="text-primary hover:text-primary transition-colors p-2 rounded-lg hover:bg-accent"
           >
-            <Youtube className="h-5 w-5" />
+            <Youtube className="h-7 w-7" />
           </Link>
         </div>
 
         {/* Bottom Bar */}
         <div className="mt-8 pt-8 border-t border-accent">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-muted-foreground text-sm">
+            <p className="text-primary text-sm">
               © {currentYear} Noornest Properties. All rights reserved.
             </p>
-            <div className="flex space-x-6">
+            <div className="flex items-center space-x-6">
               <Link
                 href="/privacy-policy"
-                className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                className="text-primary hover:text-primary transition-colors text-sm"
               >
                 Privacy Policy
               </Link>
+              <span className="text-primary">|</span>
               <Link
                 href="/terms-of-service"
-                className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                className="text-primary hover:text-primary transition-colors text-sm"
               >
                 Terms of Service
               </Link>
-              <Link
+              {/* <Link
                 href="/cookie-policy"
-                className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                className="text-white hover:text-primary transition-colors text-sm"
               >
                 Cookie Policy
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>
