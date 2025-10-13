@@ -129,7 +129,7 @@ export default function FeaturedPropertiesSection({
                   <CardContent className="px-6">
                     <div className="space-y-3">
                       <div>
-                        <h3 className="text-xl font-semibold text-gray-900 group-hover:text-primary transition-colors">
+                        <h3 className="text-md font-bold text-gray-900 group-hover:text-primary transition-colors">
                           {property.title}
                         </h3>
                         <p className="text-sm text-gray-600 flex items-center mt-1">
@@ -138,7 +138,7 @@ export default function FeaturedPropertiesSection({
                         </p>
                       </div>
 
-                      <div className="text-2xl font-bold text-gray-900">
+                      <div className="text-lg font-bold text-gray-900">
                         {formatPrice(property.price)}
                       </div>
 
@@ -157,9 +157,9 @@ export default function FeaturedPropertiesSection({
                         </div>
                       </div>
 
-                      <p className="text-sm text-gray-600 line-clamp-2">
+                      {/* <p className="text-sm text-gray-600 line-clamp-2">
                         {property.description}
-                      </p>
+                      </p> */}
 
                       <div className="flex flex-col justify-between pt-4 space-y-2">
                         <div className="flex items-center space-x-2">

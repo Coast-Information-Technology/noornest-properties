@@ -173,7 +173,7 @@ export default function TestimonialCarousel({
                   animate={{ opacity: 1, scale: 1, rotate: 0 }}
                   exit={{ opacity: 0, scale: 0.9, rotate: 5 }}
                   transition={{ duration: 0.6, ease: "easeInOut" }}
-                  className="relative z-10 h-full"
+                  className="relative z-10 h-full border-2 border-primary rounded-[10px]"
                 >
                   <Image
                     src={testimonial.image}

@@ -2,22 +2,7 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   TrendingUp,
   Shield,
@@ -44,9 +29,6 @@ import {
 } from "lucide-react";
 import AnimatedSection from "@/components/ui/AnimatedSection";
 import AnimatedText from "@/components/ui/AnimatedText";
-import AnimatedList from "@/components/ui/AnimatedList";
-import AnimatedCounter from "@/components/ui/AnimatedCounter";
-// import PropertyImage from "@/components/ui/PropertyImage";
 import {
   fadeInUp,
   fadeInLeft,
@@ -64,7 +46,7 @@ import CTASection from "@/components/ui/CTASection";
 import FeaturedPropertiesSection from "@/components/ui/FeaturedPropertiesSection";
 import PropertySearchBox from "@/components/ui/PropertySearchBox";
 import BlogSection from "@/components/ui/BlogSection";
-import PropertyImage from "@/components/ui/PropertyImage";
+import CountUp from "react-countup";
 
 const heroImages = ["/hero-img.png", "/hero-img2.webp", "/hero-img3.webp"];
 
@@ -402,7 +384,7 @@ export default function Home() {
               variants={fadeInUp}
               className="space-y-6 grid grid-cols-1 lg:grid-cols-2 lg:items-center w-full"
             >
-              <div className="space-y-6">
+              <div className="space-y-4">
                 {/* Badge */}
                 <div className="flex justify-center lg:justify-start">
                   <Badge variant="secondary" className="w-fit">
@@ -426,12 +408,12 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="space-y-6">
+              <div className="space-y-4">
                 {/* Description */}
                 <div className="text-center lg:text-left">
                   <AnimatedText
                     as="p"
-                    className="text-base sm:text-md lg:text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed px-4"
+                    className="text-sm text-muted-foreground max-w-4xl mx-auto leading-relaxed px-4"
                     delay={0.2}
                   >
                     Discover verified properties and tailored investment
@@ -447,8 +429,8 @@ export default function Home() {
                   <Button
                     asChild
                     variant="ghost"
-                    size="lg"
-                    className="w-full sm:w-auto text-sm sm:text-base md:text-md"
+                    size="sm"
+                    className="w-full sm:w-auto text-sm"
                   >
                     <Link href="/properties">
                       <Search className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
@@ -460,8 +442,8 @@ export default function Home() {
                   </Button>
                   <Button
                     asChild
-                    size="lg"
-                    className="w-full sm:w-auto text-sm sm:text-base md:text-md"
+                    size="sm"
+                    className="w-full sm:w-auto text-sm"
                   >
                     <Link href="/tools/bmv-analyzer">
                       <HomeIcon className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
@@ -482,11 +464,14 @@ export default function Home() {
       <section className="relative w-full h-[70vh] overflow-hidden">
         {/* Carousel Images */}
         <div
-          className="absolute inset-0 flex transition-transform duration-700 ease-in-out"
+          className="absolute -z-30 inset-0 flex transition-transform duration-700 ease-in-out"
           style={{ transform: `translateX(-${current * 100}%)` }}
         >
           {heroImages.map((image, index) => (
-            <div key={index} className="relative w-full h-full flex-shrink-0">
+            <div
+              key={index}
+              className="relative -z-30 w-full h-full flex-shrink-0"
+            >
               <Image
                 src={image}
                 alt={`Property ${index + 1}`}
@@ -499,7 +484,10 @@ export default function Home() {
         </div>
 
         {/* Overlay */}
-        <div className="absolute inset-0 bg-black/40" aria-hidden="true" />
+        <div
+          className="absolute -z-30 inset-0 bg-black/40"
+          aria-hidden="true"
+        />
 
         {/* Controls */}
         <button
@@ -569,21 +557,19 @@ export default function Home() {
       />
 
       {/* Investment Plans Section */}
-      <section className="w-full bg-amber-50 py-16 px-6 md:px-16">
-        <h3 className="text-lg tracking-wide text-black uppercase font-bold">
-          Investment Plans
-        </h3>
-        <h2 className="text-3xl md:text-4xl font-bold text-primary leading-snug">
-          Grow Your Wealth
-          <br /> with Noornest
-        </h2>
-        <p className="text-gray-600 mb-8 max-w-lg">
-          Choose from flexible plans designed to suit every investor.
-        </p>
-
+      <section className="w-full bg-amber-50 py-16 px-6 md:px-16 relative">
         <div className="flex flex-col md:flex-row items-center md:items-start gap-12">
           {/* Left Section */}
           <div className="flex-1">
+            <h3 className="text-lg tracking-wide text-black uppercase font-bold">
+              Investment Plans
+            </h3>
+            <h2 className="text-3xl md:text-4xl font-bold text-primary leading-snug mb-3">
+              Grow Your Wealth with Noornest
+            </h2>
+            <p className="text-gray-600 mb-8 max-w-lg">
+              Choose from flexible plans designed to suit every investor.
+            </p>
             {/* Plans Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8 md:mt-8">
               <div>
@@ -629,13 +615,13 @@ export default function Home() {
 
           {/* Right Section (Image) */}
           <div className="flex-1">
-            <div className="rounded-2xl overflow-hidden shadow-lg">
+            <div className="rounded-2xl overflow-hidden shadow-lg h-[600px] w-[400px] md:h-[500px] md:w-[600px] relative">
               <Image
                 src="/hero-img.png" // replace with your actual image path
                 alt="Investment Houses"
                 width={600}
                 height={400}
-                className="object-cover"
+                className="object-cover h-full w-full"
               />
             </div>
           </div>
@@ -733,31 +719,56 @@ export default function Home() {
           {/* Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[150px]">
             {/* Tall first card */}
-            <div className="row-span-3 bg-[#F5E9DC] rounded-lg shadow-sm p-6 flex flex-col justify-center items-center text-center">
-              <h3 className="text-3xl md:text-4xl font-bold">500+</h3>
+            <div className="row-span-3 bg-accent rounded-lg shadow-sm p-6 flex flex-col justify-center items-center text-center">
+              <CountUp
+                end={500}
+                suffix="+"
+                duration={3.5}
+                className="text-2xl md:text-3xl font-bold"
+              />
               <p className="mt-2 text-gray-700 text-base">
                 Verified Properties
               </p>
             </div>
 
             {/* Rest of the cards */}
-            <div className="row-span-2 bg-[#F5E9DC] rounded-lg shadow-sm p-6 flex flex-col justify-center items-center text-center">
-              <h3 className="text-2xl md:text-3xl font-bold">200+</h3>
+            <div className="row-span-2 bg-accent rounded-lg shadow-sm p-6 flex flex-col justify-center items-center text-center">
+              <CountUp
+                end={200}
+                suffix="+"
+                duration={3.5}
+                className="text-3xl md:text-4xl font-bold"
+              />
               <p className="mt-2 text-gray-700">Blog Articles</p>
             </div>
 
-            <div className="bg-[#F5E9DC] rounded-lg shadow-sm p-6 flex flex-col justify-center items-center text-center">
-              <h3 className="text-2xl md:text-3xl font-bold">150+</h3>
+            <div className="bg-accent rounded-lg shadow-sm p-6 flex flex-col justify-center items-center text-center">
+              <CountUp
+                end={150}
+                suffix="+"
+                duration={3.5}
+                className="text-3xl md:text-4xl font-bold"
+              />
               <p className="mt-2 text-gray-700">Agent Partnerships</p>
             </div>
 
-            <div className="row-span-2 bg-[#F5E9DC] rounded-lg shadow-sm p-6 flex flex-col justify-center items-center text-center">
-              <h3 className="text-2xl md:text-3xl font-bold">1K+</h3>
+            <div className="row-span-2 bg-accent rounded-lg shadow-sm p-6 flex flex-col justify-center items-center text-center">
+              <CountUp
+                end={1000}
+                suffix="+"
+                duration={3.5}
+                className="text-3xl md:text-4xl font-bold"
+              />
               <p className="mt-2 text-gray-700">Active Users</p>
             </div>
 
-            <div className="bg-[#F5E9DC] rounded-lg shadow-sm p-6 flex flex-col justify-center items-center text-center">
-              <h3 className="text-2xl md:text-3xl font-bold">50+</h3>
+            <div className="bg-accent rounded-lg shadow-sm p-6 flex flex-col justify-center items-center text-center">
+              <CountUp
+                end={50}
+                suffix="+"
+                duration={3.5}
+                className="text-3xl md:text-4xl font-bold"
+              />
               <p className="mt-2 text-gray-700">Cities Covered</p>
             </div>
           </div>
@@ -785,7 +796,7 @@ export default function Home() {
         }}
         secondaryButton={{
           text: "Book a Consultation",
-          href: "/consultation",
+          href: "/booking",
         }}
         backgroundImage="/hero-img3.webp"
         overlayClassName="bg-gradient-to-r from-black/40 to-black/60 backdrop-blur-sm"

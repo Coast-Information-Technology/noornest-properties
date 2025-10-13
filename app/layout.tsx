@@ -5,6 +5,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Toaster } from "@/components/ui/sonner";
 import { AnimationProvider } from "@/components/providers/AnimationProvider";
+import BackToTopButton from "@/components/ui/BackToTopButton";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -92,6 +93,7 @@ export default function RootLayout({
           <Header />
           {children}
           <Footer />
+          <BackToTopButton />
           <Toaster />
         </AnimationProvider>
       </body>

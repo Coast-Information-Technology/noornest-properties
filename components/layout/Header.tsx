@@ -8,31 +8,12 @@ import {
   X,
   User,
   Search,
-  Heart,
-  ShoppingCart,
   ChevronDown,
-  Building2,
-  TrendingUp,
-  FileText,
-  Users,
-  Phone,
-  Calculator,
-  Home,
-  Building,
-  MapPin,
-  Briefcase,
-  BarChart3,
-  Shield,
-  Target,
-  Settings,
-  Lightbulb,
-  Palette,
-  Wrench,
   Calendar,
+  Info,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -40,35 +21,23 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
   DropdownMenuLabel,
-  DropdownMenuGroup,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
-import { NAVIGATION_ITEMS } from "@/constants";
 import Image from "next/image";
 import { disableHeaderWithFooter } from "@/utils/disableHeaderWithFooter";
 import MegaMenu from "./MegaMenu";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isCompanyOpen, setIsCompanyOpen] = useState(false);
   const pathname = usePathname();
 
   const mobileNavItems = [
     { href: "/", label: "Home" },
+    { href: "/about", label: "About Us" },
+    { href: "/services", label: "Services" },
     { href: "/properties", label: "Properties" },
     { href: "/investment-plans", label: "Investment Plans" },
-    { href: "/services", label: "Services" },
     { href: "/blog", label: "Blog" },
-    { href: "/about", label: "About Us" },
     { href: "/contact", label: "Contact" },
   ];
 
@@ -87,7 +56,10 @@ export default function Header() {
   const isActive = (href: string) => pathname === href;
 
   return (
-    <header className="top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 h-[10vh] md:h-[15vh] flex items-center">
+    <header
+      className="top-0 z-[10000] w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 h-[10vh] md:h-[15vh] flex items-center"
+      style={{ zIndex: 10000 }}
+    >
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
@@ -129,7 +101,7 @@ export default function Header() {
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                  <Link href="/consultation" className="flex items-center">
+                  <Link href="/booking" className="flex items-center">
                     <Calendar className="mr-2 h-4 w-4" />
                     <span>Book a Consultation</span>
                   </Link>
@@ -155,7 +127,10 @@ export default function Header() {
 
         {/* Mobile/Tablet Menu */}
         {isMenuOpen && (
-          <div className="xl:hidden absolute top-full left-0 right-0 bg-background border-b shadow-lg z-40 animate-in slide-in-from-top-2 duration-200">
+          <div
+            className="xl:hidden absolute top-full left-0 right-0 bg-background border-b shadow-lg z-[9999] animate-in slide-in-from-top-2 duration-200"
+            style={{ zIndex: 9999 }}
+          >
             <div className="px-4 py-6 space-y-4 max-h-[80vh] overflow-y-auto">
               {/* Mobile Search */}
               <div className="mb-4">
@@ -205,7 +180,7 @@ export default function Header() {
                   Login
                 </Link>
                 <Link
-                  href="/consultation"
+                  href="/booking"
                   className="flex items-center px-3 py-2 text-base font-medium rounded-md transition-colors bg-primary text-primary-foreground hover:bg-primary/90"
                   onClick={() => setIsMenuOpen(false)}
                 >

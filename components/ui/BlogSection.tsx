@@ -68,7 +68,7 @@ export default function BlogSection({
           <div>
             <AnimatedText
               as="h3"
-              className="text-xs font-semibold text-black uppercase tracking-wider mb-1"
+              className="text-lg tracking-wide text-black uppercase font-bold"
             >
               {subtitle}
             </AnimatedText>

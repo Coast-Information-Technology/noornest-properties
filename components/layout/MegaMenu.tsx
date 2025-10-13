@@ -26,6 +26,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
+  NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
 
 export default function MegaMenu() {
@@ -33,7 +34,7 @@ export default function MegaMenu() {
   const isActive = (href: string) => pathname === href;
 
   return (
-    <NavigationMenu className="hidden xl:flex" viewport={false}>
+    <NavigationMenu className="hidden xl:flex z-50 relative">
       <NavigationMenuList className="flex space-x-1">
         {/* Home */}
         <NavigationMenuItem>
@@ -49,52 +50,108 @@ export default function MegaMenu() {
           </NavigationMenuLink>
         </NavigationMenuItem>
 
-        {/* About Us */}
+        {/* Company */}
         <NavigationMenuItem>
           <NavigationMenuTrigger className="h-10">
-            <Link href="/about">About Us</Link>
+            Company
           </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <div className="grid w-[400px] gap-3 p-4">
-              <NavigationMenuLink asChild>
-                <Link
-                  href="/about"
-                  className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                >
-                  <div className="text-sm font-medium leading-none">
-                    Our Story & Mission
-                  </div>
-                  <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                    Learn about our journey and commitment
-                  </p>
-                </Link>
-              </NavigationMenuLink>
-              <NavigationMenuLink asChild>
-                <Link
-                  href="/about/why-choose-us"
-                  className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                >
-                  <div className="text-sm font-medium leading-none">
-                    Why Choose Noornest
-                  </div>
-                  <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                    Discover what makes us different
-                  </p>
-                </Link>
-              </NavigationMenuLink>
-              <NavigationMenuLink asChild>
-                <Link
-                  href="/about/partners"
-                  className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                >
-                  <div className="text-sm font-medium leading-none">
-                    Partners & Affiliates
-                  </div>
-                  <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                    Our trusted partners and network
-                  </p>
-                </Link>
-              </NavigationMenuLink>
+            <div className="grid w-[min(90vw,500px)] gap-3 p-4 md:grid-cols-2">
+              <div className="space-y-3">
+                <div className="text-sm font-medium text-muted-foreground">
+                  About Us
+                </div>
+
+                <NavigationMenuLink asChild>
+                  <Link
+                    href="/about"
+                    className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                  >
+                    <div className="text-sm font-medium leading-none">
+                      Our Story & Mission
+                    </div>
+                    <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                      Learn about our journey and commitment
+                    </p>
+                  </Link>
+                </NavigationMenuLink>
+
+                <NavigationMenuLink asChild>
+                  <Link
+                    href="/about/why-choose-us"
+                    className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                  >
+                    <div className="text-sm font-medium leading-none">
+                      Why Choose Noornest
+                    </div>
+                    <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                      Discover what makes us different
+                    </p>
+                  </Link>
+                </NavigationMenuLink>
+
+                <NavigationMenuLink asChild>
+                  <Link
+                    href="/about/partners"
+                    className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                  >
+                    <div className="text-sm font-medium leading-none">
+                      Partners & Affiliates
+                    </div>
+                    <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                      Our trusted partners and network
+                    </p>
+                  </Link>
+                </NavigationMenuLink>
+              </div>
+
+              <div className="space-y-3">
+                <div className="text-sm font-medium text-muted-foreground">
+                  Contact
+                </div>
+
+                <NavigationMenuLink asChild>
+                  <Link
+                    href="/contact"
+                    className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                  >
+                    <div className="text-sm font-medium leading-none">
+                      Contact Form
+                    </div>
+                    <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                      Get in touch with our team
+                    </p>
+                  </Link>
+                </NavigationMenuLink>
+
+                <NavigationMenuLink asChild>
+                  <Link
+                    href="/contact/location"
+                    className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                  >
+                    <div className="text-sm font-medium leading-none">
+                      Location & Map
+                    </div>
+                    <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                      Find our office locations
+                    </p>
+                  </Link>
+                </NavigationMenuLink>
+
+                <NavigationMenuLink asChild>
+                  <Link
+                    href="/contact/whatsapp"
+                    className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                  >
+                    <div className="text-sm font-medium leading-none">
+                      WhatsApp / Phone
+                    </div>
+                    <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                      Quick contact options
+                    </p>
+                  </Link>
+                </NavigationMenuLink>
+              </div>
             </div>
           </NavigationMenuContent>
         </NavigationMenuItem>
@@ -102,10 +159,10 @@ export default function MegaMenu() {
         {/* Properties */}
         <NavigationMenuItem>
           <NavigationMenuTrigger className="h-10">
-            <Link href="/properties">Properties</Link>
+            Properties
           </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <div className="grid w-[600px] gap-3 p-4 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid w-[min(90vw,600px)] gap-3 p-4 md:grid-cols-2 lg:grid-cols-3">
               <div className="row-span-3">
                 <NavigationMenuLink asChild>
                   <Link
@@ -122,6 +179,7 @@ export default function MegaMenu() {
                   </Link>
                 </NavigationMenuLink>
               </div>
+
               <NavigationMenuLink asChild>
                 <Link
                   href="/properties?type=apartments"
@@ -135,6 +193,7 @@ export default function MegaMenu() {
                   </p>
                 </Link>
               </NavigationMenuLink>
+
               <NavigationMenuLink asChild>
                 <Link
                   href="/properties?type=houses"
@@ -146,6 +205,7 @@ export default function MegaMenu() {
                   </p>
                 </Link>
               </NavigationMenuLink>
+
               <NavigationMenuLink asChild>
                 <Link
                   href="/properties?type=land"
@@ -157,6 +217,7 @@ export default function MegaMenu() {
                   </p>
                 </Link>
               </NavigationMenuLink>
+
               <NavigationMenuLink asChild>
                 <Link
                   href="/properties?type=commercial"
@@ -170,6 +231,7 @@ export default function MegaMenu() {
                   </p>
                 </Link>
               </NavigationMenuLink>
+
               <NavigationMenuLink asChild>
                 <Link
                   href="/properties?featured=true"
@@ -187,13 +249,63 @@ export default function MegaMenu() {
           </NavigationMenuContent>
         </NavigationMenuItem>
 
+        {/* Blog */}
+        <NavigationMenuItem>
+          <NavigationMenuTrigger className="h-10">Blog</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <div className="grid w-[min(90vw,400px)] gap-3 p-4">
+              <NavigationMenuLink asChild>
+                <Link
+                  href="/blog/market-trends"
+                  className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                >
+                  <div className="text-sm font-medium leading-none">
+                    Market Trends
+                  </div>
+                  <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                    Latest real estate market insights
+                  </p>
+                </Link>
+              </NavigationMenuLink>
+
+              <NavigationMenuLink asChild>
+                <Link
+                  href="/blog/investment-education"
+                  className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                >
+                  <div className="text-sm font-medium leading-none">
+                    Investment Education
+                  </div>
+                  <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                    Learn about property investment strategies
+                  </p>
+                </Link>
+              </NavigationMenuLink>
+
+              <NavigationMenuLink asChild>
+                <Link
+                  href="/blog/property-tips"
+                  className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                >
+                  <div className="text-sm font-medium leading-none">
+                    Property Tips
+                  </div>
+                  <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                    Expert advice for property owners and buyers
+                  </p>
+                </Link>
+              </NavigationMenuLink>
+            </div>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+
         {/* Investment Plans */}
         <NavigationMenuItem>
           <NavigationMenuTrigger className="h-10">
-            <Link href="/investment-plans">Investment Plans</Link>
+            Investment Plans
           </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <div className="grid w-[500px] gap-3 p-4 md:grid-cols-2">
+            <div className="grid w-[min(90vw,500px)] gap-3 p-4 md:grid-cols-2">
               <NavigationMenuLink asChild>
                 <Link
                   href="/investment-plans/equity-nest"
@@ -210,6 +322,7 @@ export default function MegaMenu() {
                   </p>
                 </Link>
               </NavigationMenuLink>
+
               <NavigationMenuLink asChild>
                 <Link
                   href="/investment-plans/yield-nest"
@@ -226,6 +339,7 @@ export default function MegaMenu() {
                   </p>
                 </Link>
               </NavigationMenuLink>
+
               <NavigationMenuLink asChild>
                 <Link
                   href="/investment-plans/secure-nest"
@@ -242,6 +356,7 @@ export default function MegaMenu() {
                   </p>
                 </Link>
               </NavigationMenuLink>
+
               <NavigationMenuLink asChild>
                 <Link
                   href="/investment-plans/opportunity-nest"
@@ -265,14 +380,15 @@ export default function MegaMenu() {
         {/* Services */}
         <NavigationMenuItem>
           <NavigationMenuTrigger className="h-10">
-            <Link href="/services">Services</Link>
+            Services
           </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <div className="grid w-[600px] gap-3 p-4 md:grid-cols-2">
+            <div className="grid w-[min(90vw,600px)] gap-3 p-4 md:grid-cols-2">
               <div className="space-y-3">
                 <div className="text-sm font-medium text-muted-foreground">
                   Property Solutions
                 </div>
+
                 <NavigationMenuLink asChild>
                   <Link
                     href="/services/property-management"
@@ -286,6 +402,7 @@ export default function MegaMenu() {
                     </div>
                   </Link>
                 </NavigationMenuLink>
+
                 <NavigationMenuLink asChild>
                   <Link
                     href="/services/sales-marketing"
@@ -299,6 +416,7 @@ export default function MegaMenu() {
                     </div>
                   </Link>
                 </NavigationMenuLink>
+
                 <NavigationMenuLink asChild>
                   <Link
                     href="/services/rentals"
@@ -312,6 +430,7 @@ export default function MegaMenu() {
                     </div>
                   </Link>
                 </NavigationMenuLink>
+
                 <NavigationMenuLink asChild>
                   <Link
                     href="/services/property-sourcing"
@@ -326,10 +445,12 @@ export default function MegaMenu() {
                   </Link>
                 </NavigationMenuLink>
               </div>
+
               <div className="space-y-3">
                 <div className="text-sm font-medium text-muted-foreground">
                   Advisory & Enhancements
                 </div>
+
                 <NavigationMenuLink asChild>
                   <Link
                     href="/services/valuation"
@@ -343,6 +464,7 @@ export default function MegaMenu() {
                     </div>
                   </Link>
                 </NavigationMenuLink>
+
                 <NavigationMenuLink asChild>
                   <Link
                     href="/services/investment-advisory"
@@ -356,6 +478,7 @@ export default function MegaMenu() {
                     </div>
                   </Link>
                 </NavigationMenuLink>
+
                 <NavigationMenuLink asChild>
                   <Link
                     href="/services/consultancy"
@@ -369,6 +492,7 @@ export default function MegaMenu() {
                     </div>
                   </Link>
                 </NavigationMenuLink>
+
                 <NavigationMenuLink asChild>
                   <Link
                     href="/services/refurbishment"
@@ -382,6 +506,7 @@ export default function MegaMenu() {
                     </div>
                   </Link>
                 </NavigationMenuLink>
+
                 <NavigationMenuLink asChild>
                   <Link
                     href="/services/interior-design"
@@ -399,107 +524,17 @@ export default function MegaMenu() {
             </div>
           </NavigationMenuContent>
         </NavigationMenuItem>
-
-        {/* Blog */}
-        <NavigationMenuItem>
-          <NavigationMenuTrigger className="h-10">
-            <Link href="/blog">Blog</Link>
-          </NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <div className="grid w-[400px] gap-3 p-4">
-              <NavigationMenuLink asChild>
-                <Link
-                  href="/blog/market-trends"
-                  className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                >
-                  <div className="text-sm font-medium leading-none">
-                    Market Trends
-                  </div>
-                  <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                    Latest real estate market insights
-                  </p>
-                </Link>
-              </NavigationMenuLink>
-              <NavigationMenuLink asChild>
-                <Link
-                  href="/blog/investment-education"
-                  className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                >
-                  <div className="text-sm font-medium leading-none">
-                    Investment Education
-                  </div>
-                  <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                    Learn about property investment strategies
-                  </p>
-                </Link>
-              </NavigationMenuLink>
-              <NavigationMenuLink asChild>
-                <Link
-                  href="/blog/property-tips"
-                  className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                >
-                  <div className="text-sm font-medium leading-none">
-                    Property Tips
-                  </div>
-                  <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                    Expert advice for property owners and buyers
-                  </p>
-                </Link>
-              </NavigationMenuLink>
-            </div>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-
-        {/* Contact */}
-        <NavigationMenuItem>
-          <NavigationMenuTrigger className="h-10">
-            <Link href="/contact">Contact</Link>
-          </NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <div className="grid w-[400px] gap-3 p-4">
-              <NavigationMenuLink asChild>
-                <Link
-                  href="/contact"
-                  className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                >
-                  <div className="text-sm font-medium leading-none">
-                    Contact Form
-                  </div>
-                  <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                    Get in touch with our team
-                  </p>
-                </Link>
-              </NavigationMenuLink>
-              <NavigationMenuLink asChild>
-                <Link
-                  href="/contact/location"
-                  className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                >
-                  <div className="text-sm font-medium leading-none">
-                    Location & Map
-                  </div>
-                  <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                    Find our office locations
-                  </p>
-                </Link>
-              </NavigationMenuLink>
-              <NavigationMenuLink asChild>
-                <Link
-                  href="/contact/whatsapp"
-                  className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                >
-                  <div className="text-sm font-medium leading-none">
-                    WhatsApp / Phone
-                  </div>
-                  <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                    Quick contact options
-                  </p>
-                </Link>
-              </NavigationMenuLink>
-            </div>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
       </NavigationMenuList>
+
+      {/* Anchor the viewport under the active trigger (and keep it edge-aware) */}
+      <div className="absolute left-0 top-full flex w-full justify-start z-[9997] pointer-events-none">
+        <NavigationMenuViewport
+          className="
+            pointer-events-auto
+            [transform:translate3d(var(--radix-navigation-menu-viewport-transform,0),0,0)]
+          "
+        />
+      </div>
     </NavigationMenu>
   );
 }

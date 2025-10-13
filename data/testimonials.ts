@@ -59,3 +59,20 @@ export const buyerTestimonials: Testimonial[] = [
     image: "/client.jpg",
   },
 ];
+
+export const bookingTestimonials: Testimonial[] = [
+  {
+    quote:
+      "Booking a property through Noornest was seamless. The platform is user-friendly and the customer support was top-notch.",
+    author: "Emily R.",
+    role: "Home Buyer",
+    image: "/booking/emily.png",
+  },
+  {
+    quote:
+      "I had a great experience booking my property. The team was helpful and the process was straightforward.",
+    author: "John D.",
+    role: "Investor",
+    image: "/client.jpg",
+  },
+];

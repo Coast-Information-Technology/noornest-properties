@@ -9,16 +9,18 @@ import AnimatedText from "@/components/ui/AnimatedText";
 export interface CTASectionProps {
   // Content
   title: string;
-  description: string;
+  description?: string;
 
   // Buttons
   primaryButton?: {
     text: string;
     href: string;
+    className?: string;
   };
   secondaryButton?: {
     text: string;
     href: string;
+    className?: string;
   };
 
   // Background
@@ -46,7 +48,7 @@ export default function CTASection({
   containerClassName = "",
   overlayClassName = "",
   sectionPadding = "py-20",
-  containerMaxWidth = "container mx-auto px-4",
+  containerMaxWidth = "container mx-auto px-4 md:px-16",
 }: CTASectionProps) {
   const hasBackgroundImage = Boolean(backgroundImage);
 
@@ -95,8 +97,13 @@ export default function CTASection({
               delay={0.4}
             >
               {primaryButton && (
-                <Button asChild size="lg">
-                  <Link href={primaryButton.href}>{primaryButton.text}</Link>
+                <Button asChild size="lg" className={primaryButton.className}>
+                  <Link
+                    href={primaryButton.href}
+                    className={primaryButton.className}
+                  >
+                    {primaryButton.text}
+                  </Link>
                 </Button>
               )}
               {secondaryButton && (
@@ -104,9 +111,12 @@ export default function CTASection({
                   asChild
                   size="lg"
                   variant="outline"
-                  className="text-primary"
+                  className={secondaryButton.className}
                 >
-                  <Link href={secondaryButton.href}>
+                  <Link
+                    href={secondaryButton.href}
+                    className={secondaryButton.className}
+                  >
                     {secondaryButton.text}
                   </Link>
                 </Button>
