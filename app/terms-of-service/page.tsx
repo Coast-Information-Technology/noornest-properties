@@ -13,11 +13,14 @@ import {
   ShieldAlert,
   FileWarning,
   Settings,
+  PhoneCallIcon,
 } from "lucide-react";
 import Newsletter from "@/components/layout/Newsletter";
 import AnimatedSection from "@/components/ui/AnimatedSection";
 import { fadeInUp } from "@/lib/animations";
 import AnimatedText from "@/components/ui/AnimatedText";
+import { BsEnvelope, BsPhoneFill } from "react-icons/bs";
+import { TbLocationFilled } from "react-icons/tb";
 
 const cards = [
   {
@@ -130,6 +133,27 @@ const responsibilitySections = [
     title: "Transparency",
     description:
       "Complete financial information provided upfront for user understanding.",
+  },
+];
+
+const accountTermination = [
+  {
+    id: 1,
+    title: "User options",
+    description:
+      "Users can close accounts at any time through platform settings.",
+  },
+  {
+    id: 2,
+    title: "Platform rights",
+    description:
+      "Noornest reserves right to terminate access for terms violations.",
+  },
+  {
+    id: 3,
+    title: "Ongoing obligations",
+    description:
+      "Certain financial and confidentiality requirements persist after account closure.",
   },
 ];
 
@@ -510,7 +534,7 @@ const TermsOfServicePage = () => {
         </div>
       </section>
       {/* Intellectual Section */}
-      <section className="bg-accent text-center py-12 lg:py-20 px-8 md:px-16 w-full">
+      <section className="bg-accent text-center py-20 px-8 md:px-16 w-full">
         <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-between max-w-5xl mx-auto gap-12">
           {/* Left Column */}
           <div className="w-full h-[300px] lg:w-[400px] lg:h-[400px] rounded-[10px]">
@@ -523,7 +547,7 @@ const TermsOfServicePage = () => {
             />
           </div>
           {/* Right Column */}
-          <div className="text-left">
+          <div className="text-center lg:text-left">
             <h3 className="text-lg tracking-wide text-black uppercase font-bold mb-8">
               Legal
             </h3>
@@ -532,7 +556,7 @@ const TermsOfServicePage = () => {
             </h2>
             <ul
               role="list"
-              className="list-disc mb-12 pl-5 space-y-2 text-gray-600"
+              className="list-disc mb-12 pl-5 space-y-2 text-gray-600 text-left"
             >
               <li role="listItem">
                 All content on the site (text, graphics, logos, etc.) is owned
@@ -543,7 +567,7 @@ const TermsOfServicePage = () => {
                 consent.
               </li>
             </ul>
-            <div className="flex items-center gap-4 justify-center md:justify-start mb-8">
+            <div className="flex items-center gap-4 justify-center lg:justify-start mb-8">
               <Link href="/about">
                 <Button>Learn more</Button>
               </Link>
@@ -568,8 +592,8 @@ const TermsOfServicePage = () => {
           </p>
           <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-between border-accent border-2 rounded-[10px]">
             {/* Left Column */}
-            <div className="text-left px-12">
-              <h3 className="text-lg tracking-wide text-black uppercase font-bold mb-8">
+            <div className="text-center lg:text-left px-12 w-full pt-8 lg:pt-0 lg:w-1/2">
+              <h3 className="text-lg tracking-wide text-black uppercase font-bold mb-4 md:mb-8">
                 Caution
               </h3>
               <h2 className="text-3xl md:text-4xl font-bold text-primary leading-snug mb-4">
@@ -577,7 +601,7 @@ const TermsOfServicePage = () => {
               </h2>
               <ul
                 role="list"
-                className="list-disc mb-12 pl-5 space-y-2 text-gray-600"
+                className="list-disc mb-12 pl-5 space-y-2 text-gray-600 text-left"
               >
                 <li role="listItem">
                   We are not liable for losses arising from market conditions,
@@ -587,7 +611,7 @@ const TermsOfServicePage = () => {
                   Liability limited to the extent permitted by UK law.
                 </li>
               </ul>
-              <div className="flex items-center gap-4 justify-center md:justify-start mb-8">
+              <div className="flex items-center gap-4 justify-center lg:justify-start mb-8">
                 <Link href="/about">
                   <Button>Understand</Button>
                 </Link>
@@ -597,13 +621,13 @@ const TermsOfServicePage = () => {
               </div>
             </div>
             {/* Right Column */}
-            <div className="w-full h-[300px] lg:w-[400px] lg:h-[400px] rounded-[10px]">
+            <div className="w-full h-[300px] lg:w-1/2 lg:h-[500px] rounded-r-[10px]">
               <Image
                 src="/terms/scope-of-responsibility.png"
                 alt="Image representing scope of responsibility"
                 width={400}
                 height={500}
-                className="w-full h-full object-cover rounded-[10px]"
+                className="w-full h-full object-cover rounded-r-[10px]"
               />
             </div>
           </div>
@@ -659,11 +683,11 @@ const TermsOfServicePage = () => {
             <div className="pr-0 md:pr-8 lg:pr-12">
               {" "}
               {/* Add some right padding on larger screens */}
-              {responsibilitySections.map((section, index) => (
+              {accountTermination.map((section, id) => (
                 <div
-                  key={index}
+                  key={id}
                   className={`py-6 ${
-                    index < responsibilitySections.length - 1
+                    id < accountTermination.length - 1
                       ? "border-b border-gray-300"
                       : ""
                   }`}
@@ -681,13 +705,13 @@ const TermsOfServicePage = () => {
           </div>
         </div>
       </section>
-      {/* Intellectual Section */}
+      {/* Legal Jurisdiction Section */}
       <section className="bg-accent text-center py-12 lg:py-20 px-8 md:px-16 w-full">
         <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-between max-w-5xl mx-auto gap-12">
           {/* Left Column */}
-          <div className="w-full h-[300px] lg:w-[400px] lg:h-[400px] rounded-[10px]">
+          <div className="w-full h-[300px] lg:w-1/2 lg:h-[400px] rounded-[10px]">
             <Image
-              src="/terms/intellectual-property.png"
+              src="/terms/governing-juridiction.png"
               alt="Image representing intellectual property"
               width={400}
               height={500}
@@ -695,53 +719,54 @@ const TermsOfServicePage = () => {
             />
           </div>
           {/* Right Column */}
-          <div className="text-left">
-            <h3 className="text-lg tracking-wide text-black uppercase font-bold mb-8">
+          <div className="text-center lg:text-left w-full lg:w-1/2">
+            <h3 className="text-lg tracking-wide text-black uppercase font-bold mb-4 md:mb-8">
               Legal
             </h3>
             <h2 className="text-3xl md:text-4xl font-bold text-primary leading-snug mb-4">
-              Intellectual Property Right
+              Governing Jurisdiction
             </h2>
+            <p className="mb-4">
+              Comprehensive legal framework for platform operations.
+            </p>
             <ul
               role="list"
-              className="list-disc mb-12 pl-5 space-y-2 text-gray-600"
+              className="list-disc mb-12 pl-5 space-y-2 text-gray-600 text-left"
             >
               <li role="listItem">
-                All content on the site (text, graphics, logos, etc.) is owned
-                by Noornest.
+                These Terms are governed by the laws of England & Wales.
               </li>
               <li role="listItem">
-                You may not reproduce or distribute content without written
-                consent.
+                Disputes subject to UK courts’ exclusive jurisdiction.
               </li>
             </ul>
-            <div className="flex items-center gap-4 justify-center md:justify-start mb-8">
+            <div className="flex items-center gap-4 justify-center lg:justify-start mb-8">
               <Link href="/about">
-                <Button>Learn more</Button>
+                <Button>Review</Button>
               </Link>
               <Link href="/contact">
-                <Button variant="ghost">Contact us</Button>
+                <Button variant="ghost">Details</Button>
               </Link>
             </div>
           </div>
         </div>
       </section>
-      {/* Liability Section */}
+      {/* Terms Modification Section */}
       <section className="bg-white text-center py-12 lg:py-20 px-8 md:px-16 w-full">
         <div className="max-w-5xl mx-auto gap-12">
           <h3 className="text-lg tracking-wide text-black uppercase font-bold">
-            Risk
+            Updates
           </h3>
           <h2 className="text-3xl md:text-4xl font-bold text-primary leading-snug mb-3">
-            Liability limits
+            Terms modification
           </h2>
           <p className="text-gray-600 mb-8 md:max-w-3xl mx-auto">
-            Noornest provides services on a best-effort basis.
+            Periodic review of platform guidelines.
           </p>
           <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-between border-accent border-2 rounded-[10px]">
             {/* Left Column */}
-            <div className="text-left px-12">
-              <h3 className="text-lg tracking-wide text-black uppercase font-bold mb-8">
+            <div className="text-center lg:text-left px-12 pt-8 lg:pt-0 w-full lg:w-1/2">
+              <h3 className="text-lg tracking-wide text-black uppercase font-bold mb-4 lg:mb-8">
                 Notice
               </h3>
               <h2 className="text-3xl md:text-4xl font-bold text-primary leading-snug mb-4">
@@ -750,7 +775,7 @@ const TermsOfServicePage = () => {
               <p className="mb-8">
                 Users will be notified of significant terms modifications.
               </p>
-              <div className="flex items-center gap-4 justify-center md:justify-start mb-8">
+              <div className="flex items-center gap-4 justify-center lg:justify-start mb-8">
                 <Link href="/about">
                   <Button>Review</Button>
                 </Link>
@@ -760,74 +785,94 @@ const TermsOfServicePage = () => {
               </div>
             </div>
             {/* Right Column */}
-            <div className="w-full h-[300px] md:w-[500px] lg:h-[400px] rounded-[10px]">
+            <div className="w-full h-[300px] lg:w-1/2 lg:h-[400px] rounded-r-[10px]">
               <Image
-                src="/terms/scope-of-responsibility.png"
+                src="/terms/terms-modification.png"
                 alt="Image representing scope of responsibility"
                 width={400}
                 height={500}
-                className="w-full h-full object-cover rounded-[10px]"
+                className="w-full h-full object-cover rounded-r-[10px]"
               />
             </div>
           </div>
         </div>
       </section>
-      <section className="bg-background lg:h-screen">
-        <div className="bg-primary lg:h-[70vh] pb-12 lg:pb-20">
-          <AnimatedSection
-            variants={fadeInUp}
-            className="space-y-6 grid grid-cols-1 lg:grid-cols-2 lg:items-center w-full py-12 px-6 md:px-16"
-          >
-            {/* Text Content */}
-            <div className="space-y-4">
-              <div className="text-center space-y-4 sm:space-y-6 lg:text-left">
-                <AnimatedText
-                  as="h3"
-                  className="text-lg tracking-wide text-black uppercase font-bold"
-                >
-                  Reach out
-                </AnimatedText>
-                <AnimatedText
-                  as="h2"
-                  className="text-3xl lg:text-[2.5rem] font-bold tracking-tight text-white leading-tight"
-                  delay={0.2}
-                >
-                  Contact us
-                </AnimatedText>
-                <AnimatedText as="p">
-                  We’re here to help you with any questions, feedback, or
-                  partnership opportunities.
-                </AnimatedText>
-              </div>
+      {/* Contact */}
+      <section className="bg-background pb-20">
+        <AnimatedSection
+          variants={fadeInUp}
+          className="space-y-6 grid grid-cols-1 lg:grid-cols-2 lg:items-center w-full py-12 px-6 md:px-16"
+        >
+          {/* Text Content */}
+          <div className="space-y-4">
+            <div className="text-center space-y-4 sm:space-y-6 lg:text-left">
+              <AnimatedText
+                as="h3"
+                className="text-lg tracking-wide text-black uppercase font-bold"
+              >
+                Reach out
+              </AnimatedText>
+              <AnimatedText
+                as="h2"
+                className="text-3xl lg:text-[2.5rem] font-bold tracking-tight text-primary leading-tight"
+                delay={0.2}
+              >
+                Contact us
+              </AnimatedText>
+              <AnimatedText as="p">
+                We’re here to help you with any questions, feedback, or
+                partnership opportunities.
+              </AnimatedText>
             </div>
+          </div>
 
-            {/* Description + Buttons */}
-            <div className="space-y-4">
-              <div className="text-center lg:text-left">
+          {/* Description + Buttons */}
+          <div className="space-y-4">
+            <div className="text-center lg:text-left">
+              <Link href="mailto:legal@noornest.co.uk">
                 <AnimatedText
                   as="p"
-                  className="text-sm text-white max-w-4xl mx-auto leading-relaxed px-4"
+                  className="text-sm text-gray-700 flex max-w-4xl mx-auto leading-relaxed px-4"
                   delay={0.2}
                 >
-                  At Noornest, we make it simple to find, buy, manage, or invest
-                  in properties. Starting in the UK, we’re building a platform
-                  trusted by individuals, agents, and investors across the
-                  globe.
+                  <BsEnvelope className="w-5 h-5" />
+                  <span>
+                    <p>Email</p>
+                    <p>legal@noornest.co.uk</p>
+                  </span>
                 </AnimatedText>
-              </div>
+              </Link>
+              <AnimatedText
+                as="p"
+                className="text-sm text-gray-700 max-w-4xl mx-auto leading-relaxed px-4"
+                delay={0.2}
+              >
+                <PhoneCallIcon className="w-5 h-5" />
+                Phone
+                <span>+44 703 239 2232</span>
+              </AnimatedText>
+              <AnimatedText
+                as="p"
+                className="text-sm text-gray-700 max-w-4xl mx-auto leading-relaxed px-4"
+                delay={0.2}
+              >
+                <TbLocationFilled className="w-5 h-5" />
+                Office
+                <span>London, UK</span>
+              </AnimatedText>
             </div>
-          </AnimatedSection>
-
-          {/* Hero Image */}
-          <div className="flex justify-center w-full h-[250px] md:max-w-[60vw] lg:h-[400px] mx-auto rounded-[10px] lg:rounded-[20px] px-8">
-            <Image
-              src="/about/about-hero.png"
-              alt="simplified properties in the UK"
-              width={500}
-              height={300}
-              className="object-cover w-full h-full rounded-[20px]"
-            />
           </div>
+        </AnimatedSection>
+
+        {/* Hero Image */}
+        <div className="flex justify-center w-full h-[250px] md:max-w-[60vw] lg:h-[400px] mx-auto rounded-[10px] lg:rounded-[20px] px-8 mb-16">
+          <Image
+            src="/about/about-hero.png"
+            alt="simplified properties in the UK"
+            width={500}
+            height={300}
+            className="object-cover w-full h-full rounded-[20px]"
+          />
         </div>
       </section>
       <Newsletter />
