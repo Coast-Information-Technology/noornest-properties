@@ -135,7 +135,7 @@ const steps = [
   },
 ];
 
-const page = () => {
+export default function InteriorDesignAndFurnishingPage() {
   const [isYearly, setIsYearly] = useState(false);
 
   const monthlyPlans = [
@@ -641,6 +641,4 @@ const page = () => {
       <Newsletter />
     </>
   );
-};
-
-export default page;
+}
