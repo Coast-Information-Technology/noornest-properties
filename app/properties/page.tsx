@@ -109,10 +109,6 @@ export default function PropertiesPage() {
             </div>
           </div>
 
-          <p className="text-sm text-gray-600 line-clamp-2">
-            {property.description}
-          </p>
-
           <div className="flex flex-col justify-between pt-4 space-y-2">
             <div className="flex items-center space-x-2">
               <p className="text-sm font-medium text-gray-900">
