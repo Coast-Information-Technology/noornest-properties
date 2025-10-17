@@ -325,7 +325,7 @@ const SalesMarketingPage = () => {
             you unlock the true potential of your property.
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-[200px] mt-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-[400px] lg:auto-rows-[200px] mt-8">
           {services.map((service) => (
             <div
               key={service.id}
@@ -367,7 +367,7 @@ const SalesMarketingPage = () => {
                         key={i}
                         href={action.href}
                         aria-label={action.label}
-                        className="inline-block bg-[#b9974a] hover:bg-[#a7843e] text-white text-sm px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-600 transition"
+                        className="inline-block bg-primary hover:bg-[#a7843e] text-white text-sm px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-primary transition"
                       >
                         {action.label}
                       </Link>
