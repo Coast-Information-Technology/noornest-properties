@@ -201,154 +201,18 @@ export default function PropertiesPage() {
       </section>
 
       <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Filters Sidebar */}
-          <div className="lg:w-1/4">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Filter className="h-5 w-5 mr-2" />
-                  Filters
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div>
-                  <label className="text-sm font-medium text-gray-700 mb-2 block">
-                    Property Type
-                  </label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="All Types" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Types</SelectItem>
-                      <SelectItem value="flat">Flat</SelectItem>
-                      <SelectItem value="house">House</SelectItem>
-                      <SelectItem value="apartment">Apartment</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+        {/* Properties Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+          {properties.map((property) => (
+            <PropertyCard key={property.id} property={property} />
+          ))}
+        </div>
 
-                <div>
-                  <label className="text-sm font-medium text-gray-700 mb-2 block">
-                    Price Range
-                  </label>
-                  <div className="space-y-2">
-                    <Select>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Min Price" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="0">No Min</SelectItem>
-                        <SelectItem value="300000">£300,000</SelectItem>
-                        <SelectItem value="500000">£500,000</SelectItem>
-                        <SelectItem value="750000">£750,000</SelectItem>
-                        <SelectItem value="1000000">£1,000,000</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <Select>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Max Price" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="500000">£500,000</SelectItem>
-                        <SelectItem value="750000">£750,000</SelectItem>
-                        <SelectItem value="1000000">£1,000,000</SelectItem>
-                        <SelectItem value="1500000">£1,500,000</SelectItem>
-                        <SelectItem value="2000000">£2,000,000+</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="text-sm font-medium text-gray-700 mb-2 block">
-                    Bedrooms
-                  </label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Any" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="any">Any</SelectItem>
-                      <SelectItem value="1">1+</SelectItem>
-                      <SelectItem value="2">2+</SelectItem>
-                      <SelectItem value="3">3+</SelectItem>
-                      <SelectItem value="4">4+</SelectItem>
-                      <SelectItem value="5">5+</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div>
-                  <label className="text-sm font-medium text-gray-700 mb-2 block">
-                    Location
-                  </label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="All Areas" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Areas</SelectItem>
-                      <SelectItem value="marylebone">Marylebone</SelectItem>
-                      <SelectItem value="chelsea">Chelsea</SelectItem>
-                      <SelectItem value="canary-wharf">Canary Wharf</SelectItem>
-                      <SelectItem value="kensington">Kensington</SelectItem>
-                      <SelectItem value="westminster">Westminster</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <Button className="w-full">Apply Filters</Button>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Properties Grid */}
-          <div className="lg:w-3/4">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h2 className="text-2xl font-bold text-gray-900">
-                  {properties.length} Properties Found
-                </h2>
-                <p className="text-gray-600">
-                  Showing all available properties in London
-                </p>
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <Select>
-                  <SelectTrigger className="w-40">
-                    <SelectValue placeholder="Sort by" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="price-low">
-                      Price: Low to High
-                    </SelectItem>
-                    <SelectItem value="price-high">
-                      Price: High to Low
-                    </SelectItem>
-                    <SelectItem value="newest">Newest First</SelectItem>
-                    <SelectItem value="oldest">Oldest First</SelectItem>
-                    <SelectItem value="size">Size: Largest First</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {properties.map((property) => (
-                <PropertyCard key={property.id} property={property} />
-              ))}
-            </div>
-
-            {/* Load More Button */}
-            <div className="text-center mt-12">
-              <Button variant="outline" size="lg">
-                Load More Properties
-              </Button>
-            </div>
-          </div>
+        {/* Load More Button */}
+        <div className="text-center mt-12">
+          <Button variant="outline" size="lg">
+            Load More Properties
+          </Button>
         </div>
       </div>
     </div>
