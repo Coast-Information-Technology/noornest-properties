@@ -373,9 +373,9 @@ export default function BlogPage() {
               Insights that empower your <br /> property journey
             </h1>
             <p className="text-base text-white max-w-2xl mb-8">
-              Stay ahead with Noornest&apos;s expert articles, guides, and market
-              insights. From property investment strategies to design trends,
-              our blog helps you make smarter decisions.
+              Stay ahead with Noornest&apos;s expert articles, guides, and
+              market insights. From property investment strategies to design
+              trends, our blog helps you make smarter decisions.
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mb-16 md:mb-20">
               {/* Using text-white for buttons for contrast against the gold/gray-700 */}
@@ -388,7 +388,7 @@ export default function BlogPage() {
 
           {/* Image Section - Positioned relative to the main content flow, pulled down to overlap */}
           <div className="flex justify-center">
-            <div className="w-[90%] md:w-[80%] h-[500px] max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden mx-auto">
+            <div className="w-[90%] md:w-[80%] h-full md:h-[500px] max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden mx-auto">
               <Image
                 src="/blog/blog-hero.png"
                 alt="Modern family house"

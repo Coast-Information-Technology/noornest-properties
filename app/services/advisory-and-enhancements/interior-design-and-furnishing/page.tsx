@@ -135,7 +135,7 @@ const steps = [
   },
 ];
 
-const InteriorDesignPage = () => {
+const page = () => {
   const [isYearly, setIsYearly] = useState(false);
 
   const monthlyPlans = [
@@ -247,7 +247,7 @@ const InteriorDesignPage = () => {
 
           {/* Image Section - Positioned relative to the main content flow, pulled down to overlap */}
           <div className="flex justify-center">
-            <div className="w-[90%] md:w-[80%] h-[500px] max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden mx-auto">
+            <div className="w-[90%] md:w-[80%] h-full md:h-[500px] max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden mx-auto">
               <Image
                 src="/blog/blog-hero.png"
                 alt="Modern family house"
@@ -419,9 +419,9 @@ const InteriorDesignPage = () => {
             className="relative w-full lg:w-1/2 flex items-center justify-center"
             aria-hidden="true"
           >
-            <div className="relative w-full max-w-md h-[420px] sm:h-[500px]">
+            <div className="relative w-full max-w-md h-[420px] md:h-[500px] mx-auto">
               {/* Main Image */}
-              <div className="w-[350px] h-[500px] shadow-2xl shadow-black rounded-2xl mx-auto">
+              <div className="w-[300px] h-[400px] md:h-[500px] shadow-2xl shadow-black rounded-2xl mx-auto">
                 <Image
                   src="/services/why-3.png"
                   alt="Modern living room interior with cozy decor"
@@ -438,7 +438,7 @@ const InteriorDesignPage = () => {
                 alt="Elegant classic room design"
                 width={180}
                 height={120}
-                className="absolute top-4 right-0 rounded-xl object-cover shadow-md hidden sm:block"
+                className="absolute top-4 right-0 rounded-xl object-cover shadow-md block"
               />
 
               {/* Bottom-left small image */}
@@ -447,7 +447,7 @@ const InteriorDesignPage = () => {
                 alt="Contemporary open space living area"
                 width={200}
                 height={120}
-                className="absolute bottom-6 -left-12 rounded-xl object-cover shadow-md hidden sm:block"
+                className="absolute bottom-6 -left-12 rounded-xl object-cover shadow-md block"
               />
             </div>
           </div>
@@ -643,4 +643,4 @@ const InteriorDesignPage = () => {
   );
 };
 
-export default InteriorDesignPage;
+export default page;

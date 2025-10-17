@@ -247,7 +247,7 @@ const InvestmentAdvisoryPage = () => {
 
           {/* Image Section - Positioned relative to the main content flow, pulled down to overlap */}
           <div className="flex justify-center">
-            <div className="w-[90%] md:w-[80%] h-[500px] max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden mx-auto">
+            <div className="w-[90%] md:w-[80%] h-full md:h-[500px] max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden mx-auto">
               <Image
                 src="/blog/blog-hero.png"
                 alt="Modern family house"
