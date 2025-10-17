@@ -76,3 +76,27 @@ export const bookingTestimonials: Testimonial[] = [
     image: "/client.jpg",
   },
 ];
+
+export const interiorTestimonials: Testimonial[] = [
+  {
+    quote:
+      "Noornest styled my rental apartment beautifully. It rented within a week at a higher price than I expected.",
+    author: "Jonathan P.",
+    role: "Landlord",
+    image: "/interior/jonathan.png",
+  },
+  {
+    quote:
+      "Noornest gave me access to serious buyers. The verification process is smooth, and I feel more confident listing my properties.",
+    author: "James T.",
+    role: "Property Consultant",
+    image: "/interior/jonathan.png",
+  },
+  {
+    quote:
+      "The platform has streamlined my workflow and connected me with buyers across multiple cities. Highly recommend it.",
+    author: "Sarah L.",
+    role: "Broker",
+    image: "/interior/jonathan.png",
+  },
+];

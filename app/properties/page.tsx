@@ -175,7 +175,7 @@ export default function PropertiesPage() {
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex-1">
                   <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5 -z-10" />
                     <Input
                       placeholder="Search by location, property type, or features..."
                       className="pl-10 h-12 text-gray-900"

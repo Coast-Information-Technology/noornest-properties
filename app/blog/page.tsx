@@ -1,310 +1,744 @@
-import { Metadata } from "next";
+"use client";
+
 import Link from "next/link";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Calendar, Clock, User, Search, Filter } from "lucide-react";
-import { BlogPost, BlogCategory } from "@/types";
+// import { BlogPost, BlogCategory } from "@/types";
 
-import {
-  getBlogPosts,
-  getBlogCategories,
-  searchBlogPosts,
-  paginatePosts,
-} from "@/lib/mock-data";
+// import {
+//   getBlogPosts,
+//   getBlogCategories,
+//   searchBlogPosts,
+//   paginatePosts,
+// } from "@/lib/mock-data";
+import Image from "next/image";
+import Newsletter from "@/components/layout/Newsletter";
+import { Lightbulb, ChevronRight } from "lucide-react";
+import React, { useState } from "react";
 
-export const metadata: Metadata = {
-  title: "Real Estate Blog | Noornest Properties",
-  description:
-    "Expert insights, tips, and analysis on real estate investment, BMV properties, and market trends.",
-  keywords: [
-    "real estate blog",
-    "property investment tips",
-    "BMV analysis",
-    "market trends",
-    "real estate news",
-  ],
-  authors: [{ name: "Noornest Properties" }],
-  creator: "Noornest Properties",
-  publisher: "Noornest Properties",
-  openGraph: {
-    title: "Real Estate Blog | Noornest Properties",
+interface BlogPost {
+  id: number;
+  category: string;
+  readTime: string;
+  title: string;
+  description: string;
+  image: string;
+}
+
+const posts: BlogPost[] = [
+  {
+    id: 1,
+    category: "Investment",
+    readTime: "5 min read",
+    title: "Top 5 emerging property markets in UK",
     description:
-      "Expert insights, tips, and analysis on real estate investment, BMV properties, and market trends.",
-    url: "https://noornestproperties.com/blog",
-    siteName: "Noornest Properties",
-    images: [
+      "Uncover strategic locations with high potential for capital growth and rental yields",
+    image: "/blog/property-market.png",
+  },
+  {
+    id: 2,
+    category: "Market",
+    readTime: "7 min read",
+    title: "Navigating property investment risks",
+    description:
+      "Comprehensive guide to mitigating potential challenges in real estate investing",
+    image: "/blog/property-investment.png",
+  },
+  {
+    id: 3,
+    category: "Design",
+    readTime: "4 min read",
+    title: "Renovation strategies for higher returns",
+    description:
+      "Smart upgrades that significantly increase property value and attract quality tenants",
+    image: "/blog/renovation.png",
+  },
+  {
+    id: 4,
+    category: "Investment",
+    readTime: "5 min read",
+    title: "Top 5 emerging property markets in UK",
+    description:
+      "Uncover strategic locations with high potential for capital growth and rental yields",
+    image: "/blog/property-market.png",
+  },
+  {
+    id: 5,
+    category: "Market",
+    readTime: "7 min read",
+    title: "Navigating property investment risks",
+    description:
+      "Comprehensive guide to mitigating potential challenges in real estate investing",
+    image: "/blog/property-investment.png",
+  },
+  {
+    id: 6,
+    category: "Design",
+    readTime: "4 min read",
+    title: "Renovation strategies for higher returns",
+    description:
+      "Smart upgrades that significantly increase property value and attract quality tenants",
+    image: "/blog/renovation.png",
+  },
+];
+
+/**
+ * Data for each property insight tab.
+ */
+const insightTabs = [
+  {
+    id: "uk-cities",
+    label: "UK Cities",
+    articles: [
       {
-        url: "/blog/og-blog.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Noornest Properties Blog",
+        title: "Top 5 UK Cities for Property Investment in 2025",
+        subtitle: "Investment",
+        description:
+          "Detailed analysis of emerging markets with the highest potential for capital appreciation — from Manchester’s rental surge to Birmingham’s regeneration push.",
+        image: "/blog/property-insights.png",
       },
+      // {
+      //   title: "How to Spot Below-Market Property Deals",
+      //   subtitle: "Market Strategy",
+      //   description:
+      //     "Learn the insider signals that identify undervalued assets — from distressed sales to hidden-growth zones poised for transformation.",
+      //   image: "/blog/property-insights.png",
+      // },
+      // {
+      //   title: "Secure vs Yield: Choosing the Right Nest Plan",
+      //   subtitle: "Investment Planning",
+      //   description:
+      //     "Compare long-term stability and high-yield short-term strategies to align your investment path with your financial goals.",
+      //   image: "/blog/property-insights.png",
+      // },
     ],
-    locale: "en_US",
-    type: "website",
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Real Estate Blog | Noornest Properties",
+  {
+    id: "investment-trends",
+    label: "Investment Trends",
+    articles: [
+      {
+        title: "Emerging Real Estate Markets to Watch in 2025",
+        subtitle: "Trends",
+        description:
+          "Explore the cities and asset classes expected to outperform in the coming year — from co-living spaces to suburban logistics hubs.",
+        image: "/blog/property-insights.png",
+      },
+      // {
+      //   title: "The Rise of Sustainable Property Investment",
+      //   subtitle: "Green Investing",
+      //   description:
+      //     "Understand how ESG factors are reshaping property portfolios, driving investor demand for low-carbon, energy-efficient developments.",
+      //   image: "/blog/property-insights.png",
+      // },
+      // {
+      //   title: "AI-Driven Valuation: The Future of Real Estate Analysis",
+      //   subtitle: "PropTech",
+      //   description:
+      //     "Discover how AI algorithms are transforming property appraisals and enabling smarter, data-led investment decisions.",
+      //   image: "/blog/property-insights.png",
+      // },
+    ],
+  },
+  {
+    id: "market-analysis",
+    label: "Market Analysis",
+    articles: [
+      {
+        title: "Quarterly Housing Market Overview — Q1 2025",
+        subtitle: "Market Report",
+        description:
+          "Gain insights into price movements, rental yields, and mortgage trends shaping the UK housing sector in early 2025.",
+        image: "/blog/property-insights.png",
+      },
+      // {
+      //   title: "Regional Growth Hotspots: Beyond London",
+      //   subtitle: "Location Insights",
+      //   description:
+      //     "Find out which regional cities are outperforming the capital — and why migration, infrastructure, and tech ecosystems matter.",
+      //   image: "/blog/property-insights.png",
+      // },
+      // {
+      //   title: "Investor Sentiment Index — What’s Driving Confidence?",
+      //   subtitle: "Analytics",
+      //   description:
+      //     "Dive into survey-based data revealing how global and domestic investors view the 2025 property landscape.",
+      //   image: "/blog/property-insights.png",
+      // },
+    ],
+  },
+];
+
+/**
+ * Data for each property experts tab.
+ */
+const propertyExperts = [
+  {
+    id: "investments",
+    label: "Investments",
+    articles: [
+      {
+        title: "James Richardson",
+        subtitle: "Strategy",
+        description:
+          "Senior investment strategist with 15 years of experience in UK property markets",
+        image: "/blog/james.png",
+      },
+      // {
+      //   title: "How to Spot Below-Market Property Deals",
+      //   subtitle: "Market Strategy",
+      //   description:
+      //     "Learn the insider signals that identify undervalued assets — from distressed sales to hidden-growth zones poised for transformation.",
+      //   image: "/blog/property-insights.png",
+      // },
+      // {
+      //   title: "Secure vs Yield: Choosing the Right Nest Plan",
+      //   subtitle: "Investment Planning",
+      //   description:
+      //     "Compare long-term stability and high-yield short-term strategies to align your investment path with your financial goals.",
+      //   image: "/blog/property-insights.png",
+      // },
+    ],
+  },
+  {
+    id: "market",
+    label: "Market",
+    articles: [
+      {
+        title: "Emerging Real Estate Markets to Watch in 2025",
+        subtitle: "Trends",
+        description:
+          "Explore the cities and asset classes expected to outperform in the coming year — from co-living spaces to suburban logistics hubs.",
+        image: "/blog/property-insights.png",
+      },
+      // {
+      //   title: "The Rise of Sustainable Property Investment",
+      //   subtitle: "Green Investing",
+      //   description:
+      //     "Understand how ESG factors are reshaping property portfolios, driving investor demand for low-carbon, energy-efficient developments.",
+      //   image: "/blog/property-insights.png",
+      // },
+      // {
+      //   title: "AI-Driven Valuation: The Future of Real Estate Analysis",
+      //   subtitle: "PropTech",
+      //   description:
+      //     "Discover how AI algorithms are transforming property appraisals and enabling smarter, data-led investment decisions.",
+      //   image: "/blog/property-insights.png",
+      // },
+    ],
+  },
+  {
+    id: "design",
+    label: "Design",
+    articles: [
+      {
+        title: "Quarterly Housing Market Overview — Q1 2025",
+        subtitle: "Market Report",
+        description:
+          "Gain insights into price movements, rental yields, and mortgage trends shaping the UK housing sector in early 2025.",
+        image: "/blog/property-insights.png",
+      },
+      // {
+      //   title: "Regional Growth Hotspots: Beyond London",
+      //   subtitle: "Location Insights",
+      //   description:
+      //     "Find out which regional cities are outperforming the capital — and why migration, infrastructure, and tech ecosystems matter.",
+      //   image: "/blog/property-insights.png",
+      // },
+      // {
+      //   title: "Investor Sentiment Index — What’s Driving Confidence?",
+      //   subtitle: "Analytics",
+      //   description:
+      //     "Dive into survey-based data revealing how global and domestic investors view the 2025 property landscape.",
+      //   image: "/blog/property-insights.png",
+      // },
+    ],
+  },
+];
+
+/**
+ * Category data – dynamic mapping between sidebar items and content.
+ */
+const sidebarSubItems = [
+  {
+    label: "Investment strategies",
+    title: "Investment Strategies",
+    headline: "Investment strategies deep dive",
     description:
-      "Expert insights, tips, and analysis on real estate investment, BMV properties, and market trends.",
-    images: ["/blog/og-blog.jpg"],
+      "Comprehensive analysis of investment approaches tailored for modern property investors",
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
+  {
+    label: "Property buying",
+    title: "Property Buying",
+    headline: "Master the Art of Property Investment",
+    description:
+      "Explore tailored propery buying designed to maximize returns in today’s evolving real estate market. From long-term holds to short-term flips, discover what fits your goals.",
   },
-  alternates: {
-    canonical: "https://noornestproperties.com/blog",
+  {
+    label: "Market trends",
+    title: "Market Analysis",
+    headline: "Stay Ahead with Market Insights",
+    description:
+      "Understand the latest real estate trends, regional performance indicators, and data-driven insights shaping property investment decisions.",
   },
+  {
+    label: "Refurbishment",
+    title: "Refurbishment & Design",
+    headline: "Transform Properties with Design",
+    description:
+      "Enhance property value through thoughtful design and renovation strategies that appeal to modern tenants and buyers.",
+  },
+  {
+    label: "Guides",
+    title: "Guides & Articles",
+    headline: "Step-by-Step Learning Resources",
+    description:
+      "Access in-depth how-to guides, expert articles, and actionable advice to navigate every stage of your property journey.",
+  },
+];
+
+/**
+ * Sidebar sub-item component.
+ */
+const SidebarSubItem = ({
+  label,
+  isActive,
+  onClick,
+  isFirst,
+  isLast,
+}: {
+  label: string;
+  isActive: boolean;
+  onClick: () => void;
+  isFirst: boolean;
+  isLast: boolean;
+}) => {
+  const baseClasses =
+    "py-4 px-6 text-left font-medium cursor-pointer transition-colors duration-200";
+  const goldColor = "bg-primary";
+  let classes = baseClasses;
+
+  if (isActive) {
+    classes += " bg-white text-primary";
+  } else {
+    classes += ` ${goldColor} text-white hover:bg-yellow-700`;
+  }
+
+  if (isFirst) classes += " rounded-tl-xl";
+  if (isLast) classes += " rounded-bl-xl";
+
+  return (
+    <div className={classes} onClick={onClick}>
+      {label}
+    </div>
+  );
 };
 
 export default function BlogPage() {
   // Get data from centralized mock data
-  const allPosts = getBlogPosts();
-  const categories = getBlogCategories();
+  // const allPosts = getBlogPosts();
+  // const categories = getBlogCategories();
 
-  // Featured post (first post)
-  const featuredPost = allPosts[0];
-  const regularPosts = allPosts.slice(1);
+  // // Featured post (first post)
+  // const featuredPost = allPosts[0];
+  // const regularPosts = allPosts.slice(1);
+
+  // Initialize with first item active
+  const [activeItem, setActiveItem] = useState(sidebarSubItems[0]);
+  const [activeTab, setActiveTab] = useState("uk-cities");
+  const [activeTab2, setActiveTab2] = useState("investments");
+
+  const activeContent =
+    insightTabs.find((tab) => tab.id === activeTab)?.articles || [];
+
+  const expertsContent =
+    propertyExperts.find((tab) => tab.id === activeTab2)?.articles || [];
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* Header */}
-      <div className="text-center space-y-4 mb-12">
-        <h1 className="text-4xl font-bold">Real Estate Blog</h1>
-        <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-          Expert insights, tips, and analysis to help you make smarter real
-          estate investment decisions.
-        </p>
-      </div>
+    <>
+      {/* Hero Section */}
+      <section className="relative w-full min-h-screen bg-white overflow-hidden -z-30">
+        {/* Absolute Pseudo-Element for Gold Background (bg-primary) 
+          This creates the fixed-height gold block sitting underneath the content. */}
+        <div
+          className="absolute inset-x-0 top-0 h-[90vh] bg-primary z-0"
+          // Note: I'm using a fixed height (e.g., 400px) here. Adjust this value
+          // to control how much of the gold background you want visible.
+        />
 
-      {/* Search and Filters */}
-      <div className="mb-8 space-y-4">
-        <div className="flex flex-col md:flex-row gap-4">
-          <div className="flex-1">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input placeholder="Search articles..." className="pl-10" />
-            </div>
-          </div>
-          <div className="flex gap-4">
-            <Select defaultValue="all">
-              <SelectTrigger className="w-48">
-                <Filter className="w-4 h-4 mr-2" />
-                <SelectValue placeholder="Filter by category" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Categories</SelectItem>
-                {categories.map((category) => (
-                  <SelectItem key={category.id} value={category.slug}>
-                    {category.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Select defaultValue="newest">
-              <SelectTrigger className="w-48">
-                <SelectValue placeholder="Sort by" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="newest">Newest First</SelectItem>
-                <SelectItem value="oldest">Oldest First</SelectItem>
-                <SelectItem value="popular">Most Popular</SelectItem>
-                <SelectItem value="trending">Trending</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-      </div>
-
-      {/* Featured Post */}
-      {allPosts.length > 0 && (
-        <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6">Featured Article</h2>
-          <Card className="overflow-hidden">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="relative h-64 lg:h-full">
-                <img
-                  src={allPosts[0].featuredImage}
-                  alt={allPosts[0].title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute top-4 left-4">
-                  <Badge className="bg-primary text-primary-foreground">
-                    Featured
-                  </Badge>
-                </div>
-              </div>
-              <div className="p-6 flex flex-col justify-center">
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {allPosts[0].categories.map((category) => (
-                    <Badge
-                      key={category.id}
-                      variant="secondary"
-                      style={{
-                        backgroundColor: category.color + "20",
-                        color: category.color,
-                      }}
-                    >
-                      {category.name}
-                    </Badge>
-                  ))}
-                </div>
-                <h3 className="text-2xl font-bold mb-3">{allPosts[0].title}</h3>
-                <p className="text-muted-foreground mb-4">
-                  {allPosts[0].excerpt}
-                </p>
-                <div className="flex items-center space-x-4 text-sm text-muted-foreground mb-6">
-                  <div className="flex items-center space-x-1">
-                    <User className="w-4 h-4" />
-                    <span>{allPosts[0].author.name}</span>
-                  </div>
-                  <div className="flex items-center space-x-1">
-                    <Calendar className="w-4 h-4" />
-                    <span>
-                      {new Date(allPosts[0].publishedAt!).toLocaleDateString()}
-                    </span>
-                  </div>
-                  <div className="flex items-center space-x-1">
-                    <Clock className="w-4 h-4" />
-                    <span>5 min read</span>
-                  </div>
-                </div>
-                <Button asChild>
-                  <Link href={`/blog/${allPosts[0].slug}`}>Read Article</Link>
-                </Button>
-              </div>
-            </div>
-          </Card>
-        </div>
-      )}
-
-      {/* Blog Posts Grid */}
-      <div className="space-y-8">
-        <h2 className="text-2xl font-bold">Latest Articles</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {allPosts.slice(1).map((post) => (
-            <Card
-              key={post.id}
-              className="overflow-hidden hover:shadow-lg transition-shadow"
-            >
-              <div className="relative h-48">
-                <img
-                  src={post.featuredImage}
-                  alt={post.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute top-4 left-4">
-                  <Badge
-                    variant="secondary"
-                    style={{
-                      backgroundColor: post.categories[0].color + "20",
-                      color: post.categories[0].color,
-                    }}
-                  >
-                    {post.categories[0].name}
-                  </Badge>
-                </div>
-              </div>
-              <CardHeader>
-                <CardTitle className="line-clamp-2">{post.title}</CardTitle>
-                <CardDescription className="line-clamp-3">
-                  {post.excerpt}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center space-x-4 text-sm text-muted-foreground mb-4">
-                  <div className="flex items-center space-x-1">
-                    <User className="w-4 h-4" />
-                    <span>{post.author.name}</span>
-                  </div>
-                  <div className="flex items-center space-x-1">
-                    <Calendar className="w-4 h-4" />
-                    <span>
-                      {new Date(post.publishedAt!).toLocaleDateString()}
-                    </span>
-                  </div>
-                </div>
-                <Button asChild variant="outline" className="w-full">
-                  <Link href={`/blog/${post.slug}`}>Read More</Link>
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
-
-      {/* Categories */}
-      <div className="mt-16">
-        <h2 className="text-2xl font-bold mb-6">Browse by Category</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          {categories.map((category) => (
-            <Link
-              key={category.id}
-              href={`/blog/category/${category.slug}`}
-              className="group"
-            >
-              <Card className="p-6 text-center hover:shadow-lg transition-shadow group-hover:scale-105">
-                <div
-                  className="w-12 h-12 rounded-lg mx-auto mb-3 flex items-center justify-center text-white font-bold"
-                  style={{ backgroundColor: category.color }}
-                >
-                  {category.name.charAt(0)}
-                </div>
-                <h3 className="font-semibold mb-1">{category.name}</h3>
-                <p className="text-sm text-muted-foreground">
-                  {category.description}
-                </p>
-              </Card>
-            </Link>
-          ))}
-        </div>
-      </div>
-
-      {/* Newsletter Signup */}
-      <div className="mt-16">
-        <Card className="bg-gradient-to-r from-primary to-primary/80 text-white">
-          <CardContent className="p-8 text-center">
-            <h2 className="text-2xl font-bold mb-2">Stay Updated</h2>
-            <p className="text-white/90 mb-6">
-              Get the latest real estate insights and investment tips delivered
-              to your inbox.
+        {/* Hero Content Area - Relative z-index to sit on top of the gold background */}
+        <div className="relative z-10 py-16">
+          {/* Top Section with Text and Buttons */}
+          <div className="flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+            <h1 className="text-3xl md:text-5xl font-bold text-white leading-tight mb-4">
+              Insights that empower your <br /> property journey
+            </h1>
+            <p className="text-base text-white max-w-2xl mb-8">
+              Stay ahead with Noornest's expert articles, guides, and market
+              insights. From property investment strategies to design trends,
+              our blog helps you make smarter decisions.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <Input
-                placeholder="Enter your email"
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/70"
-              />
-              <Button variant="secondary" className="whitespace-nowrap">
+            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mb-16 md:mb-20">
+              {/* Using text-white for buttons for contrast against the gold/gray-700 */}
+              <Button className="bg-black hover:bg-gray-900 text-white font-semibold py-3 px-8 rounded-md shadow-lg transition-colors duration-300">
                 Subscribe
               </Button>
+              <Button variant="ghost">Learn more</Button>
             </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+          </div>
+
+          {/* Image Section - Positioned relative to the main content flow, pulled down to overlap */}
+          <div className="flex justify-center">
+            <div className="w-[90%] md:w-[80%] h-[500px] max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden mx-auto">
+              <Image
+                src="/blog/blog-hero.png"
+                alt="Modern family house"
+                width={800}
+                height={300}
+                layout="responsive"
+                objectFit="cover"
+                className="rounded-xl"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-background py-12 lg:py-16 px-8 md:px-16 w-full">
+        <div className="text-center lg:text-left mb-10 mt-8">
+          <h3 className="text-lg tracking-wide text-black uppercase font-bold">
+            Blog
+          </h3>
+          <h2 className="text-3xl md:text-4xl font-bold text-primary leading-snug mb-3">
+            Latest Property Insights
+          </h2>
+          <p className="text-gray-600 mb-8">
+            Discover expert analysis and strategic property investment content
+          </p>
+        </div>
+        {/* Blog Posts Grid */}
+        <div className="space-y-8 mb-12">
+          {/* Responsive Grid */}
+          {/* Card Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {posts.map((post) => (
+              <article
+                key={post.id}
+                className="bg-white rounded-2xl shadow-md overflow-hidden transition-transform transform hover:-translate-y-1 hover:shadow-lg focus-within:ring-2 focus-within:ring-[#bda053]"
+                role="article"
+                tabIndex={0}
+              >
+                {/* Image */}
+                <div className="relative w-full h-[250px]">
+                  <Image
+                    src={post.image}
+                    alt={post.title}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+
+                {/* Content */}
+                <div className="p-5">
+                  <div className="flex items-center gap-3 text-sm text-gray-500 mb-3">
+                    <span className="font-medium bg-gray-200 text-black px-2 py-1 rounded">
+                      {post.category}
+                    </span>
+                    <span className="w-1 h-1 bg-gray-400 rounded-full"></span>
+                    <span>{post.readTime}</span>
+                  </div>
+
+                  <h3 className="text-lg font-semibold text-[#bda053] mb-2">
+                    {post.title}
+                  </h3>
+                  <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                    {post.description}
+                  </p>
+
+                  <button
+                    className="flex items-center gap-1 text-sm font-medium text-gray-800 hover:text-[#bda053] focus:outline-none cursor-pointer"
+                    aria-label={`Read more about ${post.title}`}
+                  >
+                    Read more
+                    <ChevronRight className="w-4 h-4 mt-[1px]" />
+                  </button>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <Link href="/blog" className="flex justify-center">
+          <Button>View All Posts</Button>
+        </Link>
+      </section>
+
+      <section className="bg-background text-center py-12 lg:py-16 px-8 md:px-16 w-full">
+        <div className="text-center lg:text-left mb-10 mt-8">
+          <h3 className="text-lg tracking-wide text-black uppercase font-bold">
+            Categories
+          </h3>
+          <h2 className="text-3xl md:text-4xl font-bold text-primary leading-snug mb-3">
+            Explore Property Insights
+          </h2>
+          <p className="text-gray-600 mb-8">
+            Navigate through curated content designed for property investors and
+            enthusiasts.
+          </p>
+        </div>
+
+        {/* Main Content */}
+        <div className="shadow-2xl rounded-xl bg-white overflow-hidden">
+          <div className="lg:grid lg:grid-cols-3">
+            {/* Sidebar */}
+            <div className="col-span-1 hidden lg:block">
+              {/* <div className="py-4 px-6 text-left text-lg font-semibold text-gray-800 border-b border-gray-200">
+                {activeItem.title}
+              </div> */}
+              <div className="bg-primary">
+                {sidebarSubItems.map((item, index) => (
+                  <SidebarSubItem
+                    key={item.label}
+                    label={item.label}
+                    isActive={activeItem.label === item.label}
+                    onClick={() => setActiveItem(item)}
+                    isFirst={index === 0}
+                    isLast={index === sidebarSubItems.length - 1}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Right Content */}
+            <div className="col-span-2 p-8 md:p-12 text-left">
+              <div className="flex items-start mb-6">
+                <Lightbulb
+                  className="w-8 h-8 md:w-10 md:h-10 text-black mr-4 mt-1"
+                  fill="black"
+                />
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-800 leading-snug">
+                    {activeItem.headline}
+                  </h3>
+                  <p className="mt-2 text-gray-600">{activeItem.description}</p>
+                </div>
+              </div>
+
+              {/* Explore + Learn */}
+              <div className="mt-8 flex items-center">
+                <Button
+                  className="inline-flex items-center justify-center 
+                bg-primary hover:bg-accent text-black 
+                font-semibold py-3 px-6 rounded shadow transition-all duration-300"
+                >
+                  Explore
+                </Button>
+
+                <Link
+                  href="#"
+                  className="inline-flex items-center text-gray-800 font-semibold ml-6 group"
+                >
+                  Learn
+                  <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Top Property Insights Section */}
+      <section className="bg-accent text-center py-12 lg:py-20 px-8 md:px-16 w-full">
+        <div className="max-w-5xl mx-auto gap-12">
+          <h3 className="text-lg tracking-wide text-black uppercase font-bold">
+            Featured
+          </h3>
+          <h2 className="text-3xl md:text-4xl font-bold text-primary leading-snug mb-3">
+            Top Property Insights
+          </h2>
+          <p className="text-gray-600 mb-8 md:max-w-3xl mx-auto">
+            Curated articles that provide strategic perspectives on property
+            investment.
+          </p>
+
+          {/* Tab Buttons */}
+          <div className="flex flex-wrap items-center justify-center gap-4 mb-8">
+            {insightTabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`p-2 font-medium transition-all duration-300 text-sm ${
+                  activeTab === tab.id
+                    ? "text-primary border-b-2 border-primary"
+                    : "text-black hover:text-gray-700 border-b-2 border-black hover:border-gray-700"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Dynamic Content */}
+          {activeContent.map((article, idx) => (
+            <div
+              key={idx}
+              className="flex flex-col lg:flex-row items-center justify-center lg:justify-between border-gray-400 border rounded-[10px] mt-8 overflow-hidden"
+            >
+              {/* Left Image */}
+              <div className="w-full h-[300px] lg:w-1/2 lg:h-[500px]">
+                <Image
+                  src={article.image}
+                  alt={article.title}
+                  width={500}
+                  height={500}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              {/* Right Text */}
+              <div className="text-center lg:text-left px-12 w-full pt-8 lg:pt-0 lg:w-1/2">
+                <h3 className="text-lg tracking-wide text-black uppercase font-bold mb-4 md:mb-8">
+                  {article.subtitle}
+                </h3>
+                <h2 className="text-3xl md:text-4xl font-bold text-primary leading-snug mb-4">
+                  {article.title}
+                </h2>
+                <p className="text-gray-600 mb-8 md:max-w-lg mx-auto lg:mx-0">
+                  {article.description}
+                </p>
+                <div className="flex items-center gap-4 justify-center lg:justify-start mb-8">
+                  <Link href="/about">
+                    <Button>Discover</Button>
+                  </Link>
+                  <Link href="/contact">
+                    <Button variant="ghost">Research</Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="bg-white text-center py-12 lg:py-20 px-8 md:px-16 w-full min-h-screen">
+        <div className="max-w-5xl mx-auto gap-12">
+          <h3 className="text-lg tracking-wide text-black uppercase font-bold">
+            Featured
+          </h3>
+          <h2 className="text-3xl md:text-4xl font-bold text-primary leading-snug mb-3">
+            Get Exclusive Property Insights
+          </h2>
+          <p className="text-gray-600 mb-8 md:max-w-3xl mx-auto">
+            Stay ahead with our curated newsletter packed with strategic
+            investment intelligence.
+          </p>
+
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link href="#">
+              <Button aria-label="Learn more about our privacy policy">
+                Subscribe
+              </Button>
+            </Link>
+
+            <Link href="#">
+              <Button variant="ghost" aria-label="Contact us">
+                Learn More
+              </Button>
+            </Link>
+          </div>
+        </div>
+
+        <div className="w-full h-[300px] md:h-[500px] rounded-[20px] mt-8">
+          <Image
+            src="/blog/property-insights-2.png"
+            alt="Image representing scope of responsibility"
+            width={1200}
+            height={400}
+            className="w-full h-full object-cover rounded-[20px]"
+          />
+        </div>
+      </section>
+
+      {/* Meet Our Property Specialists Section */}
+      <section className="bg-accent text-center py-12 lg:py-20 px-8 md:px-16 w-full">
+        <div className="max-w-5xl mx-auto gap-12">
+          <h3 className="text-lg tracking-wide text-black uppercase font-bold">
+            Experts
+          </h3>
+          <h2 className="text-3xl md:text-4xl font-bold text-primary leading-snug mb-3">
+            Meet Our Property Specialists
+          </h2>
+          <p className="text-gray-600 mb-8 md:max-w-3xl mx-auto">
+            Experience professional delivering insights from years of market
+            research and investment.
+          </p>
+          <div className="flex items-center justify-center gap-8 mb-8">
+            <Button>View</Button>
+            <Link href="#" className="flex items-center gap-3">
+              Connect <ChevronRight className="w-3 h-3" />
+            </Link>
+          </div>
+
+          {/* Tab Buttons */}
+          <div className="flex flex-wrap items-center justify-center gap-4 mb-12">
+            {propertyExperts.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab2(tab.id)}
+                className={`p-2 font-medium transition-all duration-300 text-sm ${
+                  activeTab2 === tab.id
+                    ? "text-primary border-b-2 border-primary"
+                    : "text-black hover:text-gray-700 border-b-2 border-black hover:border-gray-700"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Dynamic Content */}
+          {expertsContent.map((article, idx) => (
+            <div
+              key={idx}
+              className="flex flex-col lg:flex-row items-center justify-center lg:justify-between border-gray-400 border rounded-[10px] mt-8 overflow-hidden"
+            >
+              {/* Left Image */}
+              <div className="text-center lg:text-left px-12 w-full pt-8 lg:pt-0 lg:w-1/2">
+                <h3 className="text-lg tracking-wide text-black uppercase font-bold mb-4 md:mb-8">
+                  {article.subtitle}
+                </h3>
+                <h2 className="text-3xl md:text-4xl font-bold text-primary leading-snug mb-4">
+                  {article.title}
+                </h2>
+                <p className="text-gray-600 mb-8 md:max-w-lg mx-auto lg:mx-0">
+                  {article.description}
+                </p>
+                <div className="flex items-center gap-4 justify-center lg:justify-start mb-8">
+                  <Link href="/about">
+                    <Button>Profile</Button>
+                  </Link>
+                  <Link href="/contact">
+                    <Button variant="ghost">Contact</Button>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Right Text */}
+              <div className="w-full h-[300px] lg:w-1/2 lg:h-[500px]">
+                <Image
+                  src={article.image}
+                  alt={article.title}
+                  width={500}
+                  height={500}
+                  className="w-full h-full object-cover top-0"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Newsletter Signup */}
+      <Newsletter />
+    </>
   );
 }

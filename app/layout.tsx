@@ -1,5 +1,11 @@
 import type { Metadata } from "next";
-import { Inter, Montserrat, Open_Sans, Roboto } from "next/font/google";
+import {
+  DM_Sans,
+  Inter,
+  Montserrat,
+  Open_Sans,
+  Roboto,
+} from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -14,7 +20,7 @@ const inter = Inter({
 
 const roboto = Roboto({
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   variable: "--font-roboto",
 });
 
@@ -22,6 +28,12 @@ const openSans = Open_Sans({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800"],
   variable: "--font-open-sans",
+});
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-montserrat",
 });
 
 export const metadata: Metadata = {
@@ -87,7 +99,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${openSans.variable}`}>
+    <html lang="en" className={`${roboto.variable} ${montserrat.variable}`}>
       <body className="min-h-screen bg-background font-sans antialiased">
         <AnimationProvider>
           <Header />

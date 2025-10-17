@@ -128,8 +128,8 @@ export default function Header() {
         {/* Mobile/Tablet Menu */}
         {isMenuOpen && (
           <div
-            className="xl:hidden absolute top-full left-0 right-0 bg-background border-b shadow-lg z-[9999] animate-in slide-in-from-top-2 duration-200"
-            style={{ zIndex: 9999 }}
+            className="xl:hidden absolute top-full left-0 right-0 bg-white border-b shadow-lg z-[200] animate-in slide-in-from-top-2 duration-200"
+            style={{ zIndex: 200 }}
           >
             <div className="px-4 py-6 space-y-4 max-h-[80vh] overflow-y-auto">
               {/* Mobile Search */}

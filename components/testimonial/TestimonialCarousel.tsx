@@ -72,7 +72,7 @@ export default function TestimonialCarousel({
 
   return (
     <section
-      className={`w-full ${backgroundColor} py-16 ${className}`}
+      className={`w-full ${backgroundColor} py-20 ${className}`}
       aria-labelledby="testimonials-heading"
     >
       <div className="max-w-6xl mx-auto px-4">

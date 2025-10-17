@@ -256,6 +256,20 @@ export default function MegaMenu() {
             <div className="grid w-[min(90vw,400px)] gap-3 p-4">
               <NavigationMenuLink asChild>
                 <Link
+                  href="/blog"
+                  className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                >
+                  <div className="text-sm font-medium leading-none">
+                    Insights
+                  </div>
+                  <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                    Latest insights
+                  </p>
+                </Link>
+              </NavigationMenuLink>
+
+              <NavigationMenuLink asChild>
+                <Link
                   href="/blog/market-trends"
                   className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                 >
@@ -391,7 +405,7 @@ export default function MegaMenu() {
 
                 <NavigationMenuLink asChild>
                   <Link
-                    href="/services/property-management"
+                    href="/services/property-solutions/property-management"
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="flex items-center">
@@ -405,7 +419,7 @@ export default function MegaMenu() {
 
                 <NavigationMenuLink asChild>
                   <Link
-                    href="/services/sales-marketing"
+                    href="/services/property-solutions/sales-and-marketing"
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="flex items-center">
@@ -419,7 +433,7 @@ export default function MegaMenu() {
 
                 <NavigationMenuLink asChild>
                   <Link
-                    href="/services/rentals"
+                    href="/services/property-solutions/property-rentals-and-shortlets"
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="flex items-center">
@@ -433,7 +447,7 @@ export default function MegaMenu() {
 
                 <NavigationMenuLink asChild>
                   <Link
-                    href="/services/property-sourcing"
+                    href="/services/property-solutions/property-sourcing"
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="flex items-center">
@@ -453,7 +467,7 @@ export default function MegaMenu() {
 
                 <NavigationMenuLink asChild>
                   <Link
-                    href="/services/valuation"
+                    href="/services/advisory-and-enhancements/valuation-and-due-diligence"
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="flex items-center">
@@ -467,7 +481,7 @@ export default function MegaMenu() {
 
                 <NavigationMenuLink asChild>
                   <Link
-                    href="/services/investment-advisory"
+                    href="/services/advisory-and-enhancements/investment-advisory"
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="flex items-center">
@@ -481,7 +495,7 @@ export default function MegaMenu() {
 
                 <NavigationMenuLink asChild>
                   <Link
-                    href="/services/consultancy"
+                    href="/services/advisory-and-enhancements/real-estate-consultancy"
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="flex items-center">
@@ -495,7 +509,7 @@ export default function MegaMenu() {
 
                 <NavigationMenuLink asChild>
                   <Link
-                    href="/services/refurbishment"
+                    href="/services/advisory-and-enhancements/property-refurbishment-and-renovation"
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="flex items-center">
@@ -509,7 +523,7 @@ export default function MegaMenu() {
 
                 <NavigationMenuLink asChild>
                   <Link
-                    href="/services/interior-design"
+                    href="/services/advisory-and-enhancements/interior-design-and-furnishing"
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="flex items-center">
@@ -527,7 +541,7 @@ export default function MegaMenu() {
       </NavigationMenuList>
 
       {/* Anchor the viewport under the active trigger (and keep it edge-aware) */}
-      <div className="absolute left-0 top-full flex w-full justify-start z-[9997] pointer-events-none">
+      <div className="absolute left-0 top-full flex w-full justify-start z-50 pointer-events-none">
         <NavigationMenuViewport
           className="
             pointer-events-auto

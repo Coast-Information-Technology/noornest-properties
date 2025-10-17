@@ -172,7 +172,7 @@ export interface BlogPost {
   slug: string;
   excerpt: string;
   content: any; // Editor.js output
-  featuredImage?: string;
+  image?: string;
   author: BlogAuthor;
   categories: BlogCategory[];
   tags: BlogTag[];
@@ -182,6 +182,7 @@ export interface BlogPost {
   seo: BlogSEO;
   createdAt: string;
   updatedAt: string;
+  descripyion?: string;
 }
 
 export interface BlogAuthor {
