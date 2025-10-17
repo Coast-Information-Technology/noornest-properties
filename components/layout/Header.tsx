@@ -3,15 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  Menu,
-  X,
-  User,
-  Search,
-  ChevronDown,
-  Calendar,
-  Info,
-} from "lucide-react";
+import { Menu, X, User, Search, ChevronDown, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -28,7 +20,7 @@ import MegaMenu from "./MegaMenu";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isCompanyOpen, setIsCompanyOpen] = useState(false);
+  // const [isCompanyOpen, setIsCompanyOpen] = useState(false);
   const pathname = usePathname();
 
   const mobileNavItems = [

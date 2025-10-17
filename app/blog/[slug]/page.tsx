@@ -1,4 +1,3 @@
-import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import {
@@ -11,7 +10,6 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Separator } from "@/components/ui/separator";
 import {
   Calendar,
   Clock,
@@ -25,10 +23,56 @@ import {
   Linkedin,
 } from "lucide-react";
 import { BlogPost } from "@/types";
+import { getRelatedPosts } from "@/lib/mock-data";
+import Image from "next/image";
+import React from "react";
 
-import { getBlogPostBySlug, getRelatedPosts } from "@/lib/mock-data";
+/** ---- Minimal EditorJS typing (covers the blocks you render) ---- */
+type HeaderLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
-// Mock data - in real app, this would come from API
+type EditorJSHeaderBlock = {
+  id: string;
+  type: "header";
+  data: { text: string; level: HeaderLevel };
+};
+
+type EditorJSParagraphBlock = {
+  id: string;
+  type: "paragraph";
+  data: { text: string };
+};
+
+type EditorJSListBlock = {
+  id: string;
+  type: "list";
+  data: { style: "ordered" | "unordered"; items: string[] };
+};
+
+type EditorJSQuoteBlock = {
+  id: string;
+  type: "quote";
+  data: { text: string; caption?: string };
+};
+
+type EditorJSTableBlock = {
+  id: string;
+  type: "table";
+  data: { withHeadings?: boolean; content: string[][] };
+};
+
+type EditorJSBlock =
+  | EditorJSHeaderBlock
+  | EditorJSParagraphBlock
+  | EditorJSListBlock
+  | EditorJSQuoteBlock
+  | EditorJSTableBlock;
+
+type EditorJSContent = {
+  time?: number;
+  blocks: EditorJSBlock[];
+};
+
+/** ---------------- Mock post (replace with API data in real app) ---------------- */
 const mockPost: BlogPost = {
   id: "1",
   title: "10 Essential Tips for First-Time Real Estate Investors",
@@ -41,10 +85,7 @@ const mockPost: BlogPost = {
       {
         id: "1",
         type: "header",
-        data: {
-          text: "Introduction to Real Estate Investment",
-          level: 2,
-        },
+        data: { text: "Introduction to Real Estate Investment", level: 2 },
       },
       {
         id: "2",
@@ -56,10 +97,7 @@ const mockPost: BlogPost = {
       {
         id: "3",
         type: "header",
-        data: {
-          text: "1. Start with Education",
-          level: 3,
-        },
+        data: { text: "1. Start with Education", level: 3 },
       },
       {
         id: "4",
@@ -85,10 +123,7 @@ const mockPost: BlogPost = {
       {
         id: "6",
         type: "header",
-        data: {
-          text: "2. Set Clear Investment Goals",
-          level: 3,
-        },
+        data: { text: "2. Set Clear Investment Goals", level: 3 },
       },
       {
         id: "7",
@@ -108,10 +143,7 @@ const mockPost: BlogPost = {
       {
         id: "9",
         type: "header",
-        data: {
-          text: "3. Build Your Team",
-          level: 3,
-        },
+        data: { text: "3. Build Your Team", level: 3 },
       },
       {
         id: "10",
@@ -138,10 +170,7 @@ const mockPost: BlogPost = {
       {
         id: "12",
         type: "header",
-        data: {
-          text: "4. Analyze the Numbers",
-          level: 3,
-        },
+        data: { text: "4. Analyze the Numbers", level: 3 },
       },
       {
         id: "13",
@@ -175,10 +204,7 @@ const mockPost: BlogPost = {
       {
         id: "15",
         type: "header",
-        data: {
-          text: "5. Start Small and Scale",
-          level: 3,
-        },
+        data: { text: "5. Start Small and Scale", level: 3 },
       },
       {
         id: "16",
@@ -187,14 +213,7 @@ const mockPost: BlogPost = {
           text: "Begin with a single property to learn the ropes before expanding your portfolio. This approach minimizes risk while building experience.",
         },
       },
-      {
-        id: "17",
-        type: "header",
-        data: {
-          text: "Conclusion",
-          level: 2,
-        },
-      },
+      { id: "17", type: "header", data: { text: "Conclusion", level: 2 } },
       {
         id: "18",
         type: "paragraph",
@@ -203,8 +222,8 @@ const mockPost: BlogPost = {
         },
       },
     ],
-  },
-  featuredImage: "/blog/real-estate-tips.jpg",
+  } as EditorJSContent, // Cast once, keep the rest strictly typed
+  image: "/blog/real-estate-tips.jpg",
   author: {
     id: "1",
     name: "Sarah Johnson",
@@ -254,128 +273,65 @@ const mockPost: BlogPost = {
 // Get related posts from centralized data
 const relatedPosts = getRelatedPosts(mockPost.id, 2);
 
-interface BlogPostPageProps {
-  params: {
-    slug: string;
-  };
-}
-
-export async function generateMetadata({
-  params,
-}: BlogPostPageProps): Promise<Metadata> {
-  // In real app, fetch post data here
-  const post = mockPost; // This would be fetched from API
-
-  return {
-    title: post.seo.title,
-    description: post.seo.description,
-    keywords: post.seo.keywords,
-    openGraph: {
-      title: post.seo.title,
-      description: post.seo.description,
-      images: [
-        post.seo.ogImage || post.featuredImage || "/blog/default-og.jpg",
-      ],
-      type: "article",
-      publishedTime: post.publishedAt,
-      authors: [post.author.name],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: post.seo.title,
-      description: post.seo.description,
-      images: [
-        post.seo.ogImage || post.featuredImage || "/blog/default-og.jpg",
-      ],
-    },
-  };
-}
-
-export default function BlogPostPage({ params }: BlogPostPageProps) {
+/** ---------------- Page ---------------- */
+export default function BlogPostPage() {
   // In real app, fetch post data based on slug
-  const post = mockPost; // This would be fetched from API
+  const post = mockPost as BlogPost;
 
   if (!post) {
     notFound();
   }
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
+  const formatDate = (dateString: string) =>
+    new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
       day: "numeric",
     });
-  };
 
-  const renderEditorJSContent = (content: any) => {
-    if (!content.blocks) return null;
+  const renderEditorJSContent = (content: EditorJSContent) => {
+    if (!content.blocks?.length) return null;
 
-    return content.blocks.map((block: any, index: number) => {
+    return content.blocks.map((block, index) => {
       switch (block.type) {
-        case "header":
-          const level = block.data.level;
-          const className = "mt-8 mb-4 font-bold";
-          if (level === 1) {
-            return (
-              <h1 key={index} className={className}>
-                {block.data.text}
-              </h1>
-            );
-          } else if (level === 2) {
-            return (
-              <h2 key={index} className={className}>
-                {block.data.text}
-              </h2>
-            );
-          } else if (level === 3) {
-            return (
-              <h3 key={index} className={className}>
-                {block.data.text}
-              </h3>
-            );
-          } else if (level === 4) {
-            return (
-              <h4 key={index} className={className}>
-                {block.data.text}
-              </h4>
-            );
-          } else if (level === 5) {
-            return (
-              <h5 key={index} className={className}>
-                {block.data.text}
-              </h5>
-            );
-          } else {
-            return (
-              <h6 key={index} className={className}>
-                {block.data.text}
-              </h6>
-            );
-          }
+        case "header": {
+          const Tag =
+            `h${block.data.level}` as unknown as keyof React.ReactElement;
+          return (
+            <div key={block.id ?? index} className="mt-8 mb-4 font-bold">
+              {block.data.text}
+            </div>
+          );
+        }
+
         case "paragraph":
           return (
-            <p key={index} className="mb-4 leading-relaxed">
+            <p key={block.id ?? index} className="mb-4 leading-relaxed">
               {block.data.text}
             </p>
           );
-        case "list":
-          const ListTag = block.data.style === "ordered" ? "ol" : "ul";
+
+        case "list": {
+          const ListTag: React.ElementType =
+            block.data.style === "ordered" ? "ol" : "ul";
           return (
-            <ListTag key={index} className="mb-4 ml-6">
-              {block.data.items.map((item: string, itemIndex: number) => (
-                <li key={itemIndex} className="mb-2">
+            <ListTag key={block.id ?? index} className="mb-4 ml-6 list-inside">
+              {block.data.items.map((item, i) => (
+                <li key={i} className="mb-2">
                   {item}
                 </li>
               ))}
             </ListTag>
           );
+        }
+
         case "quote":
           return (
             <blockquote
-              key={index}
+              key={block.id ?? index}
               className="border-l-4 border-primary pl-4 py-2 mb-4 italic"
             >
-              <p className="mb-2">"{block.data.text}"</p>
+              <p className="mb-2">&ldquo;{block.data.text}&rdquo;</p>
               {block.data.caption && (
                 <cite className="text-sm text-muted-foreground">
                   — {block.data.caption}
@@ -383,48 +339,48 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
               )}
             </blockquote>
           );
+
         case "table":
           return (
-            <div key={index} className="overflow-x-auto mb-4">
+            <div key={block.id ?? index} className="overflow-x-auto mb-4">
               <table className="w-full border-collapse border border-gray-300">
                 <thead>
                   <tr>
-                    {block.data.content[0].map(
-                      (header: string, headerIndex: number) => (
-                        <th
-                          key={headerIndex}
-                          className="border border-gray-300 px-4 py-2 bg-gray-50 font-semibold"
-                        >
-                          {header}
-                        </th>
-                      )
-                    )}
+                    {block.data.content[0]?.map((header, hIdx) => (
+                      <th
+                        key={hIdx}
+                        className="border border-gray-300 px-4 py-2 bg-gray-50 font-semibold"
+                      >
+                        {header}
+                      </th>
+                    ))}
                   </tr>
                 </thead>
                 <tbody>
-                  {block.data.content
-                    .slice(1)
-                    .map((row: string[], rowIndex: number) => (
-                      <tr key={rowIndex}>
-                        {row.map((cell: string, cellIndex: number) => (
-                          <td
-                            key={cellIndex}
-                            className="border border-gray-300 px-4 py-2"
-                          >
-                            {cell}
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
+                  {block.data.content.slice(1).map((row, rIdx) => (
+                    <tr key={rIdx}>
+                      {row.map((cell, cIdx) => (
+                        <td
+                          key={cIdx}
+                          className="border border-gray-300 px-4 py-2"
+                        >
+                          {cell}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
           );
+
         default:
           return null;
       }
     });
   };
+
+  const editorContent = post.content as unknown as EditorJSContent;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -475,7 +431,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
             </div>
             <div className="flex items-center space-x-1">
               <Calendar className="w-4 h-4" />
-              <span>{formatDate(post.publishedAt!)}</span>
+              <span>{formatDate(post.publishedAt || "")}</span>
             </div>
             <div className="flex items-center space-x-1">
               <Clock className="w-4 h-4" />
@@ -501,16 +457,18 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
 
         {/* Featured Image */}
         <div className="mb-8">
-          <img
-            src={post.featuredImage}
+          <Image
+            src={post.image || ""}
             alt={post.title}
             className="w-full h-64 md:h-96 object-cover rounded-lg"
+            width={800}
+            height={600}
           />
         </div>
 
         {/* Article Content */}
         <article className="prose prose-lg max-w-none mb-12">
-          {renderEditorJSContent(post.content)}
+          {renderEditorJSContent(editorContent)}
         </article>
 
         {/* Tags */}
@@ -579,10 +537,12 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
                 className="overflow-hidden hover:shadow-lg transition-shadow"
               >
                 <div className="relative h-48">
-                  <img
-                    src={relatedPost.featuredImage}
+                  <Image
+                    src={relatedPost.image || ""}
                     alt={relatedPost.title}
                     className="w-full h-full object-cover"
+                    width={800}
+                    height={600}
                   />
                 </div>
                 <CardHeader>
@@ -601,7 +561,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
                     </div>
                     <div className="flex items-center space-x-1">
                       <Calendar className="w-4 h-4" />
-                      <span>{formatDate(relatedPost.publishedAt!)}</span>
+                      <span>{formatDate(relatedPost.publishedAt || "")}</span>
                     </div>
                   </div>
                   <Button asChild variant="outline" className="w-full">

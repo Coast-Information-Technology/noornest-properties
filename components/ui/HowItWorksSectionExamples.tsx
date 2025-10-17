@@ -2,14 +2,6 @@
 // This file shows different ways to use the HowItWorksSection component
 
 import HowItWorksSection from "./HowItWorksSection";
-import {
-  Calendar,
-  Target,
-  User,
-  Phone,
-  MessageSquare,
-  CheckCircle,
-} from "lucide-react";
 
 // Example 1: Default booking process
 export function DefaultBookingProcess() {

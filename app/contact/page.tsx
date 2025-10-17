@@ -35,8 +35,8 @@ const ContactPage = () => {
                   className="text-3xl lg:text-[2.5rem] font-bold tracking-tight text-white leading-tight"
                   delay={0.2}
                 >
-                  Let's Talk -<br />
-                  We're Here to Help
+                  Let&apos;s Talk -<br />
+                  We&apos;re Here to Help
                 </AnimatedText>
               </div>
             </div>

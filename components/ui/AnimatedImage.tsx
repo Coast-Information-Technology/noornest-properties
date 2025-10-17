@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
-import Image, { ImageProps } from 'next/image';
-import { Variants } from 'framer-motion';
-import { scrollAnimationOptions } from '@/lib/animations';
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+import Image, { ImageProps } from "next/image";
+import { Variants } from "framer-motion";
+import { scrollAnimationOptions } from "@/lib/animations";
 
-interface AnimatedImageProps extends Omit<ImageProps, 'onLoad'> {
+interface AnimatedImageProps extends Omit<ImageProps, "onLoad"> {
   variants?: Variants;
   className?: string;
   delay?: number;
@@ -16,7 +16,7 @@ interface AnimatedImageProps extends Omit<ImageProps, 'onLoad'> {
 
 export default function AnimatedImage({
   variants,
-  className = '',
+  className = "",
   delay = 0,
   duration = 0.8,
   onLoad,
@@ -46,12 +46,13 @@ export default function AnimatedImage({
       ref={ref}
       variants={variants || defaultVariants}
       initial="hidden"
-      animate={isInView ? 'visible' : 'hidden'}
+      animate={isInView ? "visible" : "hidden"}
       className={className}
     >
       <Image
         {...imageProps}
         onLoad={onLoad}
+        alt=""
         className="w-full h-full object-cover"
       />
     </motion.div>

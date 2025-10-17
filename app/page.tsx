@@ -5,15 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
   TrendingUp,
-  Shield,
-  Users,
-  Calculator,
-  Star,
   ArrowRight,
   HomeIcon,
   ChevronLeft,
   ChevronRight,
-  Filter,
   CheckCircle,
   Search,
   Newspaper,
@@ -31,11 +26,11 @@ import AnimatedSection from "@/components/ui/AnimatedSection";
 import AnimatedText from "@/components/ui/AnimatedText";
 import {
   fadeInUp,
-  fadeInLeft,
-  fadeInRight,
-  staggerContainer,
-  staggerItem,
-  slideInFromBottom,
+  // fadeInLeft,
+  // fadeInRight,
+  // staggerContainer,
+  // staggerItem,
+  // slideInFromBottom,
 } from "@/lib/animations";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
@@ -339,13 +334,13 @@ const advisoryEnhancements = [
   },
 ];
 
-const metrics = [
-  { value: "500+", label: "Verified Properties" },
-  { value: "200+", label: "Blog Articles" },
-  { value: "150+", label: "Agent Partnerships" },
-  { value: "1K+", label: "Active Users" },
-  { value: "50+", label: "Cities Covered" },
-];
+// const metrics = [
+//   { value: "500+", label: "Verified Properties" },
+//   { value: "200+", label: "Blog Articles" },
+//   { value: "150+", label: "Agent Partnerships" },
+//   { value: "1K+", label: "Active Users" },
+//   { value: "50+", label: "Cities Covered" },
+// ];
 
 export default function Home() {
   const [current, setCurrent] = useState(0);

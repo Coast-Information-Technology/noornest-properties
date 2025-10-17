@@ -25,7 +25,7 @@ export default function PropertyImage({
   const [imageError, setImageError] = useState(false);
 
   // Fallback image for when the actual image fails to load
-  const fallbackSrc = "/hero-img.png";
+  // const fallbackSrc = "/hero-img.png";
 
   if (imageError) {
     return (

@@ -1,6 +1,6 @@
 "use client";
 
-import { colors, semanticColors } from "@/lib/colors";
+import { colors } from "@/lib/colors";
 
 export default function ColorShowcase() {
   return (

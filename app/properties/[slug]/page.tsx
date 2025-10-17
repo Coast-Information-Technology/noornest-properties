@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Metadata } from "next";
 import {
   ChevronLeft,
   ChevronRight,
@@ -15,7 +14,6 @@ import {
   Phone,
   Mail,
   Star,
-  Car,
   Train,
   Building,
   TreePine,
@@ -24,16 +22,10 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { getPropertyBySlug, getProperties } from "@/lib/mock-data";
+import { getPropertyBySlug } from "@/lib/mock-data";
 import Link from "next/link";
 import PropertyImage from "@/components/ui/PropertyImage";
 import { notFound } from "next/navigation";

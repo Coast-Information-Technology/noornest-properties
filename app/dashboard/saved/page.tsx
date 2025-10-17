@@ -1,27 +1,26 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { 
-  Heart, 
-  MapPin, 
-  Bed, 
-  Bath, 
-  Square, 
+import { useState } from "react";
+import {
+  Heart,
+  MapPin,
+  Bed,
+  Bath,
+  Square,
   Calendar,
   Eye,
   Share2,
-  Filter,
   Search,
   Grid,
   List,
   Trash2,
-  MoreVertical
-} from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { Checkbox } from '@/components/ui/checkbox';
+  MoreVertical,
+} from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,135 +28,139 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/dropdown-menu";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import Link from 'next/link';
+} from "@/components/ui/select";
+import Link from "next/link";
 
 // Mock data - replace with actual API calls
 const mockSavedProperties = [
   {
     id: 1,
-    title: 'Modern 3BR Apartment in Downtown',
+    title: "Modern 3BR Apartment in Downtown",
     price: 450000,
     pricePerSqft: 375,
-    location: 'Downtown, City',
-    address: '123 Main Street, Downtown',
-    image: '/properties/property-1.jpg',
+    location: "Downtown, City",
+    address: "123 Main Street, Downtown",
+    image: "/properties/property-1.jpg",
     bedrooms: 3,
     bathrooms: 2,
     sqft: 1200,
     yearBuilt: 2020,
-    propertyType: 'Apartment',
-    status: 'For Sale',
-    savedDate: '2024-01-10',
-    lastViewed: '2024-01-12',
+    propertyType: "Apartment",
+    status: "For Sale",
+    savedDate: "2024-01-10",
+    lastViewed: "2024-01-12",
     views: 45,
     bmvScore: 85,
     agent: {
-      name: 'Sarah Johnson',
-      phone: '+1 (555) 123-4567',
-      email: 'sarah@noornest.com'
+      name: "Sarah Johnson",
+      phone: "+1 (555) 123-4567",
+      email: "sarah@noornest.com",
     },
-    features: ['Parking', 'Balcony', 'Gym', 'Pool'],
-    description: 'Beautiful modern apartment with stunning city views. Recently renovated with high-end finishes.'
+    features: ["Parking", "Balcony", "Gym", "Pool"],
+    description:
+      "Beautiful modern apartment with stunning city views. Recently renovated with high-end finishes.",
   },
   {
     id: 2,
-    title: 'Luxury Villa with Pool',
+    title: "Luxury Villa with Pool",
     price: 850000,
     pricePerSqft: 340,
-    location: 'Suburbs, City',
-    address: '456 Oak Avenue, Suburbs',
-    image: '/properties/property-2.jpg',
+    location: "Suburbs, City",
+    address: "456 Oak Avenue, Suburbs",
+    image: "/properties/property-2.jpg",
     bedrooms: 4,
     bathrooms: 3,
     sqft: 2500,
     yearBuilt: 2018,
-    propertyType: 'House',
-    status: 'For Sale',
-    savedDate: '2024-01-08',
-    lastViewed: '2024-01-11',
+    propertyType: "House",
+    status: "For Sale",
+    savedDate: "2024-01-08",
+    lastViewed: "2024-01-11",
     views: 78,
     bmvScore: 72,
     agent: {
-      name: 'Mike Chen',
-      phone: '+1 (555) 987-6543',
-      email: 'mike@noornest.com'
+      name: "Mike Chen",
+      phone: "+1 (555) 987-6543",
+      email: "mike@noornest.com",
     },
-    features: ['Pool', 'Garden', 'Garage', 'Fireplace'],
-    description: 'Stunning luxury villa with private pool and beautifully landscaped garden.'
+    features: ["Pool", "Garden", "Garage", "Fireplace"],
+    description:
+      "Stunning luxury villa with private pool and beautifully landscaped garden.",
   },
   {
     id: 3,
-    title: 'Cozy 2BR Condo',
+    title: "Cozy 2BR Condo",
     price: 320000,
     pricePerSqft: 356,
-    location: 'Midtown, City',
-    address: '789 Pine Street, Midtown',
-    image: '/properties/property-3.jpg',
+    location: "Midtown, City",
+    address: "789 Pine Street, Midtown",
+    image: "/properties/property-3.jpg",
     bedrooms: 2,
     bathrooms: 2,
     sqft: 900,
     yearBuilt: 2019,
-    propertyType: 'Condo',
-    status: 'For Sale',
-    savedDate: '2024-01-05',
-    lastViewed: '2024-01-09',
+    propertyType: "Condo",
+    status: "For Sale",
+    savedDate: "2024-01-05",
+    lastViewed: "2024-01-09",
     views: 32,
     bmvScore: 68,
     agent: {
-      name: 'Emily Davis',
-      phone: '+1 (555) 456-7890',
-      email: 'emily@noornest.com'
+      name: "Emily Davis",
+      phone: "+1 (555) 456-7890",
+      email: "emily@noornest.com",
     },
-    features: ['Parking', 'Balcony', 'Storage'],
-    description: 'Charming condo in a quiet neighborhood, perfect for first-time buyers.'
+    features: ["Parking", "Balcony", "Storage"],
+    description:
+      "Charming condo in a quiet neighborhood, perfect for first-time buyers.",
   },
   {
     id: 4,
-    title: 'Penthouse with City Views',
+    title: "Penthouse with City Views",
     price: 1200000,
     pricePerSqft: 600,
-    location: 'Uptown, City',
-    address: '321 Skyline Drive, Uptown',
-    image: '/properties/property-4.jpg',
+    location: "Uptown, City",
+    address: "321 Skyline Drive, Uptown",
+    image: "/properties/property-4.jpg",
     bedrooms: 3,
     bathrooms: 3,
     sqft: 2000,
     yearBuilt: 2021,
-    propertyType: 'Penthouse',
-    status: 'For Sale',
-    savedDate: '2024-01-03',
-    lastViewed: '2024-01-07',
+    propertyType: "Penthouse",
+    status: "For Sale",
+    savedDate: "2024-01-03",
+    lastViewed: "2024-01-07",
     views: 156,
     bmvScore: 91,
     agent: {
-      name: 'David Wilson',
-      phone: '+1 (555) 321-0987',
-      email: 'david@noornest.com'
+      name: "David Wilson",
+      phone: "+1 (555) 321-0987",
+      email: "david@noornest.com",
     },
-    features: ['Parking', 'Balcony', 'Gym', 'Concierge', 'Rooftop'],
-    description: 'Exclusive penthouse with panoramic city views and luxury amenities.'
-  }
+    features: ["Parking", "Balcony", "Gym", "Concierge", "Rooftop"],
+    description:
+      "Exclusive penthouse with panoramic city views and luxury amenities.",
+  },
 ];
 
 export default function SavedPropertiesPage() {
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [selectedProperties, setSelectedProperties] = useState<number[]>([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [sortBy, setSortBy] = useState('savedDate');
-  const [filterType, setFilterType] = useState('all');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortBy, setSortBy] = useState("savedDate");
+  const [filterType, setFilterType] = useState("all");
 
   const handleSelectProperty = (propertyId: number) => {
-    setSelectedProperties(prev => 
-      prev.includes(propertyId) 
-        ? prev.filter(id => id !== propertyId)
+    setSelectedProperties((prev) =>
+      prev.includes(propertyId)
+        ? prev.filter((id) => id !== propertyId)
         : [...prev, propertyId]
     );
   };
@@ -166,34 +169,41 @@ export default function SavedPropertiesPage() {
     if (selectedProperties.length === filteredProperties.length) {
       setSelectedProperties([]);
     } else {
-      setSelectedProperties(filteredProperties.map(p => p.id));
+      setSelectedProperties(filteredProperties.map((p) => p.id));
     }
   };
 
   const handleRemoveSelected = () => {
     // TODO: Implement API call to remove selected properties
-    console.log('Removing properties:', selectedProperties);
+    console.log("Removing properties:", selectedProperties);
     setSelectedProperties([]);
   };
 
   const filteredProperties = mockSavedProperties
-    .filter(property => {
-      const matchesSearch = property.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           property.location.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesType = filterType === 'all' || property.propertyType.toLowerCase() === filterType.toLowerCase();
+    .filter((property) => {
+      const matchesSearch =
+        property.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        property.location.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesType =
+        filterType === "all" ||
+        property.propertyType.toLowerCase() === filterType.toLowerCase();
       return matchesSearch && matchesType;
     })
     .sort((a, b) => {
       switch (sortBy) {
-        case 'price':
+        case "price":
           return b.price - a.price;
-        case 'priceAsc':
+        case "priceAsc":
           return a.price - b.price;
-        case 'savedDate':
-          return new Date(b.savedDate).getTime() - new Date(a.savedDate).getTime();
-        case 'lastViewed':
-          return new Date(b.lastViewed).getTime() - new Date(a.lastViewed).getTime();
-        case 'bmvScore':
+        case "savedDate":
+          return (
+            new Date(b.savedDate).getTime() - new Date(a.savedDate).getTime()
+          );
+        case "lastViewed":
+          return (
+            new Date(b.lastViewed).getTime() - new Date(a.lastViewed).getTime()
+          );
+        case "bmvScore":
           return b.bmvScore - a.bmvScore;
         default:
           return 0;
@@ -201,19 +211,19 @@ export default function SavedPropertiesPage() {
     });
 
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(price);
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
     });
   };
 
@@ -225,14 +235,15 @@ export default function SavedPropertiesPage() {
           <h1 className="text-3xl font-bold text-gray-900">Saved Properties</h1>
           <p className="text-gray-600">
             {filteredProperties.length} saved properties
-            {selectedProperties.length > 0 && ` • ${selectedProperties.length} selected`}
+            {selectedProperties.length > 0 &&
+              ` • ${selectedProperties.length} selected`}
           </p>
         </div>
-        
+
         {selectedProperties.length > 0 && (
           <div className="flex items-center space-x-2">
-            <Button 
-              variant="destructive" 
+            <Button
+              variant="destructive"
               size="sm"
               onClick={handleRemoveSelected}
             >
@@ -290,16 +301,16 @@ export default function SavedPropertiesPage() {
 
               <div className="flex items-center space-x-2">
                 <Button
-                  variant={viewMode === 'grid' ? 'default' : 'outline'}
+                  variant={viewMode === "grid" ? "default" : "outline"}
                   size="sm"
-                  onClick={() => setViewMode('grid')}
+                  onClick={() => setViewMode("grid")}
                 >
                   <Grid className="w-4 h-4" />
                 </Button>
                 <Button
-                  variant={viewMode === 'list' ? 'default' : 'outline'}
+                  variant={viewMode === "list" ? "default" : "outline"}
                   size="sm"
-                  onClick={() => setViewMode('list')}
+                  onClick={() => setViewMode("list")}
                 >
                   <List className="w-4 h-4" />
                 </Button>
@@ -328,9 +339,13 @@ export default function SavedPropertiesPage() {
         <Card>
           <CardContent className="p-12 text-center">
             <Heart className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No saved properties</h3>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
+              No saved properties
+            </h3>
             <p className="text-gray-500 mb-4">
-              {searchTerm ? 'No properties match your search criteria.' : 'Start saving properties you like to see them here.'}
+              {searchTerm
+                ? "No properties match your search criteria."
+                : "Start saving properties you like to see them here."}
             </p>
             <Button asChild>
               <Link href="/properties">Browse Properties</Link>
@@ -338,12 +353,18 @@ export default function SavedPropertiesPage() {
           </CardContent>
         </Card>
       ) : (
-        <div className={viewMode === 'grid' 
-          ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' 
-          : 'space-y-4'
-        }>
+        <div
+          className={
+            viewMode === "grid"
+              ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+              : "space-y-4"
+          }
+        >
           {filteredProperties.map((property) => (
-            <Card key={property.id} className="group hover:shadow-lg transition-shadow">
+            <Card
+              key={property.id}
+              className="group hover:shadow-lg transition-shadow"
+            >
               <div className="relative">
                 {/* Property Image */}
                 <div className="aspect-video bg-gray-200 rounded-t-lg overflow-hidden">
@@ -353,9 +374,15 @@ export default function SavedPropertiesPage() {
                 </div>
 
                 {/* BMV Score Badge */}
-                <Badge 
+                <Badge
                   className="absolute top-3 left-3"
-                  variant={property.bmvScore >= 80 ? 'default' : property.bmvScore >= 60 ? 'secondary' : 'destructive'}
+                  variant={
+                    property.bmvScore >= 80
+                      ? "default"
+                      : property.bmvScore >= 60
+                      ? "secondary"
+                      : "destructive"
+                  }
                 >
                   BMV: {property.bmvScore}
                 </Badge>
@@ -390,7 +417,9 @@ export default function SavedPropertiesPage() {
                         Share
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild>
-                        <Link href={`/dashboard/bookings/new?property=${property.id}`}>
+                        <Link
+                          href={`/dashboard/bookings/new?property=${property.id}`}
+                        >
                           <Calendar className="w-4 h-4 mr-2" />
                           Schedule Viewing
                         </Link>
@@ -459,10 +488,12 @@ export default function SavedPropertiesPage() {
                   {/* Agent Info */}
                   <div className="pt-2 border-t">
                     <div className="text-sm text-gray-600">
-                      <span className="font-medium">Agent:</span> {property.agent.name}
+                      <span className="font-medium">Agent:</span>{" "}
+                      {property.agent.name}
                     </div>
                     <div className="text-xs text-gray-500">
-                      Saved on {formatDate(property.savedDate)} • Last viewed {formatDate(property.lastViewed)}
+                      Saved on {formatDate(property.savedDate)} • Last viewed{" "}
+                      {formatDate(property.lastViewed)}
                     </div>
                   </div>
 
@@ -475,7 +506,9 @@ export default function SavedPropertiesPage() {
                       </Link>
                     </Button>
                     <Button variant="outline" asChild>
-                      <Link href={`/dashboard/bookings/new?property=${property.id}`}>
+                      <Link
+                        href={`/dashboard/bookings/new?property=${property.id}`}
+                      >
                         <Calendar className="w-4 h-4" />
                       </Link>
                     </Button>
@@ -489,4 +522,3 @@ export default function SavedPropertiesPage() {
     </div>
   );
 }
-

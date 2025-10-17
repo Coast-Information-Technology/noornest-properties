@@ -15,8 +15,6 @@ import {
   BedDouble,
   ClipboardList,
   ChevronRight,
-  MessageSquare,
-  Truck,
   FileText,
   Search,
   FileSearch,

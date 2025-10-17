@@ -3,29 +3,16 @@
 import { useState } from "react";
 import {
   Search,
-  TrendingUp,
   Download,
   Eye,
-  Calendar,
-  MapPin,
-  DollarSign,
   BarChart3,
-  Filter,
   MoreVertical,
   Trash2,
   Share2,
   Star,
   AlertCircle,
-  CheckCircle,
-  Clock,
 } from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -108,11 +95,11 @@ export default function BMVAnalysisPage() {
     });
   };
 
-  const getScoreColor = (score: number) => {
-    if (score >= 80) return "text-green-600";
-    if (score >= 60) return "text-primary";
-    return "text-red-600";
-  };
+  // const getScoreColor = (score: number) => {
+  //   if (score >= 80) return "text-green-600";
+  //   if (score >= 60) return "text-primary";
+  //   return "text-red-600";
+  // };
 
   const getScoreBadgeVariant = (score: number) => {
     if (score >= 80) return "default";

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import AuthLayout from "../App-layout";
 
 export default function LoginPage() {
@@ -50,9 +51,12 @@ export default function LoginPage() {
             />
             Remember me
           </label>
-          <a href="/forgot-password" className="text-primary hover:underline">
+          <Link
+            href="/forgot-password"
+            className="text-primary hover:underline"
+          >
             Forgot Password?
-          </a>
+          </Link>
         </div>
 
         <button

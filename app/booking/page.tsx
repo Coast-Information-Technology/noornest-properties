@@ -9,15 +9,7 @@ import AnimatedText from "@/components/ui/AnimatedText";
 import { fadeInUp } from "@/lib/animations";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import {
-  Mail,
-  Phone,
-  Calendar,
-  List,
-  MessageSquare,
-  Plus,
-  X,
-} from "lucide-react";
+import { Plus, X } from "lucide-react";
 import { FaUserTie } from "react-icons/fa";
 import { TbMailFilled } from "react-icons/tb";
 import { BsFillTelephoneFill, BsFillCalendarDateFill } from "react-icons/bs";
@@ -26,7 +18,6 @@ import { AiFillMessage } from "react-icons/ai";
 import TestimonialCarousel from "@/components/testimonial/TestimonialCarousel";
 import { bookingTestimonials } from "@/data/testimonials";
 import Newsletter from "@/components/layout/Newsletter";
-import { FaUser } from "react-icons/fa6";
 
 const steps = [
   {

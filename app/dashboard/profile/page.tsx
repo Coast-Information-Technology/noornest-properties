@@ -1,22 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  User,
-  Mail,
-  Phone,
-  MapPin,
-  Calendar,
-  Camera,
-  Save,
-  Edit,
-  Eye,
-  EyeOff,
-  Bell,
-  Shield,
-  CreditCard,
-  Globe,
-} from "lucide-react";
+import { Calendar, Camera, Save, Edit, Eye, EyeOff, Globe } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -565,7 +550,7 @@ export default function ProfilePage() {
                   <div className="space-y-0.5">
                     <Label>Show Activity Status</Label>
                     <p className="text-sm text-gray-500">
-                      Let others see when you're online
+                      Let others see when you&apos;re online
                     </p>
                   </div>
                   <Switch

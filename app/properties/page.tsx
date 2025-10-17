@@ -1,24 +1,8 @@
 import { Metadata } from "next";
-import {
-  Search,
-  Filter,
-  MapPin,
-  Bed,
-  Bath,
-  Square,
-  Heart,
-  Eye,
-  Calendar,
-} from "lucide-react";
+import { Search, Filter, MapPin, Bed, Bath, Square, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   Select,
@@ -27,11 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  getProperties,
-  searchProperties,
-  filterProperties,
-} from "@/lib/mock-data";
+import { getProperties } from "@/lib/mock-data";
 import Link from "next/link";
 import PropertyImage from "@/components/ui/PropertyImage";
 

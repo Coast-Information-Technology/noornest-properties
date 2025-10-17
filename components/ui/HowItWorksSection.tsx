@@ -11,7 +11,6 @@ import {
   CheckCircle,
 } from "lucide-react";
 import AnimatedSection from "@/components/ui/AnimatedSection";
-import AnimatedText from "@/components/ui/AnimatedText";
 
 export interface HowItWorksStep {
   icon: string; // Icon name as string
@@ -69,7 +68,6 @@ export default function HowItWorksSection({
   titleColor = "text-[#C8A970]",
   iconBackgroundColor = "bg-[#C8A970]",
   textColor = "text-gray-900",
-  connectorColor = "border-[#C8A970]",
   footerBackgroundColor = "bg-accent",
 }: HowItWorksSectionProps) {
   return (

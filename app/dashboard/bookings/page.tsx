@@ -9,24 +9,16 @@ import {
   Phone,
   Mail,
   Plus,
-  Filter,
   Search,
   MoreVertical,
   Edit,
-  Trash2,
   CheckCircle,
   XCircle,
   AlertCircle,
   Video,
   MessageCircle,
 } from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -191,13 +183,13 @@ export default function BookingsPage() {
     );
   };
 
-  const handleSelectAll = () => {
-    if (selectedBookings.length === filteredBookings.length) {
-      setSelectedBookings([]);
-    } else {
-      setSelectedBookings(filteredBookings.map((b) => b.id));
-    }
-  };
+  // const handleSelectAll = () => {
+  //   if (selectedBookings.length === filteredBookings.length) {
+  //     setSelectedBookings([]);
+  //   } else {
+  //     setSelectedBookings(filteredBookings.map((b) => b.id));
+  //   }
+  // };
 
   const filteredBookings = mockBookings.filter((booking) => {
     const matchesSearch =
@@ -483,7 +475,7 @@ export default function BookingsPage() {
                   No upcoming bookings
                 </h3>
                 <p className="text-gray-500 mb-4">
-                  You don't have any upcoming property viewings scheduled.
+                  You don&apos;t have any upcoming property viewings scheduled.
                 </p>
                 <Button asChild>
                   <Link href="/dashboard/bookings/new">Schedule a Viewing</Link>

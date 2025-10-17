@@ -19,7 +19,7 @@ import Newsletter from "@/components/layout/Newsletter";
 import AnimatedSection from "@/components/ui/AnimatedSection";
 import { fadeInUp } from "@/lib/animations";
 import AnimatedText from "@/components/ui/AnimatedText";
-import { BsEnvelope, BsPhoneFill } from "react-icons/bs";
+import { BsEnvelope } from "react-icons/bs";
 import { TbLocationFilled } from "react-icons/tb";
 
 const cards = [
@@ -200,7 +200,7 @@ const TermsOfServicePage = () => {
                 </h1>
 
                 <p className="text-base sm:text-lg lg:text-xl text-gray-100 mb-12 max-w-2xl">
-                  These terms govern your use of Noornest's property and
+                  These terms govern your use of Noornest&apos;s property and
                   investment platform. By accessing our services, you agree to
                   these binding conditions.
                 </p>

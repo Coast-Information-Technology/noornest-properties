@@ -5,8 +5,6 @@ import {
   TrendingUp,
   MapPin,
   Clock,
-  Star,
-  Eye,
 } from "lucide-react";
 import {
   Card,
@@ -30,7 +28,8 @@ export default function ClientDashboard() {
       <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg p-6 text-white">
         <h1 className="text-3xl font-bold mb-2">Welcome back, John!</h1>
         <p className="text-blue-100">
-          Here's what's happening with your property search and investments.
+          Here&apos;s what&apos;s happening with your property search and
+          investments.
         </p>
       </div>
 
@@ -102,7 +101,7 @@ export default function ClientDashboard() {
               </Button>
             </div>
             <CardDescription>
-              Properties you've recently viewed or saved
+              Properties you&apos;ve recently viewed or saved
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">

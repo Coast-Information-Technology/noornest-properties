@@ -11,12 +11,12 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock, User, ArrowLeft } from "lucide-react";
-import { BlogPost, BlogCategory } from "@/types";
+import Image from "next/image";
 
 import { getBlogCategories, getBlogPostsByCategory } from "@/lib/mock-data";
+import type { BlogPost, BlogCategory } from "@/types";
 
-// Mock data - in real app, this would come from API
-const mockCategories = getBlogCategories();
+const mockCategories: BlogCategory[] = getBlogCategories();
 
 interface CategoryPageProps {
   params: {
@@ -48,21 +48,19 @@ export async function generateMetadata({
 
 export default function CategoryPage({ params }: CategoryPageProps) {
   const category = mockCategories.find((cat) => cat.slug === params.slug);
-
   if (!category) {
     notFound();
   }
 
-  // Filter posts by category
-  const categoryPosts = getBlogPostsByCategory(params.slug);
+  // Typed posts from data source (matches the shared BlogPost type)
+  const categoryPosts: BlogPost[] = getBlogPostsByCategory(params.slug);
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
+  const formatDate = (dateString: string) =>
+    new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
       day: "numeric",
     });
-  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -102,16 +100,18 @@ export default function CategoryPage({ params }: CategoryPageProps) {
       {/* Articles Grid */}
       {categoryPosts.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {categoryPosts.map((post: any) => (
+          {categoryPosts.map((post: BlogPost) => (
             <Card
               key={post.id}
               className="overflow-hidden hover:shadow-lg transition-shadow"
             >
               <div className="relative h-48">
-                <img
-                  src={post.featuredImage}
+                <Image
+                  src={post.image || ""}
                   alt={post.title}
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="(min-width:1024px) 33vw, (min-width:768px) 50vw, 100vw"
+                  className="object-cover"
                 />
                 <div className="absolute top-4 left-4">
                   <Badge
@@ -139,7 +139,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                   </div>
                   <div className="flex items-center space-x-1">
                     <Calendar className="w-4 h-4" />
-                    <span>{formatDate(post.publishedAt!)}</span>
+                    <span>{formatDate(post.publishedAt || "")}</span>
                   </div>
                   <div className="flex items-center space-x-1">
                     <Clock className="w-4 h-4" />

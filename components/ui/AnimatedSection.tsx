@@ -20,8 +20,8 @@ export default function AnimatedSection({
   className = "",
   delay = 0,
   duration = 0.6,
-  once = true,
-}: AnimatedSectionProps) {
+}: // once = true,
+AnimatedSectionProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, scrollAnimationOptions);
 

@@ -373,7 +373,7 @@ export default function BlogPage() {
               Insights that empower your <br /> property journey
             </h1>
             <p className="text-base text-white max-w-2xl mb-8">
-              Stay ahead with Noornest's expert articles, guides, and market
+              Stay ahead with Noornest&apos;s expert articles, guides, and market
               insights. From property investment strategies to design trends,
               our blog helps you make smarter decisions.
             </p>

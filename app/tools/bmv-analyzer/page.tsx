@@ -26,7 +26,6 @@ import {
   Calculator,
   MapPin,
   Home,
-  TrendingUp,
   AlertCircle,
   CheckCircle,
   Download,
@@ -34,6 +33,43 @@ import {
 } from "lucide-react";
 import { PropertyType, BMVAnalysisRequest } from "@/types";
 import { PROPERTY_TYPES, BMV_SCORE_RANGES } from "@/constants";
+import Link from "next/link";
+
+/** ---------- Local types for the analysis result (no `any`) ---------- */
+type Impact = "positive" | "negative";
+type InvestmentLevel = "low" | "medium" | "high";
+type RiskLevel = "low" | "medium" | "high";
+
+interface AnalysisFactor {
+  name: string;
+  impact: Impact;
+  score: number; // 0..100
+  description: string;
+}
+
+interface AnalysisReport {
+  summary: string;
+  recommendations: string[];
+  marketTrends: string;
+  investmentPotential: InvestmentLevel;
+  riskAssessment: RiskLevel;
+}
+
+interface AnalysisResult {
+  id: string;
+  address: string;
+  propertyType: PropertyType;
+  bedrooms: number;
+  bathrooms: number;
+  squareFeet: number;
+  yearBuilt?: number;
+  marketValue: number;
+  estimatedValue: number;
+  bmvScore: number; // 0..100
+  confidence: number; // 0..100
+  factors: AnalysisFactor[];
+  report: AnalysisReport;
+}
 
 export default function BMVAnalyzerPage() {
   const [formData, setFormData] = useState<BMVAnalysisRequest>({
@@ -47,16 +83,21 @@ export default function BMVAnalyzerPage() {
   });
 
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [analysisResult, setAnalysisResult] = useState<any>(null);
-  const [dailyUsage, setDailyUsage] = useState(0);
-  const [maxDailyUsage] = useState(2); // Guest limit
+  const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(
+    null
+  );
+  const [dailyUsage, setDailyUsage] = useState<number>(0);
+  const [maxDailyUsage] = useState<number>(2); // Guest limit
 
-  const handleInputChange = (field: keyof BMVAnalysisRequest, value: any) => {
+  function handleInputChange<K extends keyof BMVAnalysisRequest>(
+    field: K,
+    value: BMVAnalysisRequest[K]
+  ) {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
     }));
-  };
+  }
 
   const handleAnalyze = async () => {
     if (dailyUsage >= maxDailyUsage) {
@@ -70,7 +111,7 @@ export default function BMVAnalyzerPage() {
 
     // Simulate API call
     setTimeout(() => {
-      const mockResult = {
+      const mockResult: AnalysisResult = {
         id: "1",
         address: formData.address,
         propertyType: formData.propertyType,
@@ -119,8 +160,8 @@ export default function BMVAnalyzerPage() {
           ],
           marketTrends:
             "The local market is experiencing steady growth with 8% year-over-year appreciation.",
-          investmentPotential: "high" as const,
-          riskAssessment: "low" as const,
+          investmentPotential: "high",
+          riskAssessment: "low",
         },
       };
 
@@ -165,10 +206,11 @@ export default function BMVAnalyzerPage() {
               <div className="flex items-center space-x-2">
                 <AlertCircle className="w-5 h-5 text-primary" />
                 <p className="text-primary">
-                  You've reached your daily limit ({maxDailyUsage} analyses).
-                  <a href="/register" className="underline ml-1">
+                  You&apos;ve reached your daily limit ({maxDailyUsage}{" "}
+                  analyses).
+                  <Link href="/register" className="underline ml-1">
                     Register for unlimited access
-                  </a>
+                  </Link>
                 </p>
               </div>
             </div>
@@ -244,8 +286,8 @@ export default function BMVAnalyzerPage() {
                   <Input
                     id="bedrooms"
                     type="number"
-                    min="1"
-                    max="10"
+                    min={1}
+                    max={10}
                     value={formData.bedrooms}
                     onChange={(e) =>
                       handleInputChange("bedrooms", parseInt(e.target.value))
@@ -257,9 +299,9 @@ export default function BMVAnalyzerPage() {
                   <Input
                     id="bathrooms"
                     type="number"
-                    min="1"
-                    max="8"
-                    step="0.5"
+                    min={1}
+                    max={8}
+                    step={0.5}
                     value={formData.bathrooms}
                     onChange={(e) =>
                       handleInputChange("bathrooms", parseFloat(e.target.value))
@@ -271,8 +313,8 @@ export default function BMVAnalyzerPage() {
                   <Input
                     id="squareFeet"
                     type="number"
-                    min="100"
-                    max="50000"
+                    min={100}
+                    max={50000}
                     value={formData.squareFeet}
                     onChange={(e) =>
                       handleInputChange("squareFeet", parseInt(e.target.value))
@@ -402,7 +444,7 @@ export default function BMVAnalyzerPage() {
                   <CardContent>
                     <div className="space-y-4">
                       {analysisResult.factors.map(
-                        (factor: any, index: number) => (
+                        (factor: AnalysisFactor, index: number) => (
                           <div key={index} className="space-y-2">
                             <div className="flex justify-between items-center">
                               <span className="font-medium">{factor.name}</span>

@@ -9,56 +9,54 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import {
-  Palette,
   Home,
   ClipboardCheck,
   BedDouble,
   ClipboardList,
   ChevronRight,
-  MessageSquare,
-  Truck,
+  UserCheck,
 } from "lucide-react";
 import FAQSection from "@/components/ui/FAQSection";
 
 const services = [
   {
     id: 1,
-    icon: <Palette className="w-10 h-10 text-white" aria-hidden="true" />,
-    title: "Interior Design Concepts",
+    icon: <UserCheck className="w-10 h-10 text-white" aria-hidden="true" />,
+    title: "Tenant Matching",
     description:
-      "Bespoke design concepts that balance style, functionality, and long-term property value.",
-    image: "/services/interior-design.jpg",
+      "Connect with reliable, pre-screened renters to minimize vacancy and risk.",
+    image: "/services/tenant-matching.jpg",
     actions: [
-      { label: "View Concepts", href: "/concepts", variant: "primary" },
-      { label: "Start Design", href: "/start-design", variant: "link" },
+      { label: "Find Tenants", href: "/find-tenants", variant: "primary" },
+      { label: "View Listings", href: "/listings", variant: "link" },
     ],
     colSpan: "md:col-span-2",
     rowSpan: "md:row-span-3",
   },
   {
     id: 2,
-    icon: <BedDouble className="w-10 h-10 text-white" aria-hidden="true" />,
-    title: "Furnishing Solutions",
+    icon: <Home className="w-10 h-10 text-white" aria-hidden="true" />,
+    title: "Long-Term Rentals",
     description:
-      "Curated furniture packages — full or partial — crafted for homes and rental properties.",
-    image: "/services/furnishing-solution.jpg",
+      "Secure stable income through fully managed long-term rental agreements.",
+    image: "/services/long-term-rentals.jpg",
     actions: [
-      { label: "Explore Packages", href: "/packages", variant: "primary" },
-      { label: "Get Quote", href: "/quote", variant: "link" },
+      { label: "List Property", href: "/list-property", variant: "primary" },
+      { label: "Learn More", href: "/rental-info", variant: "link" },
     ],
     colSpan: "md:col-span-2",
     rowSpan: "md:row-span-2",
   },
   {
     id: 3,
-    icon: <Home className="w-10 h-10 text-white" aria-hidden="true" />,
-    title: "Home Staging",
+    icon: <BedDouble className="w-10 h-10 text-white" aria-hidden="true" />,
+    title: "Short-Lets & Holiday Stays",
     description:
-      "Professional staging that attracts buyers, shortens sales time, and increases property value.",
-    image: "/services/home-staging.jpg",
+      "Flexible short-term rental options, verified for safety and guest quality.",
+    image: "/services/short-lets.jpg",
     actions: [
-      { label: "Stage Property", href: "/staging", variant: "primary" },
-      { label: "Learn More", href: "/learn-more", variant: "link" },
+      { label: "Get Started", href: "/short-lets", variant: "primary" },
+      { label: "View Options", href: "/holiday-stays", variant: "link" },
     ],
     colSpan: "md:col-span-2",
     rowSpan: "md:row-span-3",
@@ -66,12 +64,12 @@ const services = [
   {
     id: 4,
     icon: <ClipboardList className="w-10 h-10 text-white" aria-hidden="true" />,
-    title: "Rental-Ready Fit-Outs",
+    title: "Lease Management",
     description:
-      "Durable, stylish interiors tailored for both short-let and long-term rental markets.",
-    image: "/services/rental-ready.jpg",
+      "We handle contracts, renewals, and compliance so you stay stress-free.",
+    image: "/services/lease-management.jpg",
     actions: [
-      { label: "Request Plan", href: "/request-plan", variant: "primary" },
+      { label: "Manage Lease", href: "/manage-lease", variant: "primary" },
     ],
     rowSpan: "md:row-span-2",
   },
@@ -80,60 +78,62 @@ const services = [
     icon: (
       <ClipboardCheck className="w-10 h-10 text-white" aria-hidden="true" />
     ),
-    title: "End-to-End Management",
+    title: "Verified Listings",
     description:
-      "Complete service from concept boards to final installation, managed seamlessly.",
-    image: "/services/end-to-end.jpg",
-    actions: [{ label: "View Process", href: "/process", variant: "primary" }],
+      "Every rental is checked for authenticity and safety — peace of mind for landlords and tenants.",
+    image: "/services/verified-listings.jpg",
+    actions: [
+      { label: "Verify Listing", href: "/verify-listing", variant: "primary" },
+    ],
     rowSpan: "md:row-span-2",
   },
 ];
 
 const faqData = [
   {
-    question: "Do you design both homes and rental properties?",
+    question: "Do you handle both short-term and long-term rentals?",
     answer:
-      "Yes, we handle residential homes, rentals, and short-let properties.",
+      "Yes, we support both long-term leases and flexible short-let stays.",
   },
   {
-    question: "Can you provide furniture packages?",
+    question: "How do you screen tenants?",
     answer:
-      "Absolutely. We offer curated furniture packages for homes, rentals, and corporate spaces.",
+      "We verify tenant identities, rental history, and references before placement.",
   },
   {
-    question: "Do you work with developers?",
+    question: "Can you manage rent collection?",
     answer:
-      "Yes, we collaborate with developers to design and furnish show units and investment properties.",
+      "Yes — our Professional and Premium plans include rent collection support.",
   },
   {
-    question: "How long does a project take?",
+    question: "Do you handle furnished rentals?",
     answer:
-      "Timelines vary by scope, but most projects take between 4 to 10 weeks from concept to completion.",
+      "Absolutely. We manage both furnished and unfurnished properties seamlessly.",
   },
   {
-    question: "Is the consultation free?",
+    question: "What locations do you cover?",
     answer:
-      "Yes, your initial consultation is free. It helps us understand your goals and propose tailored solutions.",
+      "We cover rentals across major UK cities, with ongoing regional expansion.",
   },
 ];
 
 const steps = [
   {
     icon: (
-      <MessageSquare className="w-7 h-7 text-yellow-700" aria-hidden="true" />
+      <ClipboardList className="w-7 h-7 text-yellow-700" aria-hidden="true" />
     ),
-    title: "Consult & Plan",
-    desc: "Discuss your style, goals, and budget.",
+    title: "List Your Property",
+    desc: "Share your property details and preferences to get started.",
   },
   {
-    icon: <Palette className="w-7 h-7 text-yellow-700" aria-hidden="true" />,
-    title: "Design & Curate",
-    desc: "We create concepts, source furniture, and plan the layout.",
+    icon: <UserCheck className="w-7 h-7 text-yellow-700" aria-hidden="true" />,
+    title: "Find the Right Tenant",
+    desc: "We vet and connect you with serious, verified renters.",
   },
   {
-    icon: <Truck className="w-7 h-7 text-yellow-700" aria-hidden="true" />,
-    title: "Deliver & Style",
-    desc: "Full setup and finishing touches handled by our team.",
+    icon: <Home className="w-7 h-7 text-yellow-700" aria-hidden="true" />,
+    title: "Secure Your Rental",
+    desc: "Lease agreements, payments, and ongoing support — all managed for you.",
   },
 ];
 
@@ -142,71 +142,77 @@ const PropertyManagementPage = () => {
 
   const monthlyPlans = [
     {
-      title: "Furnishing essentials",
-      price: "£2,000",
+      title: "Basic Rental Plan",
+      subtitle: "For single landlords",
+      price: "From £199 per listing",
       features: [
-        "Basic furniture package",
-        "Functional rental designs",
-        "Quick installation",
+        "Standard listing on Noornest",
+        "Basic tenant screening",
+        "Lease template support",
       ],
-      button: "Start now",
+      button: "List Now",
     },
     {
-      title: "Home staging",
-      price: "£3,500",
+      title: "Professional Rental Plan",
+      subtitle: "For active landlords & small portfolios",
+      price: "From 8% of monthly rent",
       features: [
-        "Property listing optimization",
-        "Professional styling",
-        "Photography preparation",
-        "Market ready",
+        "Premium listing placement",
+        "Enhanced tenant vetting",
+        "Full lease management",
+        "Rent collection support",
       ],
-      button: "Explore package",
+      button: "Start Plan",
     },
     {
-      title: "Bespoke design",
-      price: "Custom",
+      title: "Premium Rental & Short-Let Plan",
+      subtitle: "For developers & serviced apartments",
+      price: "Custom pricing",
       features: [
-        "Full consultation",
-        "Custom furniture sourcing",
-        "Unique design approach",
-        "Dedicated consultant",
-        "Personalized experience",
+        "All Professional features",
+        "Short-let promotion (Airbnb-style visibility)",
+        "Professional photography & staging",
+        "Dedicated rental manager",
       ],
-      button: "Get started",
+      button: "Book Consultation",
     },
   ];
 
   const yearlyPlans = [
     {
-      title: "Furnishing Essentials",
-      price: "From £2,000",
+      title: "Basic Rental Plan",
+      subtitle: "For single landlords",
+      price: "From £199 per listing per year",
       features: [
-        "Basic furniture package",
-        "Functional & durable styles",
-        "Delivered & installed",
+        "Standard Noornest listing",
+        "Basic tenant screening (annual access)",
+        "Lease template & renewal support",
       ],
-      button: "Start now",
+      button: "Subscribe Yearly",
     },
     {
-      title: "Home Staging Package",
-      price: "From £3,500",
+      title: "Professional Rental Plan",
+      subtitle: "For active landlords & portfolios",
+      price: "From 8% of annual rent",
       features: [
-        "Interior styling for show homes & listings",
-        "Accessory & décor setup",
-        "Photography-ready finish",
+        "Premium annual listing visibility",
+        "Enhanced tenant vetting & renewal management",
+        "Full lease management system",
+        "Automated rent collection support",
       ],
-      button: "Explore package",
+      button: "Choose Plan",
     },
     {
-      title: "Premium Bespoke Design",
-      price: "Custom pricing",
+      title: "Premium Rental & Short-Let Plan",
+      subtitle: "For developers & serviced apartments",
+      price: "Custom yearly pricing",
       features: [
-        "Full interior design consultation",
-        "Custom furniture sourcing",
-        "Bespoke finishes & décor",
-        "Dedicated design consultant",
+        "All Professional benefits for 12 months",
+        "Short-let visibility on partner platforms",
+        "Professional photography & staging (annual refresh)",
+        "Dedicated rental manager & marketing support",
       ],
-      button: "Get started",
+      button: "Get Quote",
     },
   ];
 
