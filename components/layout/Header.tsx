@@ -85,6 +85,59 @@ export default function Header() {
       ],
     },
     {
+      key: "services",
+      label: "Services",
+      prefixes: ["/services"],
+      sections: [
+        {
+          title: "Property Solutions",
+          links: [
+            {
+              href: "/services/property-solutions/property-management",
+              label: "Property Management",
+            },
+            {
+              href: "/services/property-solutions/sales-and-marketing",
+              label: "Sales & Marketing",
+            },
+            {
+              href: "/services/property-solutions/property-rentals-and-shortlets",
+              label: "Rentals & Short-Lets",
+            },
+            {
+              href: "/services/property-solutions/property-sourcing",
+              label: "Property Sourcing",
+            },
+          ],
+        },
+        {
+          title: "Advisory & Enhancements",
+          links: [
+            {
+              href: "/services/advisory-and-enhancements/valuation-and-due-diligence",
+              label: "Valuation & Due Diligence",
+            },
+            {
+              href: "/services/advisory-and-enhancements/investment-advisory",
+              label: "Investment Advisory",
+            },
+            {
+              href: "/services/advisory-and-enhancements/real-estate-consultancy",
+              label: "Real Estate Consultancy",
+            },
+            {
+              href: "/services/advisory-and-enhancements/property-refurbishment-and-renovation",
+              label: "Refurbishment & Renovation",
+            },
+            {
+              href: "/services/advisory-and-enhancements/interior-design-and-furnishing",
+              label: "Interior Design & Furnishing",
+            },
+          ],
+        },
+      ],
+    },
+    {
       key: "properties",
       label: "Properties",
       prefixes: ["/properties"],
@@ -136,59 +189,6 @@ export default function Header() {
             {
               href: "/investment-plans/opportunity-nest",
               label: "Opportunity Nest",
-            },
-          ],
-        },
-      ],
-    },
-    {
-      key: "services",
-      label: "Services",
-      prefixes: ["/services"],
-      sections: [
-        {
-          title: "Property Solutions",
-          links: [
-            {
-              href: "/services/property-solutions/property-management",
-              label: "Property Management",
-            },
-            {
-              href: "/services/property-solutions/sales-and-marketing",
-              label: "Sales & Marketing",
-            },
-            {
-              href: "/services/property-solutions/property-rentals-and-shortlets",
-              label: "Rentals & Short-Lets",
-            },
-            {
-              href: "/services/property-solutions/property-sourcing",
-              label: "Property Sourcing",
-            },
-          ],
-        },
-        {
-          title: "Advisory & Enhancements",
-          links: [
-            {
-              href: "/services/advisory-and-enhancements/valuation-and-due-diligence",
-              label: "Valuation & Due Diligence",
-            },
-            {
-              href: "/services/advisory-and-enhancements/investment-advisory",
-              label: "Investment Advisory",
-            },
-            {
-              href: "/services/advisory-and-enhancements/real-estate-consultancy",
-              label: "Real Estate Consultancy",
-            },
-            {
-              href: "/services/advisory-and-enhancements/property-refurbishment-and-renovation",
-              label: "Refurbishment & Renovation",
-            },
-            {
-              href: "/services/advisory-and-enhancements/interior-design-and-furnishing",
-              label: "Interior Design & Furnishing",
             },
           ],
         },
