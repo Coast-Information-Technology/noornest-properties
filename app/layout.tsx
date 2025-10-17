@@ -1,11 +1,5 @@
 import type { Metadata } from "next";
-import {
-  // DM_Sans,
-  // Inter,
-  Montserrat,
-  // Open_Sans,
-  Roboto,
-} from "next/font/google";
+import { Montserrat, Roboto } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -13,22 +7,11 @@ import { Toaster } from "@/components/ui/sonner";
 import { AnimationProvider } from "@/components/providers/AnimationProvider";
 import BackToTopButton from "@/components/ui/BackToTopButton";
 
-// const inter = Inter({
-//   subsets: ["latin"],
-//   variable: "--font-inter",
-// });
-
 const roboto = Roboto({
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   variable: "--font-roboto",
 });
-
-// const openSans = Open_Sans({
-//   subsets: ["latin"],
-//   weight: ["300", "400", "500", "600", "700", "800"],
-//   variable: "--font-open-sans",
-// });
 
 const montserrat = Montserrat({
   subsets: ["latin"],
