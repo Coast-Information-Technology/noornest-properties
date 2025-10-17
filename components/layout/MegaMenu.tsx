@@ -1,8 +1,9 @@
+// components/layout/MegaMenu.tsx
 "use client";
 
+import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
 import {
   Building2,
   Building,
@@ -31,7 +32,12 @@ import {
 
 export default function MegaMenu() {
   const pathname = usePathname();
+
   const isActive = (href: string) => pathname === href;
+  const isGroupActive = (prefixes: string[] | string) => {
+    const arr = Array.isArray(prefixes) ? prefixes : [prefixes];
+    return arr.some((p) => pathname === p || pathname.startsWith(`${p}/`));
+  };
 
   return (
     <NavigationMenu className="hidden xl:flex z-50 relative">
@@ -41,6 +47,7 @@ export default function MegaMenu() {
           <NavigationMenuLink asChild>
             <Link
               href="/"
+              aria-current={isActive("/") ? "page" : undefined}
               className={`group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:text-primary focus:text-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50 ${
                 isActive("/") ? "text-primary" : "text-muted-foreground"
               }`}
@@ -52,10 +59,24 @@ export default function MegaMenu() {
 
         {/* Company */}
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="h-10">
+          <NavigationMenuTrigger
+            aria-label="Open Company menu"
+            className={`h-10 relative
+              ${isGroupActive("/about")
+                ? "text-primary after:absolute after:left-3 after:right-3 after:-bottom-[2px] after:h-0.5 after:bg-primary"
+                : "text-foreground"}
+              data-[state=open]:text-primary
+            `}
+          >
             Company
           </NavigationMenuTrigger>
-          <NavigationMenuContent>
+          <NavigationMenuContent
+            className="
+              data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95
+              data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95
+              duration-150
+            "
+          >
             <div className="grid w-[min(90vw,500px)] gap-3 p-4 md:grid-cols-2">
               <div className="space-y-3">
                 <div className="text-sm font-medium text-muted-foreground">
@@ -65,6 +86,7 @@ export default function MegaMenu() {
                 <NavigationMenuLink asChild>
                   <Link
                     href="/about"
+                    aria-current={pathname === "/about" ? "page" : undefined}
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="text-sm font-medium leading-none">
@@ -79,6 +101,9 @@ export default function MegaMenu() {
                 <NavigationMenuLink asChild>
                   <Link
                     href="/about/why-choose-us"
+                    aria-current={
+                      pathname === "/about/why-choose-us" ? "page" : undefined
+                    }
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="text-sm font-medium leading-none">
@@ -93,6 +118,9 @@ export default function MegaMenu() {
                 <NavigationMenuLink asChild>
                   <Link
                     href="/about/partners"
+                    aria-current={
+                      pathname === "/about/partners" ? "page" : undefined
+                    }
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="text-sm font-medium leading-none">
@@ -113,6 +141,9 @@ export default function MegaMenu() {
                 <NavigationMenuLink asChild>
                   <Link
                     href="/contact"
+                    aria-current={
+                      pathname === "/contact" ? "page" : undefined
+                    }
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="text-sm font-medium leading-none">
@@ -127,6 +158,9 @@ export default function MegaMenu() {
                 <NavigationMenuLink asChild>
                   <Link
                     href="/contact/location"
+                    aria-current={
+                      pathname === "/contact/location" ? "page" : undefined
+                    }
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="text-sm font-medium leading-none">
@@ -141,6 +175,9 @@ export default function MegaMenu() {
                 <NavigationMenuLink asChild>
                   <Link
                     href="/contact/whatsapp"
+                    aria-current={
+                      pathname === "/contact/whatsapp" ? "page" : undefined
+                    }
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="text-sm font-medium leading-none">
@@ -158,15 +195,30 @@ export default function MegaMenu() {
 
         {/* Properties */}
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="h-10">
+          <NavigationMenuTrigger
+            aria-label="Open Properties menu"
+            className={`h-10 relative
+              ${isGroupActive("/properties")
+                ? "text-primary after:absolute after:left-3 after:right-3 after:-bottom-[2px] after:h-0.5 after:bg-primary"
+                : "text-foreground"}
+              data-[state=open]:text-primary
+            `}
+          >
             Properties
           </NavigationMenuTrigger>
-          <NavigationMenuContent>
+          <NavigationMenuContent
+            className="
+              data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95
+              data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95
+              duration-150
+            "
+          >
             <div className="grid w-[min(90vw,600px)] gap-3 p-4 md:grid-cols-2 lg:grid-cols-3">
               <div className="row-span-3">
                 <NavigationMenuLink asChild>
                   <Link
                     href="/properties"
+                    prefetch={false}
                     className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                   >
                     <Building2 className="h-6 w-6" />
@@ -251,17 +303,32 @@ export default function MegaMenu() {
 
         {/* Blog */}
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="h-10">Blog</NavigationMenuTrigger>
-          <NavigationMenuContent>
+          <NavigationMenuTrigger
+            aria-label="Open Blog menu"
+            className={`h-10 relative
+              ${isGroupActive(["/blog","/blog/market-trends","/blog/investment-education","/blog/property-tips"])
+                ? "text-primary after:absolute after:left-3 after:right-3 after:-bottom-[2px] after:h-0.5 after:bg-primary"
+                : "text-foreground"}
+              data-[state=open]:text-primary
+            `}
+          >
+            Blog
+          </NavigationMenuTrigger>
+          <NavigationMenuContent
+            className="
+              data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95
+              data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95
+              duration-150
+            "
+          >
             <div className="grid w-[min(90vw,400px)] gap-3 p-4">
               <NavigationMenuLink asChild>
                 <Link
                   href="/blog"
+                  aria-current={pathname === "/blog" ? "page" : undefined}
                   className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                 >
-                  <div className="text-sm font-medium leading-none">
-                    Insights
-                  </div>
+                  <div className="text-sm font-medium leading-none">Insights</div>
                   <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                     Latest insights
                   </p>
@@ -271,6 +338,9 @@ export default function MegaMenu() {
               <NavigationMenuLink asChild>
                 <Link
                   href="/blog/market-trends"
+                  aria-current={
+                    pathname === "/blog/market-trends" ? "page" : undefined
+                  }
                   className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                 >
                   <div className="text-sm font-medium leading-none">
@@ -285,6 +355,9 @@ export default function MegaMenu() {
               <NavigationMenuLink asChild>
                 <Link
                   href="/blog/investment-education"
+                  aria-current={
+                    pathname === "/blog/investment-education" ? "page" : undefined
+                  }
                   className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                 >
                   <div className="text-sm font-medium leading-none">
@@ -299,6 +372,9 @@ export default function MegaMenu() {
               <NavigationMenuLink asChild>
                 <Link
                   href="/blog/property-tips"
+                  aria-current={
+                    pathname === "/blog/property-tips" ? "page" : undefined
+                  }
                   className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                 >
                   <div className="text-sm font-medium leading-none">
@@ -315,14 +391,33 @@ export default function MegaMenu() {
 
         {/* Investment Plans */}
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="h-10">
+          <NavigationMenuTrigger
+            aria-label="Open Investment Plans menu"
+            className={`h-10 relative
+              ${isGroupActive("/investment-plans")
+                ? "text-primary after:absolute after:left-3 after:right-3 after:-bottom-[2px] after:h-0.5 after:bg-primary"
+                : "text-foreground"}
+              data-[state=open]:text-primary
+            `}
+          >
             Investment Plans
           </NavigationMenuTrigger>
-          <NavigationMenuContent>
+          <NavigationMenuContent
+            className="
+              data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95
+              data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95
+              duration-150
+            "
+          >
             <div className="grid w-[min(90vw,500px)] gap-3 p-4 md:grid-cols-2">
               <NavigationMenuLink asChild>
                 <Link
                   href="/investment-plans/equity-nest"
+                  aria-current={
+                    pathname === "/investment-plans/equity-nest"
+                      ? "page"
+                      : undefined
+                  }
                   className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                 >
                   <div className="flex items-center">
@@ -340,6 +435,11 @@ export default function MegaMenu() {
               <NavigationMenuLink asChild>
                 <Link
                   href="/investment-plans/yield-nest"
+                  aria-current={
+                    pathname === "/investment-plans/yield-nest"
+                      ? "page"
+                      : undefined
+                  }
                   className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                 >
                   <div className="flex items-center">
@@ -357,6 +457,11 @@ export default function MegaMenu() {
               <NavigationMenuLink asChild>
                 <Link
                   href="/investment-plans/secure-nest"
+                  aria-current={
+                    pathname === "/investment-plans/secure-nest"
+                      ? "page"
+                      : undefined
+                  }
                   className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                 >
                   <div className="flex items-center">
@@ -374,6 +479,11 @@ export default function MegaMenu() {
               <NavigationMenuLink asChild>
                 <Link
                   href="/investment-plans/opportunity-nest"
+                  aria-current={
+                    pathname === "/investment-plans/opportunity-nest"
+                      ? "page"
+                      : undefined
+                  }
                   className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                 >
                   <div className="flex items-center">
@@ -393,10 +503,24 @@ export default function MegaMenu() {
 
         {/* Services */}
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="h-10">
+          <NavigationMenuTrigger
+            aria-label="Open Services menu"
+            className={`h-10 relative
+              ${isGroupActive("/services")
+                ? "text-primary after:absolute after:left-3 after:right-3 after:-bottom-[2px] after:h-0.5 after:bg-primary"
+                : "text-foreground"}
+              data-[state=open]:text-primary
+            `}
+          >
             Services
           </NavigationMenuTrigger>
-          <NavigationMenuContent>
+          <NavigationMenuContent
+            className="
+              data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95
+              data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95
+              duration-150
+            "
+          >
             <div className="grid w-[min(90vw,600px)] gap-3 p-4 md:grid-cols-2">
               <div className="space-y-3">
                 <div className="text-sm font-medium text-muted-foreground">
@@ -406,6 +530,12 @@ export default function MegaMenu() {
                 <NavigationMenuLink asChild>
                   <Link
                     href="/services/property-solutions/property-management"
+                    aria-current={
+                      pathname ===
+                      "/services/property-solutions/property-management"
+                        ? "page"
+                        : undefined
+                    }
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="flex items-center">
@@ -420,6 +550,12 @@ export default function MegaMenu() {
                 <NavigationMenuLink asChild>
                   <Link
                     href="/services/property-solutions/sales-and-marketing"
+                    aria-current={
+                      pathname ===
+                      "/services/property-solutions/sales-and-marketing"
+                        ? "page"
+                        : undefined
+                    }
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="flex items-center">
@@ -434,6 +570,12 @@ export default function MegaMenu() {
                 <NavigationMenuLink asChild>
                   <Link
                     href="/services/property-solutions/property-rentals-and-shortlets"
+                    aria-current={
+                      pathname ===
+                      "/services/property-solutions/property-rentals-and-shortlets"
+                        ? "page"
+                        : undefined
+                    }
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="flex items-center">
@@ -448,6 +590,12 @@ export default function MegaMenu() {
                 <NavigationMenuLink asChild>
                   <Link
                     href="/services/property-solutions/property-sourcing"
+                    aria-current={
+                      pathname ===
+                      "/services/property-solutions/property-sourcing"
+                        ? "page"
+                        : undefined
+                    }
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="flex items-center">
@@ -468,6 +616,12 @@ export default function MegaMenu() {
                 <NavigationMenuLink asChild>
                   <Link
                     href="/services/advisory-and-enhancements/valuation-and-due-diligence"
+                    aria-current={
+                      pathname ===
+                      "/services/advisory-and-enhancements/valuation-and-due-diligence"
+                        ? "page"
+                        : undefined
+                    }
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="flex items-center">
@@ -482,6 +636,12 @@ export default function MegaMenu() {
                 <NavigationMenuLink asChild>
                   <Link
                     href="/services/advisory-and-enhancements/investment-advisory"
+                    aria-current={
+                      pathname ===
+                      "/services/advisory-and-enhancements/investment-advisory"
+                        ? "page"
+                        : undefined
+                    }
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="flex items-center">
@@ -496,6 +656,12 @@ export default function MegaMenu() {
                 <NavigationMenuLink asChild>
                   <Link
                     href="/services/advisory-and-enhancements/real-estate-consultancy"
+                    aria-current={
+                      pathname ===
+                      "/services/advisory-and-enhancements/real-estate-consultancy"
+                        ? "page"
+                        : undefined
+                    }
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="flex items-center">
@@ -510,6 +676,12 @@ export default function MegaMenu() {
                 <NavigationMenuLink asChild>
                   <Link
                     href="/services/advisory-and-enhancements/property-refurbishment-and-renovation"
+                    aria-current={
+                      pathname ===
+                      "/services/advisory-and-enhancements/property-refurbishment-and-renovation"
+                        ? "page"
+                        : undefined
+                    }
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="flex items-center">
@@ -524,6 +696,12 @@ export default function MegaMenu() {
                 <NavigationMenuLink asChild>
                   <Link
                     href="/services/advisory-and-enhancements/interior-design-and-furnishing"
+                    aria-current={
+                      pathname ===
+                      "/services/advisory-and-enhancements/interior-design-and-furnishing"
+                        ? "page"
+                        : undefined
+                    }
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="flex items-center">
@@ -540,8 +718,8 @@ export default function MegaMenu() {
         </NavigationMenuItem>
       </NavigationMenuList>
 
-      {/* Anchor the viewport under the active trigger (and keep it edge-aware) */}
-      <div className="absolute left-0 top-full flex w-full justify-start z-50 pointer-events-none">
+      {/* Anchor the viewport under the active trigger (edge-aware) */}
+      <div className="absolute left-0 top-full flex w-full justify-start z-[60] pointer-events-none">
         <NavigationMenuViewport
           className="
             pointer-events-auto
