@@ -141,7 +141,7 @@ export default function PropertiesPage() {
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <section
-        className="bg-[#b79243] text-white px-6 md:px-12 lg:px-24 py-16 flex flex-col lg:flex-row items-center justify-between gap-12"
+        className="bg-primary text-white px-6 md:px-12 lg:px-24 py-16 flex flex-col lg:flex-row items-center justify-between gap-12"
         aria-labelledby="hero-heading"
       >
         {/* Text Content */}
@@ -162,13 +162,13 @@ export default function PropertiesPage() {
           <div className="flex justify-center lg:justify-start gap-4">
             <Link
               href="/properties"
-              className="bg-white text-[#b79243] font-semibold px-5 py-2 rounded-lg shadow hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white transition"
+              className="bg-white text-[#b79243] font-semibold px-5 py-2 rounded-lg shadow hover:bg-gray-100 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-white transition"
             >
               Explore
             </Link>
             <Link
               href="/consult"
-              className="border border-white text-white font-semibold px-5 py-2 rounded-lg hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white transition"
+              className="border border-white text-white font-semibold px-5 py-2 rounded-lg hover:bg-white/10 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-white transition"
             >
               Consult
             </Link>
