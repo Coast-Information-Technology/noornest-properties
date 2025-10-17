@@ -1,7 +1,9 @@
-'use client';
+// components/ui/AnimatedCounter.tsx
 
-import { motion, useInView, useAnimation } from 'framer-motion';
-import { useRef, useEffect, useState } from 'react';
+"use client";
+
+import { motion, useInView, useAnimation } from "framer-motion";
+import { useRef, useEffect, useState } from "react";
 
 interface AnimatedCounterProps {
   value: number;
@@ -15,9 +17,9 @@ interface AnimatedCounterProps {
 export default function AnimatedCounter({
   value,
   duration = 2,
-  className = '',
-  prefix = '',
-  suffix = '',
+  className = "",
+  prefix = "",
+  suffix = "",
   decimals = 0,
 }: AnimatedCounterProps) {
   const ref = useRef(null);
@@ -40,11 +42,12 @@ export default function AnimatedCounter({
       const animate = () => {
         const elapsed = Date.now() - startTime;
         const progress = Math.min(elapsed / (duration * 1000), 1);
-        
+
         // Easing function for smooth animation
         const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-        const currentValue = startValue + (endValue - startValue) * easeOutQuart;
-        
+        const currentValue =
+          startValue + (endValue - startValue) * easeOutQuart;
+
         setDisplayValue(currentValue);
 
         if (progress < 1) {
@@ -57,11 +60,7 @@ export default function AnimatedCounter({
   }, [isInView, value, duration, controls]);
 
   return (
-    <motion.div
-      ref={ref}
-      animate={controls}
-      className={className}
-    >
+    <motion.div ref={ref} animate={controls} className={className}>
       {prefix}
       {displayValue.toFixed(decimals)}
       {suffix}
