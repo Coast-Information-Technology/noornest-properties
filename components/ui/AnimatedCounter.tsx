@@ -1,5 +1,4 @@
 // components/ui/AnimatedCounter.tsx
-
 "use client";
 
 import { motion, useInView, useAnimation } from "framer-motion";
@@ -22,41 +21,35 @@ export default function AnimatedCounter({
   suffix = "",
   decimals = 0,
 }: AnimatedCounterProps) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { threshold: 0.5 });
+  const ref = useRef<HTMLDivElement>(null);
+  // ✅ use amount (replaces threshold)
+  const isInView = useInView(ref, { amount: 0.5, once: false });
   const controls = useAnimation();
   const [displayValue, setDisplayValue] = useState(0);
 
   useEffect(() => {
-    if (isInView) {
-      controls.start({
-        scale: [1, 1.1, 1],
-        transition: { duration: 0.3 },
-      });
+    if (!isInView) return;
 
-      // Animate the counter
-      const startTime = Date.now();
-      const startValue = 0;
-      const endValue = value;
+    controls.start({
+      scale: [1, 1.1, 1],
+      transition: { duration: 0.3 },
+    });
 
-      const animate = () => {
-        const elapsed = Date.now() - startTime;
-        const progress = Math.min(elapsed / (duration * 1000), 1);
+    let rafId = 0;
+    const startTime = performance.now();
+    const startValue = 0;
+    const endValue = value;
 
-        // Easing function for smooth animation
-        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-        const currentValue =
-          startValue + (endValue - startValue) * easeOutQuart;
+    const tick = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / (duration * 1000), 1);
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      setDisplayValue(startValue + (endValue - startValue) * easeOutQuart);
+      if (progress < 1) rafId = requestAnimationFrame(tick);
+    };
 
-        setDisplayValue(currentValue);
-
-        if (progress < 1) {
-          requestAnimationFrame(animate);
-        }
-      };
-
-      requestAnimationFrame(animate);
-    }
+    rafId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId);
   }, [isInView, value, duration, controls]);
 
   return (
