@@ -4,86 +4,123 @@ import Newsletter from "@/components/layout/Newsletter";
 import TestimonialCarousel from "@/components/testimonial/TestimonialCarousel";
 import { Button } from "@/components/ui/button";
 import CTASection from "@/components/ui/CTASection";
-import { interiorTestimonials } from "@/data/testimonials";
+import {
+  interiorTestimonials,
+  propertyManagementTestimonials,
+} from "@/data/testimonials";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import {
-  Home,
-  ClipboardCheck,
-  BedDouble,
-  ClipboardList,
-  ChevronRight,
   UserCheck,
+  CreditCard,
+  Wrench,
+  ShieldCheck,
+  BarChart3,
+  Calendar,
+  ClipboardList,
+  ClipboardCheck,
+  ChevronRight,
 } from "lucide-react";
+
 import FAQSection from "@/components/ui/FAQSection";
 
 const services = [
   {
     id: 1,
     icon: <UserCheck className="w-10 h-10 text-white" aria-hidden="true" />,
-    title: "Tenant Matching",
+    title: "Tenant Screening & Placement",
     description:
-      "Connect with reliable, pre-screened renters to minimize vacancy and risk.",
-    image: "/services/tenant-matching.jpg",
+      "Find reliable tenants quickly with ID checks, references, and rental history.",
+    image: "/management/tenant-screening.jpg",
     actions: [
-      { label: "Find Tenants", href: "/find-tenants", variant: "primary" },
-      { label: "View Listings", href: "/listings", variant: "link" },
+      {
+        label: "Start Placement",
+        href: "/management/tenant-placement",
+        variant: "primary",
+      },
+      {
+        label: "Learn More",
+        href: "/management/tenant-placement/details",
+        variant: "link",
+      },
     ],
     colSpan: "md:col-span-2",
     rowSpan: "md:row-span-3",
   },
   {
     id: 2,
-    icon: <Home className="w-10 h-10 text-white" aria-hidden="true" />,
-    title: "Long-Term Rentals",
+    icon: <CreditCard className="w-10 h-10 text-white" aria-hidden="true" />,
+    title: "Rent Collection & Accounting",
     description:
-      "Secure stable income through fully managed long-term rental agreements.",
-    image: "/services/long-term-rentals.jpg",
+      "Timely payments with transparent statements and reconciled records.",
+    image: "/management/rent-collection.jpg",
     actions: [
-      { label: "List Property", href: "/list-property", variant: "primary" },
-      { label: "Learn More", href: "/rental-info", variant: "link" },
+      {
+        label: "Enable Collection",
+        href: "/management/rent-collection",
+        variant: "primary",
+      },
+      {
+        label: "View Sample Report",
+        href: "/management/reports/sample",
+        variant: "link",
+      },
     ],
     colSpan: "md:col-span-2",
     rowSpan: "md:row-span-2",
   },
   {
     id: 3,
-    icon: <BedDouble className="w-10 h-10 text-white" aria-hidden="true" />,
-    title: "Short-Lets & Holiday Stays",
+    icon: <Wrench className="w-10 h-10 text-white" aria-hidden="true" />,
+    title: "Maintenance & Repairs",
     description:
-      "Flexible short-term rental options, verified for safety and guest quality.",
-    image: "/services/short-lets.jpg",
+      "Proactive care via vetted contractors and responsive issue handling.",
+    image: "/management/maintenance.jpg",
     actions: [
-      { label: "Get Started", href: "/short-lets", variant: "primary" },
-      { label: "View Options", href: "/holiday-stays", variant: "link" },
+      {
+        label: "Book a Repair",
+        href: "/management/maintenance",
+        variant: "primary",
+      },
+      {
+        label: "Service Standards",
+        href: "/management/maintenance/standards",
+        variant: "link",
+      },
     ],
     colSpan: "md:col-span-2",
     rowSpan: "md:row-span-3",
   },
   {
     id: 4,
-    icon: <ClipboardList className="w-10 h-10 text-white" aria-hidden="true" />,
-    title: "Lease Management",
+    icon: <ShieldCheck className="w-10 h-10 text-white" aria-hidden="true" />,
+    title: "Inspections & Compliance",
     description:
-      "We handle contracts, renewals, and compliance so you stay stress-free.",
-    image: "/services/lease-management.jpg",
+      "Regular inspections and UK regulation checks to keep you compliant.",
+    image: "/management/compliance.jpg",
     actions: [
-      { label: "Manage Lease", href: "/manage-lease", variant: "primary" },
+      {
+        label: "Schedule Inspection",
+        href: "/management/inspections",
+        variant: "primary",
+      },
     ],
     rowSpan: "md:row-span-2",
   },
   {
     id: 5,
-    icon: (
-      <ClipboardCheck className="w-10 h-10 text-white" aria-hidden="true" />
-    ),
-    title: "Verified Listings",
+    icon: <BarChart3 className="w-10 h-10 text-white" aria-hidden="true" />,
+    title: "Owner Reporting",
     description:
-      "Every rental is checked for authenticity and safety — peace of mind for landlords and tenants.",
-    image: "/services/verified-listings.jpg",
+      "Monthly statements and dashboards with full rent & expense visibility.",
+    image: "/management/owner-reporting.jpg",
     actions: [
-      { label: "Verify Listing", href: "/verify-listing", variant: "primary" },
+      {
+        label: "See Dashboards",
+        href: "/management/reporting",
+        variant: "primary",
+      },
     ],
     rowSpan: "md:row-span-2",
   },
@@ -91,49 +128,51 @@ const services = [
 
 const faqData = [
   {
-    question: "Do you handle both short-term and long-term rentals?",
+    question: "What types of properties do you manage?",
     answer:
-      "Yes, we support both long-term leases and flexible short-let stays.",
+      "We manage residential, multi-unit, and small commercial properties across the UK.",
   },
   {
-    question: "How do you screen tenants?",
+    question: "How much does property management cost?",
     answer:
-      "We verify tenant identities, rental history, and references before placement.",
+      "Fees start from 8% of monthly rent, with tailored plans for larger portfolios.",
   },
   {
-    question: "Can you manage rent collection?",
+    question: "Do you handle tenant disputes and evictions?",
     answer:
-      "Yes — our Professional and Premium plans include rent collection support.",
+      "Yes. Our Professional and Premium plans cover legal notices and tenant management support.",
   },
   {
-    question: "Do you handle furnished rentals?",
+    question: "Can I get reports on my property performance?",
     answer:
-      "Absolutely. We manage both furnished and unfurnished properties seamlessly.",
+      "Yes—monthly owner statements include rent, expenses, and key notes for full visibility.",
   },
   {
-    question: "What locations do you cover?",
+    question: "Is the consultation really free?",
     answer:
-      "We cover rentals across major UK cities, with ongoing regional expansion.",
+      "Yes. Your first consultation is completely free with no obligations.",
   },
 ];
 
 const steps = [
   {
+    icon: <Calendar className="w-7 h-7 text-yellow-700" aria-hidden="true" />,
+    title: "Schedule a Consultation",
+    desc: "Tell us about your property and goals.",
+  },
+  {
     icon: (
       <ClipboardList className="w-7 h-7 text-yellow-700" aria-hidden="true" />
     ),
-    title: "List Your Property",
-    desc: "Share your property details and preferences to get started.",
+    title: "Custom Management Plan",
+    desc: "We design the right package for your needs.",
   },
   {
-    icon: <UserCheck className="w-7 h-7 text-yellow-700" aria-hidden="true" />,
-    title: "Find the Right Tenant",
-    desc: "We vet and connect you with serious, verified renters.",
-  },
-  {
-    icon: <Home className="w-7 h-7 text-yellow-700" aria-hidden="true" />,
-    title: "Secure Your Rental",
-    desc: "Lease agreements, payments, and ongoing support — all managed for you.",
+    icon: (
+      <ClipboardCheck className="w-7 h-7 text-yellow-700" aria-hidden="true" />
+    ),
+    title: "Ongoing Care",
+    desc: "We manage, monitor, and report—end to end.",
   },
 ];
 
@@ -142,77 +181,73 @@ const PropertyManagementPage = () => {
 
   const monthlyPlans = [
     {
-      title: "Basic Rental Plan",
-      subtitle: "For single landlords",
-      price: "From £199 per listing",
-      features: [
-        "Standard listing on Noornest",
-        "Basic tenant screening",
-        "Lease template support",
-      ],
-      button: "List Now",
-    },
-    {
-      title: "Professional Rental Plan",
-      subtitle: "For active landlords & small portfolios",
+      title: "Essential Plan",
       price: "From 8% of monthly rent",
       features: [
-        "Premium listing placement",
-        "Enhanced tenant vetting",
-        "Full lease management",
-        "Rent collection support",
+        "Tenant sourcing & placement",
+        "Rent collection",
+        "Basic maintenance coordination",
+        "Monthly owner statements",
       ],
-      button: "Start Plan",
+      button: "Book a Free Consultation",
     },
     {
-      title: "Premium Rental & Short-Let Plan",
-      subtitle: "For developers & serviced apartments",
+      title: "Professional Plan",
+      price: "From 10% of monthly rent",
+      features: [
+        "Everything in Essential",
+        "Full maintenance & contractor management",
+        "Quarterly inspections & compliance checks",
+        "Legal notices handled",
+      ],
+      button: "Book a Free Consultation",
+    },
+    {
+      title: "Premium Plan",
       price: "Custom pricing",
       features: [
-        "All Professional features",
-        "Short-let promotion (Airbnb-style visibility)",
-        "Professional photography & staging",
-        "Dedicated rental manager",
+        "Everything in Professional",
+        "Dedicated account manager",
+        "Annual portfolio review",
+        "Tailored reporting & advisory",
       ],
-      button: "Book Consultation",
+      button: "Book a Free Consultation",
     },
   ];
 
   const yearlyPlans = [
     {
-      title: "Basic Rental Plan",
-      subtitle: "For single landlords",
-      price: "From £199 per listing per year",
+      title: "Essential Plan (Annual)",
+      price: "From 8% monthly (annual contract)",
       features: [
-        "Standard Noornest listing",
-        "Basic tenant screening (annual access)",
-        "Lease template & renewal support",
+        "Tenant sourcing & placement",
+        "Rent collection",
+        "Basic maintenance coordination",
+        "Monthly owner statements",
       ],
-      button: "Subscribe Yearly",
+      button: "Book a Free Consultation",
     },
     {
-      title: "Professional Rental Plan",
-      subtitle: "For active landlords & portfolios",
-      price: "From 8% of annual rent",
+      title: "Professional Plan (Annual)",
+      price: "From 10% monthly (annual contract)",
       features: [
-        "Premium annual listing visibility",
-        "Enhanced tenant vetting & renewal management",
-        "Full lease management system",
-        "Automated rent collection support",
+        "Everything in Essential",
+        "Full maintenance & contractor management",
+        "Quarterly inspections & compliance checks",
+        "Legal notices handled",
       ],
-      button: "Choose Plan",
+      button: "Book a Free Consultation",
     },
     {
-      title: "Premium Rental & Short-Let Plan",
-      subtitle: "For developers & serviced apartments",
-      price: "Custom yearly pricing",
+      title: "Premium Plan (Annual)",
+      price: "Custom pricing",
       features: [
-        "All Professional benefits for 12 months",
-        "Short-let visibility on partner platforms",
-        "Professional photography & staging (annual refresh)",
-        "Dedicated rental manager & marketing support",
+        "Everything in Professional",
+        "Dedicated account manager",
+        "Annual portfolio review",
+        "Tailored reporting & advisory",
       ],
-      button: "Get Quote",
+      button: "Book a Free Consultation",
     },
   ];
 
@@ -235,13 +270,13 @@ const PropertyManagementPage = () => {
           {/* Top Section with Text and Buttons */}
           <div className="flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
             <h1 className="text-3xl md:text-5xl font-bold text-white leading-tight mb-4">
-              Design That Inspires. <br />
-              Interiors That Add Value.
+              Stress-Free Property Management <br />
+              You Can Trust
             </h1>
             <p className="text-base text-white max-w-2xl mb-8">
-              From concept to completion, Noornest transforms spaces with
-              professional interior design and furnishing solutions that blend
-              style, function, and investment value.
+              From tenant sourcing to rent collection and compliance, Noornest
+              manages your property like it’s our own — so you enjoy consistent
+              returns without the hassle.
             </p>
             <Link
               href="/booking"
@@ -272,13 +307,12 @@ const PropertyManagementPage = () => {
 
       <section className="bg-white text-center py-12 lg:py-16 px-8 md:px-16 w-full">
         <h2 className="text-3xl md:text-4xl font-bold text-primary leading-snug mb-3">
-          Design beyond aesthetics
+          Management
         </h2>
         <p className="text-gray-600 md:max-w-3xl mx-auto">
-          Great design is about more than looks — it’s about creating spaces
-          that work for people and add measurable value. Whether you’re styling
-          a home for sale, furnishing a rental, or creating your dream living
-          space, Noornest’s interior design service delivers results.
+          Managing property takes time, effort, and expertise. With Noornest,
+          you gain a dedicated partner who keeps your property profitable, your
+          tenants happy, and your investments secure.
         </p>
       </section>
 
@@ -383,7 +417,7 @@ const PropertyManagementPage = () => {
                 id="why-noornest-heading"
                 className="text-3xl md:text-4xl font-bold text-primary leading-tight"
               >
-                Why choose Noornest <br /> interiors
+                Why choose Noornest <br /> Property Management
               </h2>
             </div>
 
@@ -392,34 +426,21 @@ const PropertyManagementPage = () => {
               className="list-disc text-gray-700 text-sm md:text-base pl-5 space-y-3 text-left"
             >
               <li role="listitem">
-                <strong>Style Meets Function:</strong> Designs that look great
-                and work in real life.
+                <strong>Trusted & Verified:</strong> Transparent processes and
+                clear records.
               </li>
               <li role="listitem">
-                <strong>Value-Focused:</strong> Interiors that boost sales &
-                rental appeal.
+                <strong>End-to-End Coverage:</strong> From move-in to move-out.
               </li>
               <li role="listitem">
-                <strong>Tailored Packages:</strong> From budget-friendly
-                furnishing to bespoke design.
+                <strong>Tailored for You:</strong> Flexible options for
+                landlords & investors.
               </li>
               <li role="listitem">
-                <strong>Full Service:</strong> Design, sourcing, logistics, and
-                setup handled for you.
+                <strong>Peace of Mind:</strong> You focus on returns, we handle
+                the work.
               </li>
             </ul>
-
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4">
-              <Link href="/explore" aria-label="Explore Noornest interiors">
-                <Button>Explore</Button>
-              </Link>
-
-              <Link href="/get-started" aria-label="Get started with Noornest">
-                <Button variant="ghost" className="flex items-center gap-2">
-                  Get Started <ChevronRight size={18} aria-hidden="true" />
-                </Button>
-              </Link>
-            </div>
           </div>
 
           {/* Right Column - Image collage */}
@@ -621,7 +642,7 @@ const PropertyManagementPage = () => {
 
       {/* Testimonial Section */}
       <TestimonialCarousel
-        testimonials={interiorTestimonials}
+        testimonials={propertyManagementTestimonials}
         title="Testimonial"
         backgroundColor="bg-purple-50"
         cardBackgroundColor="#EADBC8"
@@ -633,8 +654,7 @@ const PropertyManagementPage = () => {
 
       {/* CTA Section */}
       <CTASection
-        title="Create spaces that sell and inspire"
-        description="Transform your property with design that adds real value and tells a compelling story."
+        title="Ready to Take the Stress Out of Property Management?"
         primaryButton={{
           text: "Book a consultation",
           href: "/properties",

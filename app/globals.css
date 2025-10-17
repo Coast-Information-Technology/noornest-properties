@@ -8,8 +8,6 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-open-sans);
-  --font-mono: var(--font-open-sans);
   --font-roboto: var(--font-roboto);
   --font-montserrat: var(--font-montserrat);
   --color-sidebar-ring: var(--sidebar-ring);

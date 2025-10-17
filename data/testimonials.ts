@@ -196,3 +196,75 @@ export const dueDiligenceTestimonials = [
     image: "/interior/sophia.png",
   },
 ];
+
+export const sourcingTestimonials = [
+  {
+    quote:
+      "Noornest found me a property I never would’ve discovered on my own — fully vetted and at a price that made sense.",
+    author: "Daniel G.",
+    role: "Investor",
+    image: "/sourcing/daniel.png",
+  },
+  {
+    quote:
+      "The shortlist hit my brief perfectly, and their negotiation support saved me thousands.",
+    author: "Priya S.",
+    role: "First-time Buyer",
+    image: "/sourcing/priya.png",
+  },
+  {
+    quote:
+      "Clear analysis, fast due diligence, and smooth completion. Exactly the sourcing partner I needed.",
+    author: "Mark A.",
+    role: "Landlord",
+    image: "/sourcing/mark.png",
+  },
+];
+
+export const propertyManagementTestimonials = [
+  {
+    quote:
+      "Noornest transformed how I manage my rentals — rent is on time, tenants are happy, and I don’t worry about maintenance anymore.",
+    author: "James W.",
+    role: "Landlord",
+    image: "/management/james.png",
+  },
+  {
+    quote:
+      "Quarterly inspections and clear reports give me peace of mind. The team handles issues before they become problems.",
+    author: "Helen C.",
+    role: "Portfolio Owner",
+    image: "/management/helen.png",
+  },
+  {
+    quote:
+      "Their tenant placement and compliance support are top-notch. I saved time and avoided legal headaches.",
+    author: "Arjun B.",
+    role: "Investor",
+    image: "/management/arjun.png",
+  },
+];
+
+export const salesTestimonials = [
+  {
+    quote:
+      "Listing my property with Noornest was seamless. Within a week, I had multiple serious enquiries, and the sale process felt transparent and stress-free.",
+    author: "James W.",
+    role: "Seller",
+    image: "/sales/james.png",
+  },
+  {
+    quote:
+      "The valuation support and marketing visuals were top-tier. We attracted the right buyers quickly and negotiated confidently.",
+    author: "Lara C.",
+    role: "Homeowner",
+    image: "/sales/lara.png",
+  },
+  {
+    quote:
+      "As an agent, I appreciated the analytics and premium placement—my listing visibility noticeably improved.",
+    author: "Michael D.",
+    role: "Estate Agent",
+    image: "/sales/michael.png",
+  },
+];

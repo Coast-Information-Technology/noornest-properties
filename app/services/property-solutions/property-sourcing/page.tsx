@@ -4,116 +4,151 @@ import Newsletter from "@/components/layout/Newsletter";
 import TestimonialCarousel from "@/components/testimonial/TestimonialCarousel";
 import { Button } from "@/components/ui/button";
 import CTASection from "@/components/ui/CTASection";
-import { interiorTestimonials } from "@/data/testimonials";
+import {
+  interiorTestimonials,
+  sourcingTestimonials,
+} from "@/data/testimonials";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import {
-  Palette,
-  Home,
-  ClipboardCheck,
-  BedDouble,
-  ClipboardList,
-  ChevronRight,
+  Search,
+  ListChecks,
+  ShieldCheck,
+  HandCoins,
+  BarChart3,
   MessageSquare,
-  Truck,
+  FileCheck2,
+  ClipboardCheck,
+  ChevronRight,
 } from "lucide-react";
 import FAQSection from "@/components/ui/FAQSection";
 
 const services = [
   {
     id: 1,
-    icon: <Palette className="w-10 h-10 text-white" aria-hidden="true" />,
-    title: "Interior Design Concepts",
+    icon: <Search className="w-10 h-10 text-white" aria-hidden="true" />,
+    title: "Market Research",
     description:
-      "Bespoke design concepts that balance style, functionality, and long-term property value.",
-    image: "/services/interior-design.jpg",
+      "Identify properties that match your budget, location, and requirements.",
+    image: "/sourcing/market-research.jpg",
     actions: [
-      { label: "View Concepts", href: "/concepts", variant: "primary" },
-      { label: "Start Design", href: "/start-design", variant: "link" },
+      {
+        label: "Start Research",
+        href: "/sourcing/market-research",
+        variant: "primary",
+      },
+      {
+        label: "How It Works",
+        href: "/sourcing/market-research/how-it-works",
+        variant: "link",
+      },
     ],
     colSpan: "md:col-span-2",
     rowSpan: "md:row-span-3",
   },
   {
     id: 2,
-    icon: <BedDouble className="w-10 h-10 text-white" aria-hidden="true" />,
-    title: "Furnishing Solutions",
+    icon: <ListChecks className="w-10 h-10 text-white" aria-hidden="true" />,
+    title: "Property Shortlisting",
     description:
-      "Curated furniture packages — full or partial — crafted for homes and rental properties.",
-    image: "/services/furnishing-solution.jpg",
+      "Filter and present only the best-fit options tailored to your goals.",
+    image: "/sourcing/shortlisting.jpg",
     actions: [
-      { label: "Explore Packages", href: "/packages", variant: "primary" },
-      { label: "Get Quote", href: "/quote", variant: "link" },
+      {
+        label: "View Shortlist",
+        href: "/sourcing/shortlist",
+        variant: "primary",
+      },
+      {
+        label: "Get Advice",
+        href: "/sourcing/shortlist/advice",
+        variant: "link",
+      },
     ],
     colSpan: "md:col-span-2",
     rowSpan: "md:row-span-2",
   },
   {
     id: 3,
-    icon: <Home className="w-10 h-10 text-white" aria-hidden="true" />,
-    title: "Home Staging",
+    icon: <ShieldCheck className="w-10 h-10 text-white" aria-hidden="true" />,
+    title: "Due Diligence Checks",
     description:
-      "Professional staging that attracts buyers, shortens sales time, and increases property value.",
-    image: "/services/home-staging.jpg",
+      "Ownership, documentation, and legal verification before you commit.",
+    image: "/sourcing/due-diligence.jpg",
     actions: [
-      { label: "Stage Property", href: "/staging", variant: "primary" },
-      { label: "Learn More", href: "/learn-more", variant: "link" },
+      {
+        label: "Run Checks",
+        href: "/sourcing/due-diligence",
+        variant: "primary",
+      },
+      {
+        label: "Learn More",
+        href: "/sourcing/due-diligence/details",
+        variant: "link",
+      },
     ],
     colSpan: "md:col-span-2",
     rowSpan: "md:row-span-3",
   },
   {
     id: 4,
-    icon: <ClipboardList className="w-10 h-10 text-white" aria-hidden="true" />,
-    title: "Rental-Ready Fit-Outs",
+    icon: <HandCoins className="w-10 h-10 text-white" aria-hidden="true" />,
+    title: "Negotiation Support",
     description:
-      "Durable, stylish interiors tailored for both short-let and long-term rental markets.",
-    image: "/services/rental-ready.jpg",
+      "We help secure fair pricing, terms, and timelines for your purchase.",
+    image: "/sourcing/negotiation.jpg",
     actions: [
-      { label: "Request Plan", href: "/request-plan", variant: "primary" },
+      {
+        label: "Negotiate with Us",
+        href: "/sourcing/negotiation",
+        variant: "primary",
+      },
     ],
     rowSpan: "md:row-span-2",
   },
   {
     id: 5,
-    icon: (
-      <ClipboardCheck className="w-10 h-10 text-white" aria-hidden="true" />
-    ),
-    title: "End-to-End Management",
+    icon: <BarChart3 className="w-10 h-10 text-white" aria-hidden="true" />,
+    title: "Investment Analysis",
     description:
-      "Complete service from concept boards to final installation, managed seamlessly.",
-    image: "/services/end-to-end.jpg",
-    actions: [{ label: "View Process", href: "/process", variant: "primary" }],
+      "ROI, rental yield, and long-term growth potential—clearly modelled.",
+    image: "/sourcing/investment-analysis.jpg",
+    actions: [
+      {
+        label: "Get an Analysis",
+        href: "/sourcing/investment-analysis",
+        variant: "primary",
+      },
+    ],
     rowSpan: "md:row-span-2",
   },
 ];
 
 const faqData = [
   {
-    question: "Do you design both homes and rental properties?",
+    question: "Who is property sourcing for?",
     answer:
-      "Yes, we handle residential homes, rentals, and short-let properties.",
+      "For buyers and investors who want expert help finding and securing properties.",
   },
   {
-    question: "Can you provide furniture packages?",
+    question: "Do you source only in the UK?",
     answer:
-      "Absolutely. We offer curated furniture packages for homes, rentals, and corporate spaces.",
+      "Yes, our current focus is UK markets, with global expansion in the future.",
   },
   {
-    question: "Do you work with developers?",
+    question: "Do you negotiate on my behalf?",
     answer:
-      "Yes, we collaborate with developers to design and furnish show units and investment properties.",
+      "Yes, we provide negotiation support and advice to help you secure the best deal.",
   },
   {
-    question: "How long does a project take?",
-    answer:
-      "Timelines vary by scope, but most projects take between 4 to 10 weeks from concept to completion.",
+    question: "How long does sourcing take?",
+    answer: "Typically 2–4 weeks, depending on your requirements.",
   },
   {
     question: "Is the consultation free?",
     answer:
-      "Yes, your initial consultation is free. It helps us understand your goals and propose tailored solutions.",
+      "Yes — your first sourcing consultation is free, with no obligations.",
   },
 ];
 
@@ -122,18 +157,20 @@ const steps = [
     icon: (
       <MessageSquare className="w-7 h-7 text-yellow-700" aria-hidden="true" />
     ),
-    title: "Consult & Plan",
-    desc: "Discuss your style, goals, and budget.",
+    title: "Tell Us Your Goals",
+    desc: "Share budget, location, and property type.",
   },
   {
-    icon: <Palette className="w-7 h-7 text-yellow-700" aria-hidden="true" />,
-    title: "Design & Curate",
-    desc: "We create concepts, source furniture, and plan the layout.",
+    icon: <FileCheck2 className="w-7 h-7 text-yellow-700" aria-hidden="true" />,
+    title: "We Source & Verify",
+    desc: "Receive a tailored shortlist with due diligence.",
   },
   {
-    icon: <Truck className="w-7 h-7 text-yellow-700" aria-hidden="true" />,
-    title: "Deliver & Style",
-    desc: "Full setup and finishing touches handled by our team.",
+    icon: (
+      <ClipboardCheck className="w-7 h-7 text-yellow-700" aria-hidden="true" />
+    ),
+    title: "Secure Your Property",
+    desc: "Negotiate and close with confidence.",
   },
 ];
 
@@ -142,71 +179,71 @@ const PropertySourcingPage = () => {
 
   const monthlyPlans = [
     {
-      title: "Furnishing essentials",
-      price: "£2,000",
+      title: "Starter Package",
+      price: "From £499",
       features: [
-        "Basic furniture package",
-        "Functional rental designs",
-        "Quick installation",
+        "Needs assessment",
+        "3–5 shortlisted properties",
+        "Basic due diligence checks",
       ],
-      button: "Start now",
+      button: "Book a Sourcing Consultation",
     },
     {
-      title: "Home staging",
-      price: "£3,500",
+      title: "Investor Package",
+      price: "From £999",
       features: [
-        "Property listing optimization",
-        "Professional styling",
-        "Photography preparation",
-        "Market ready",
+        "Needs assessment",
+        "5–10 shortlisted properties",
+        "ROI & rental yield analysis",
+        "Negotiation support",
       ],
-      button: "Explore package",
+      button: "Book a Sourcing Consultation",
     },
     {
-      title: "Bespoke design",
-      price: "Custom",
+      title: "Premium Sourcing",
+      price: "Custom pricing",
       features: [
-        "Full consultation",
-        "Custom furniture sourcing",
-        "Unique design approach",
-        "Dedicated consultant",
-        "Personalized experience",
+        "Full market scan",
+        "10+ property shortlist",
+        "End-to-end sourcing & due diligence",
+        "Negotiations & dedicated consultant",
       ],
-      button: "Get started",
+      button: "Book a Sourcing Consultation",
     },
   ];
 
   const yearlyPlans = [
     {
-      title: "Furnishing Essentials",
-      price: "From £2,000",
+      title: "Starter Package (Annual)",
+      price: "From £499",
       features: [
-        "Basic furniture package",
-        "Functional & durable styles",
-        "Delivered & installed",
+        "Needs assessment",
+        "3–5 shortlisted properties",
+        "Basic due diligence checks",
       ],
-      button: "Start now",
+      button: "Book a Sourcing Consultation",
     },
     {
-      title: "Home Staging Package",
-      price: "From £3,500",
+      title: "Investor Package (Annual)",
+      price: "From £999",
       features: [
-        "Interior styling for show homes & listings",
-        "Accessory & décor setup",
-        "Photography-ready finish",
+        "Needs assessment",
+        "5–10 shortlisted properties",
+        "ROI & rental yield analysis",
+        "Negotiation support",
       ],
-      button: "Explore package",
+      button: "Book a Sourcing Consultation",
     },
     {
-      title: "Premium Bespoke Design",
+      title: "Premium Sourcing (Annual)",
       price: "Custom pricing",
       features: [
-        "Full interior design consultation",
-        "Custom furniture sourcing",
-        "Bespoke finishes & décor",
-        "Dedicated design consultant",
+        "Full market scan",
+        "10+ property shortlist",
+        "End-to-end sourcing & diligence",
+        "Negotiations & dedicated consultant",
       ],
-      button: "Get started",
+      button: "Book a Sourcing Consultation",
     },
   ];
 
@@ -266,13 +303,13 @@ const PropertySourcingPage = () => {
 
       <section className="bg-white text-center py-12 lg:py-16 px-8 md:px-16 w-full">
         <h2 className="text-3xl md:text-4xl font-bold text-primary leading-snug mb-3">
-          Design beyond aesthetics
+          Property Sourcing Partner
         </h2>
         <p className="text-gray-600 md:max-w-3xl mx-auto">
-          Great design is about more than looks — it’s about creating spaces
-          that work for people and add measurable value. Whether you’re styling
-          a home for sale, furnishing a rental, or creating your dream living
-          space, Noornest’s interior design service delivers results.
+          Searching for the perfect property can be time-consuming and
+          overwhelming. With our sourcing service, Noornest acts as your
+          property partner — identifying, evaluating, and negotiating on your
+          behalf, ensuring every opportunity is aligned with your goals.
         </p>
       </section>
 
@@ -377,7 +414,7 @@ const PropertySourcingPage = () => {
                 id="why-noornest-heading"
                 className="text-3xl md:text-4xl font-bold text-primary leading-tight"
               >
-                Why choose Noornest <br /> interiors
+                Why choose Noornest <br /> Property Sourcing
               </h2>
             </div>
 
@@ -386,34 +423,22 @@ const PropertySourcingPage = () => {
               className="list-disc text-gray-700 text-sm md:text-base pl-5 space-y-3 text-left"
             >
               <li role="listitem">
-                <strong>Style Meets Function:</strong> Designs that look great
-                and work in real life.
+                <strong>Tailored Search: </strong> We find properties that fit
+                you — not generic results.
               </li>
               <li role="listitem">
-                <strong>Value-Focused:</strong> Interiors that boost sales &
-                rental appeal.
+                <strong>Trusted & Verified:</strong> Every recommendation is
+                backed by due diligence.
               </li>
               <li role="listitem">
-                <strong>Tailored Packages:</strong> From budget-friendly
-                furnishing to bespoke design.
+                <strong>Save Time & Money:</strong> We handle the research and
+                negotiations.
               </li>
               <li role="listitem">
-                <strong>Full Service:</strong> Design, sourcing, logistics, and
-                setup handled for you.
+                <strong>Expert Insight:</strong> Access our team’s experience
+                and market knowledge.
               </li>
             </ul>
-
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4">
-              <Link href="/explore" aria-label="Explore Noornest interiors">
-                <Button>Explore</Button>
-              </Link>
-
-              <Link href="/get-started" aria-label="Get started with Noornest">
-                <Button variant="ghost" className="flex items-center gap-2">
-                  Get Started <ChevronRight size={18} aria-hidden="true" />
-                </Button>
-              </Link>
-            </div>
           </div>
 
           {/* Right Column - Image collage */}
@@ -615,7 +640,7 @@ const PropertySourcingPage = () => {
 
       {/* Testimonial Section */}
       <TestimonialCarousel
-        testimonials={interiorTestimonials}
+        testimonials={sourcingTestimonials}
         title="Testimonial"
         backgroundColor="bg-purple-50"
         cardBackgroundColor="#EADBC8"
@@ -627,13 +652,18 @@ const PropertySourcingPage = () => {
 
       {/* CTA Section */}
       <CTASection
-        title="Create spaces that sell and inspire"
-        description="Transform your property with design that adds real value and tells a compelling story."
+        title="Ready to Find Your Next Property with Noornest?"
+        description="Our expert sourcing team is here to help you discover and secure the perfect investment opportunity."
         primaryButton={{
-          text: "Book a consultation",
+          text: "Property Sourcing",
           href: "/properties",
           className:
             "bg-black hover:bg-black/90 hover:shadow-lg hover:shadow-black/25",
+        }}
+        secondaryButton={{
+          text: "Book a consultation",
+          href: "/booking",
+          className: "text-primary hover:shadow-lg hover:shadow-black/25",
         }}
         backgroundColor="bg-primary"
         className="text-white"

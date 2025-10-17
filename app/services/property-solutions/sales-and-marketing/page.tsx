@@ -4,136 +4,165 @@ import Newsletter from "@/components/layout/Newsletter";
 import TestimonialCarousel from "@/components/testimonial/TestimonialCarousel";
 import { Button } from "@/components/ui/button";
 import CTASection from "@/components/ui/CTASection";
-import { interiorTestimonials } from "@/data/testimonials";
+import { interiorTestimonials, salesTestimonials } from "@/data/testimonials";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import {
-  Palette,
-  Home,
-  ClipboardCheck,
-  BedDouble,
+  Camera,
+  Megaphone,
+  Tags,
+  UserCheck,
+  BarChart3,
   ClipboardList,
+  Rocket,
+  BadgeCheck,
   ChevronRight,
-  MessageSquare,
-  Truck,
 } from "lucide-react";
 import FAQSection from "@/components/ui/FAQSection";
 
 const services = [
   {
     id: 1,
-    icon: <Palette className="w-10 h-10 text-white" aria-hidden="true" />,
-    title: "Interior Design Concepts",
+    icon: <Camera className="w-10 h-10 text-white" aria-hidden="true" />,
+    title: "High-Impact Listings",
     description:
-      "Bespoke design concepts that balance style, functionality, and long-term property value.",
-    image: "/services/interior-design.jpg",
+      "Professional photography, video tours, and floor plans that make your property stand out.",
+    image: "/sales/high-impact-listing.jpg",
     actions: [
-      { label: "View Concepts", href: "/concepts", variant: "primary" },
-      { label: "Start Design", href: "/start-design", variant: "link" },
+      {
+        label: "Create My Listing",
+        href: "/sales/listing",
+        variant: "primary",
+      },
+      {
+        label: "View Examples",
+        href: "/sales/listing/examples",
+        variant: "link",
+      },
     ],
     colSpan: "md:col-span-2",
     rowSpan: "md:row-span-3",
   },
   {
     id: 2,
-    icon: <BedDouble className="w-10 h-10 text-white" aria-hidden="true" />,
-    title: "Furnishing Solutions",
+    icon: <Megaphone className="w-10 h-10 text-white" aria-hidden="true" />,
+    title: "Targeted Marketing",
     description:
-      "Curated furniture packages — full or partial — crafted for homes and rental properties.",
-    image: "/services/furnishing-solution.jpg",
+      "Digital campaigns across social and buyer networks to reach the right audience fast.",
+    image: "/sales/targeted-marketing.jpg",
     actions: [
-      { label: "Explore Packages", href: "/packages", variant: "primary" },
-      { label: "Get Quote", href: "/quote", variant: "link" },
+      {
+        label: "Launch Campaign",
+        href: "/sales/marketing",
+        variant: "primary",
+      },
+      {
+        label: "Channel Strategy",
+        href: "/sales/marketing/channels",
+        variant: "link",
+      },
     ],
     colSpan: "md:col-span-2",
     rowSpan: "md:row-span-2",
   },
   {
     id: 3,
-    icon: <Home className="w-10 h-10 text-white" aria-hidden="true" />,
-    title: "Home Staging",
+    icon: <Tags className="w-10 h-10 text-white" aria-hidden="true" />,
+    title: "Property Valuation Support",
     description:
-      "Professional staging that attracts buyers, shortens sales time, and increases property value.",
-    image: "/services/home-staging.jpg",
+      "Data-led pricing strategies that attract serious offers without underselling.",
+    image: "/sales/valuation-support.jpg",
     actions: [
-      { label: "Stage Property", href: "/staging", variant: "primary" },
-      { label: "Learn More", href: "/learn-more", variant: "link" },
+      {
+        label: "Get Valuation Help",
+        href: "/sales/valuation",
+        variant: "primary",
+      },
+      {
+        label: "Pricing Guide",
+        href: "/sales/valuation/guide",
+        variant: "link",
+      },
     ],
     colSpan: "md:col-span-2",
     rowSpan: "md:row-span-3",
   },
   {
     id: 4,
-    icon: <ClipboardList className="w-10 h-10 text-white" aria-hidden="true" />,
-    title: "Rental-Ready Fit-Outs",
+    icon: <UserCheck className="w-10 h-10 text-white" aria-hidden="true" />,
+    title: "Buyer Matching",
     description:
-      "Durable, stylish interiors tailored for both short-let and long-term rental markets.",
-    image: "/services/rental-ready.jpg",
+      "Connect with verified, pre-screened buyers interested in your property type.",
+    image: "/sales/buyer-matching.jpg",
     actions: [
-      { label: "Request Plan", href: "/request-plan", variant: "primary" },
+      {
+        label: "Match Buyers",
+        href: "/sales/buyer-matching",
+        variant: "primary",
+      },
     ],
     rowSpan: "md:row-span-2",
   },
   {
     id: 5,
-    icon: (
-      <ClipboardCheck className="w-10 h-10 text-white" aria-hidden="true" />
-    ),
-    title: "End-to-End Management",
+    icon: <BarChart3 className="w-10 h-10 text-white" aria-hidden="true" />,
+    title: "Performance Tracking",
     description:
-      "Complete service from concept boards to final installation, managed seamlessly.",
-    image: "/services/end-to-end.jpg",
-    actions: [{ label: "View Process", href: "/process", variant: "primary" }],
+      "Transparent reports on views, enquiries, and offers—see what’s working in real time.",
+    image: "/sales/performance-tracking.jpg",
+    actions: [
+      { label: "View Reports", href: "/sales/analytics", variant: "primary" },
+    ],
     rowSpan: "md:row-span-2",
   },
 ];
 
 const faqData = [
   {
-    question: "Do you design both homes and rental properties?",
+    question: "How quickly can you list my property?",
     answer:
-      "Yes, we handle residential homes, rentals, and short-let properties.",
+      "Most properties go live within 48 hours once we have all details and photos.",
   },
   {
-    question: "Can you provide furniture packages?",
+    question: "Do you handle negotiations?",
     answer:
-      "Absolutely. We offer curated furniture packages for homes, rentals, and corporate spaces.",
+      "Yes, we assist in connecting you with buyers and guiding offers transparently.",
   },
   {
-    question: "Do you work with developers?",
+    question: "What types of properties can you market?",
     answer:
-      "Yes, we collaborate with developers to design and furnish show units and investment properties.",
+      "We handle apartments, houses, land, commercial units, and developer projects.",
   },
   {
-    question: "How long does a project take?",
+    question: "Can I upgrade my plan later?",
     answer:
-      "Timelines vary by scope, but most projects take between 4 to 10 weeks from concept to completion.",
+      "Yes — you can upgrade at any time to access premium marketing services.",
   },
   {
-    question: "Is the consultation free?",
+    question: "Do you charge commission?",
     answer:
-      "Yes, your initial consultation is free. It helps us understand your goals and propose tailored solutions.",
+      "We offer flexible flat-fee and commission-based options depending on the package.",
   },
 ];
 
 const steps = [
   {
     icon: (
-      <MessageSquare className="w-7 h-7 text-yellow-700" aria-hidden="true" />
+      <ClipboardList className="w-7 h-7 text-yellow-700" aria-hidden="true" />
     ),
-    title: "Consult & Plan",
-    desc: "Discuss your style, goals, and budget.",
+    title: "Submit Your Property",
+    desc: "Share details, photos, and documents.",
   },
   {
-    icon: <Palette className="w-7 h-7 text-yellow-700" aria-hidden="true" />,
-    title: "Design & Curate",
-    desc: "We create concepts, source furniture, and plan the layout.",
+    icon: <Rocket className="w-7 h-7 text-yellow-700" aria-hidden="true" />,
+    title: "Marketing Launch",
+    desc: "We create and publish a high-impact listing.",
   },
   {
-    icon: <Truck className="w-7 h-7 text-yellow-700" aria-hidden="true" />,
-    title: "Deliver & Style",
-    desc: "Full setup and finishing touches handled by our team.",
+    icon: <BadgeCheck className="w-7 h-7 text-yellow-700" aria-hidden="true" />,
+    title: "Sell Confidently",
+    desc: "Connect with verified buyers until closing.",
   },
 ];
 
@@ -142,71 +171,74 @@ const SalesMarketingPage = () => {
 
   const monthlyPlans = [
     {
-      title: "Furnishing essentials",
-      price: "£2,000",
+      title: "Standard Plan",
+      price: "From £299 flat fee",
       features: [
-        "Basic furniture package",
-        "Functional rental designs",
-        "Quick installation",
+        "Basic listing on Noornest",
+        "Standard property photography",
+        "Enquiry handling",
       ],
-      button: "Start now",
+      button: "Request a Sales Package",
     },
     {
-      title: "Home staging",
-      price: "£3,500",
+      title: "Professional Plan",
+      price: "From £599 flat fee",
       features: [
-        "Property listing optimization",
-        "Professional styling",
-        "Photography preparation",
-        "Market ready",
+        "Premium listing placement",
+        "Pro photography & video tour",
+        "Social campaign (FB, IG, LinkedIn)",
+        "Buyer pre-screening",
       ],
-      button: "Explore package",
+      button: "Request a Sales Package",
     },
     {
-      title: "Bespoke design",
-      price: "Custom",
+      title: "Premium Plan",
+      price: "Custom pricing",
       features: [
-        "Full consultation",
-        "Custom furniture sourcing",
-        "Unique design approach",
-        "Dedicated consultant",
-        "Personalized experience",
+        "All Professional features",
+        "Dedicated marketing manager",
+        "Homepage feature placement",
+        "Advanced analytics & reporting",
+        "Multi-property bundle discounts",
       ],
-      button: "Get started",
+      button: "Request a Sales Package",
     },
   ];
 
+  // If your UI expects a yearly toggle, mirror the same structures:
   const yearlyPlans = [
     {
-      title: "Furnishing Essentials",
-      price: "From £2,000",
+      title: "Standard Plan (Annual)",
+      price: "From £299 flat fee",
       features: [
-        "Basic furniture package",
-        "Functional & durable styles",
-        "Delivered & installed",
+        "Basic listing on Noornest",
+        "Standard property photography",
+        "Enquiry handling",
       ],
-      button: "Start now",
+      button: "Request a Sales Package",
     },
     {
-      title: "Home Staging Package",
-      price: "From £3,500",
+      title: "Professional Plan (Annual)",
+      price: "From £599 flat fee",
       features: [
-        "Interior styling for show homes & listings",
-        "Accessory & décor setup",
-        "Photography-ready finish",
+        "Premium listing placement",
+        "Pro photography & video tour",
+        "Social campaign (FB, IG, LinkedIn)",
+        "Buyer pre-screening",
       ],
-      button: "Explore package",
+      button: "Request a Sales Package",
     },
     {
-      title: "Premium Bespoke Design",
+      title: "Premium Plan (Annual)",
       price: "Custom pricing",
       features: [
-        "Full interior design consultation",
-        "Custom furniture sourcing",
-        "Bespoke finishes & décor",
-        "Dedicated design consultant",
+        "All Professional features",
+        "Dedicated marketing manager",
+        "Homepage feature placement",
+        "Advanced analytics & reporting",
+        "Multi-property bundle discounts",
       ],
-      button: "Get started",
+      button: "Request a Sales Package",
     },
   ];
 
@@ -229,20 +261,19 @@ const SalesMarketingPage = () => {
           {/* Top Section with Text and Buttons */}
           <div className="flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
             <h1 className="text-3xl md:text-5xl font-bold text-white leading-tight mb-4">
-              Design That Inspires. <br />
-              Interiors That Add Value.
+              Sell Smarter with Noornest
             </h1>
             <p className="text-base text-white max-w-2xl mb-8">
-              From concept to completion, Noornest transforms spaces with
-              professional interior design and furnishing solutions that blend
-              style, function, and investment value.
+              From creating compelling listings to reaching verified buyers,
+              Noornest helps you sell your property faster, with transparency
+              and confidence.
             </p>
             <Link
-              href="/booking"
+              href="/properties"
               className="flex justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-16 md:mb-20"
             >
               <Button className="bg-black hover:bg-gray-900 text-white font-semibold py-3 px-8 rounded-md shadow-lg transition-colors duration-300">
-                Book a consultation
+                Properties Listing
               </Button>
             </Link>
           </div>
@@ -266,13 +297,13 @@ const SalesMarketingPage = () => {
 
       <section className="bg-white text-center py-12 lg:py-16 px-8 md:px-16 w-full">
         <h2 className="text-3xl md:text-4xl font-bold text-primary leading-snug mb-3">
-          Design beyond aesthetics
+          Sales Property
         </h2>
         <p className="text-gray-600 md:max-w-3xl mx-auto">
-          Great design is about more than looks — it’s about creating spaces
-          that work for people and add measurable value. Whether you’re styling
-          a home for sale, furnishing a rental, or creating your dream living
-          space, Noornest’s interior design service delivers results.
+          Selling property in today’s market requires more than just a “For
+          Sale” sign. With Noornest, you gain access to professional marketing,
+          wide exposure, and a trusted platform that connects your property to
+          serious buyers.
         </p>
       </section>
 
@@ -615,7 +646,7 @@ const SalesMarketingPage = () => {
 
       {/* Testimonial Section */}
       <TestimonialCarousel
-        testimonials={interiorTestimonials}
+        testimonials={salesTestimonials}
         title="Testimonial"
         backgroundColor="bg-purple-50"
         cardBackgroundColor="#EADBC8"
@@ -627,8 +658,7 @@ const SalesMarketingPage = () => {
 
       {/* CTA Section */}
       <CTASection
-        title="Create spaces that sell and inspire"
-        description="Transform your property with design that adds real value and tells a compelling story."
+        title="Ready to Sell with Confidence?"
         primaryButton={{
           text: "Book a consultation",
           href: "/properties",

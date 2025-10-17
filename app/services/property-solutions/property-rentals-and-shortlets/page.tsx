@@ -9,56 +9,80 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import {
-  Palette,
-  Home,
-  ClipboardCheck,
+  Users,
+  Calendar,
   BedDouble,
   ClipboardList,
+  ClipboardCheck,
+  Shield,
   ChevronRight,
-  MessageSquare,
-  Truck,
 } from "lucide-react";
+
 import FAQSection from "@/components/ui/FAQSection";
 
 const services = [
   {
     id: 1,
-    icon: <Palette className="w-10 h-10 text-white" aria-hidden="true" />,
-    title: "Interior Design Concepts",
+    icon: <Users className="w-10 h-10 text-white" aria-hidden="true" />,
+    title: "Tenant Matching",
     description:
-      "Bespoke design concepts that balance style, functionality, and long-term property value.",
-    image: "/services/interior-design.jpg",
+      "Connect with reliable, pre-screened renters matched to your property and preferences.",
+    image: "/services/tenant-matching.jpg",
     actions: [
-      { label: "View Concepts", href: "/concepts", variant: "primary" },
-      { label: "Start Design", href: "/start-design", variant: "link" },
+      {
+        label: "Find Tenants",
+        href: "/rentals/tenant-matching",
+        variant: "primary",
+      },
+      {
+        label: "How It Works",
+        href: "/rentals/tenant-matching/how-it-works",
+        variant: "link",
+      },
     ],
     colSpan: "md:col-span-2",
     rowSpan: "md:row-span-3",
   },
   {
     id: 2,
-    icon: <BedDouble className="w-10 h-10 text-white" aria-hidden="true" />,
-    title: "Furnishing Solutions",
+    icon: <Calendar className="w-10 h-10 text-white" aria-hidden="true" />,
+    title: "Long-Term Rentals",
     description:
-      "Curated furniture packages — full or partial — crafted for homes and rental properties.",
-    image: "/services/furnishing-solution.jpg",
+      "Secure dependable leases for stable income with end-to-end support and screening.",
+    image: "/services/long-term-rentals.jpg",
     actions: [
-      { label: "Explore Packages", href: "/packages", variant: "primary" },
-      { label: "Get Quote", href: "/quote", variant: "link" },
+      {
+        label: "List for Long-Term",
+        href: "/rentals/long-term",
+        variant: "primary",
+      },
+      {
+        label: "Get Advice",
+        href: "/rentals/long-term/advice",
+        variant: "link",
+      },
     ],
     colSpan: "md:col-span-2",
     rowSpan: "md:row-span-2",
   },
   {
     id: 3,
-    icon: <Home className="w-10 h-10 text-white" aria-hidden="true" />,
-    title: "Home Staging",
+    icon: <BedDouble className="w-10 h-10 text-white" aria-hidden="true" />,
+    title: "Short-Lets & Holiday Stays",
     description:
-      "Professional staging that attracts buyers, shortens sales time, and increases property value.",
-    image: "/services/home-staging.jpg",
+      "Flexible, fully verified short-term lets designed for high occupancy and great guest experiences.",
+    image: "/services/short-lets.jpg",
     actions: [
-      { label: "Stage Property", href: "/staging", variant: "primary" },
-      { label: "Learn More", href: "/learn-more", variant: "link" },
+      {
+        label: "Enable Short-Lets",
+        href: "/rentals/short-lets",
+        variant: "primary",
+      },
+      {
+        label: "Learn More",
+        href: "/rentals/short-lets/details",
+        variant: "link",
+      },
     ],
     colSpan: "md:col-span-2",
     rowSpan: "md:row-span-3",
@@ -66,74 +90,104 @@ const services = [
   {
     id: 4,
     icon: <ClipboardList className="w-10 h-10 text-white" aria-hidden="true" />,
-    title: "Rental-Ready Fit-Outs",
+    title: "Lease Management",
     description:
-      "Durable, stylish interiors tailored for both short-let and long-term rental markets.",
-    image: "/services/rental-ready.jpg",
+      "Contracts, renewals, and compliance handled—so you can stay hands-off and protected.",
+    image: "/services/lease-management.jpg",
     actions: [
-      { label: "Request Plan", href: "/request-plan", variant: "primary" },
+      {
+        label: "Manage My Lease",
+        href: "/rentals/lease-management",
+        variant: "primary",
+      },
     ],
     rowSpan: "md:row-span-2",
   },
   {
     id: 5,
-    icon: (
-      <ClipboardCheck className="w-10 h-10 text-white" aria-hidden="true" />
-    ),
-    title: "End-to-End Management",
+    icon: <Shield className="w-10 h-10 text-white" aria-hidden="true" />,
+    title: "Verified Listings",
     description:
-      "Complete service from concept boards to final installation, managed seamlessly.",
-    image: "/services/end-to-end.jpg",
-    actions: [{ label: "View Process", href: "/process", variant: "primary" }],
+      "Every rental is checked for authenticity and safety before going live on Noornest.",
+    image: "/services/verified-listings.jpg",
+    actions: [
+      {
+        label: "Verify My Listing",
+        href: "/rentals/verified-listings",
+        variant: "primary",
+      },
+    ],
     rowSpan: "md:row-span-2",
   },
 ];
 
 const faqData = [
   {
-    question: "Do you design both homes and rental properties?",
-    answer:
-      "Yes, we handle residential homes, rentals, and short-let properties.",
+    question: "Do you handle both short-term and long-term rentals?",
+    answer: "Yes, we support long-term leases and flexible short-let stays.",
   },
   {
-    question: "Can you provide furniture packages?",
-    answer:
-      "Absolutely. We offer curated furniture packages for homes, rentals, and corporate spaces.",
+    question: "How do you screen tenants?",
+    answer: "We verify IDs, rental history, and references before placement.",
   },
   {
-    question: "Do you work with developers?",
+    question: "Can you manage rent collection?",
     answer:
-      "Yes, we collaborate with developers to design and furnish show units and investment properties.",
+      "Yes — our Professional and Premium plans include rent collection support.",
   },
   {
-    question: "How long does a project take?",
-    answer:
-      "Timelines vary by scope, but most projects take between 4 to 10 weeks from concept to completion.",
+    question: "Do you handle furnished rentals?",
+    answer: "Yes, both furnished and unfurnished properties are supported.",
   },
   {
-    question: "Is the consultation free?",
-    answer:
-      "Yes, your initial consultation is free. It helps us understand your goals and propose tailored solutions.",
+    question: "What locations do you cover?",
+    answer: "We cover rentals across major UK cities and expanding regions.",
   },
 ];
 
 const steps = [
   {
     icon: (
-      <MessageSquare className="w-7 h-7 text-yellow-700" aria-hidden="true" />
+      <ClipboardList className="w-7 h-7 text-yellow-700" aria-hidden="true" />
     ),
-    title: "Consult & Plan",
-    desc: "Discuss your style, goals, and budget.",
+    title: "List Your Property",
+    desc: "Share property details and your preferences.",
   },
   {
-    icon: <Palette className="w-7 h-7 text-yellow-700" aria-hidden="true" />,
-    title: "Design & Curate",
-    desc: "We create concepts, source furniture, and plan the layout.",
+    icon: <Users className="w-7 h-7 text-yellow-700" aria-hidden="true" />,
+    title: "Find the Right Tenant",
+    desc: "We vet and connect you with serious, verified renters.",
   },
   {
-    icon: <Truck className="w-7 h-7 text-yellow-700" aria-hidden="true" />,
-    title: "Deliver & Style",
-    desc: "Full setup and finishing touches handled by our team.",
+    icon: (
+      <ClipboardCheck className="w-7 h-7 text-yellow-700" aria-hidden="true" />
+    ),
+    title: "Secure Your Rental",
+    desc: "Lease agreement, payments, and ongoing support handled.",
+  },
+];
+
+const testimonials = [
+  {
+    quote:
+      "Listing my flat on Noornest was smooth — within days, I found a reliable tenant and had full lease support.",
+    author: "Sarah T.",
+    role: "Landlord",
+    image: "/interior/sarah.png",
+  },
+  {
+    quote:
+      "The screening process was thorough and fast. I’m impressed with the quality of applicants and the lease management.",
+    author: "Ola K.",
+    role: "Property Owner",
+    image: "/interior/ola.png",
+  },
+  {
+    quote:
+      "Noornest handled everything from the listing to tenant onboarding. Stress-free and truly professional.",
+    author: "Amelia P.",
+    role: "Developer",
+    image: "/interior/amelia.png",
   },
 ];
 
@@ -142,71 +196,71 @@ const PropertyRentalPage = () => {
 
   const monthlyPlans = [
     {
-      title: "Furnishing essentials",
-      price: "£2,000",
+      title: "Basic Rental Plan",
+      price: "From £199 per listing",
       features: [
-        "Basic furniture package",
-        "Functional rental designs",
-        "Quick installation",
+        "Standard listing on Noornest",
+        "Basic tenant screening",
+        "Lease template support",
       ],
-      button: "Start now",
+      button: "List my property",
     },
     {
-      title: "Home staging",
-      price: "£3,500",
+      title: "Professional Rental Plan",
+      price: "From 8% of monthly rent",
       features: [
-        "Property listing optimization",
-        "Professional styling",
-        "Photography preparation",
-        "Market ready",
+        "Premium listing placement",
+        "Enhanced tenant vetting",
+        "Full lease management",
+        "Rent collection support",
       ],
-      button: "Explore package",
+      button: "Upgrade to Professional",
     },
     {
-      title: "Bespoke design",
-      price: "Custom",
+      title: "Premium Rental & Short-Let Plan",
+      price: "Custom pricing",
       features: [
-        "Full consultation",
-        "Custom furniture sourcing",
-        "Unique design approach",
-        "Dedicated consultant",
-        "Personalized experience",
+        "All Professional features",
+        "Short-let promotion & visibility",
+        "Pro photography & staging",
+        "Dedicated rental manager",
       ],
-      button: "Get started",
+      button: "Talk to sales",
     },
   ];
 
   const yearlyPlans = [
     {
-      title: "Furnishing Essentials",
-      price: "From £2,000",
+      title: "Basic Rental Plan (Annual)",
+      price: "From £199 / listing",
       features: [
-        "Basic furniture package",
-        "Functional & durable styles",
-        "Delivered & installed",
+        "Standard listing on Noornest",
+        "Basic tenant screening",
+        "Lease template support",
       ],
-      button: "Start now",
+      button: "List annually",
     },
     {
-      title: "Home Staging Package",
-      price: "From £3,500",
+      title: "Professional Rental Plan (Annual)",
+      price: "From 8% of monthly rent",
       features: [
-        "Interior styling for show homes & listings",
-        "Accessory & décor setup",
-        "Photography-ready finish",
+        "Premium listing placement",
+        "Enhanced tenant vetting",
+        "Full lease management",
+        "Rent collection support",
       ],
-      button: "Explore package",
+      button: "Choose Professional",
     },
     {
-      title: "Premium Bespoke Design",
+      title: "Premium Rental & Short-Let Plan (Annual)",
       price: "Custom pricing",
       features: [
-        "Full interior design consultation",
-        "Custom furniture sourcing",
-        "Bespoke finishes & décor",
-        "Dedicated design consultant",
+        "All Professional features",
+        "Short-let promotion & visibility",
+        "Professional photography & staging",
+        "Dedicated rental manager",
       ],
-      button: "Get started",
+      button: "Get custom quote",
     },
   ];
 
@@ -229,20 +283,20 @@ const PropertyRentalPage = () => {
           {/* Top Section with Text and Buttons */}
           <div className="flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
             <h1 className="text-3xl md:text-5xl font-bold text-white leading-tight mb-4">
-              Design That Inspires. <br />
-              Interiors That Add Value.
+              Reliable Rentals. <br />
+              Flexible Short-Lets.
             </h1>
             <p className="text-base text-white max-w-2xl mb-8">
-              From concept to completion, Noornest transforms spaces with
-              professional interior design and furnishing solutions that blend
-              style, function, and investment value.
+              Whether you’re letting a home, seeking long-term tenants, or
+              offering short stays, Noornest connects you with trusted renters
+              and verified properties.
             </p>
             <Link
-              href="/booking"
+              href="/properties"
               className="flex justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-16 md:mb-20"
             >
               <Button className="bg-black hover:bg-gray-900 text-white font-semibold py-3 px-8 rounded-md shadow-lg transition-colors duration-300">
-                Book a consultation
+                Rental Property
               </Button>
             </Link>
           </div>
@@ -266,13 +320,12 @@ const PropertyRentalPage = () => {
 
       <section className="bg-white text-center py-12 lg:py-16 px-8 md:px-16 w-full">
         <h2 className="text-3xl md:text-4xl font-bold text-primary leading-snug mb-3">
-          Design beyond aesthetics
+          Reliable Rentals
         </h2>
         <p className="text-gray-600 md:max-w-3xl mx-auto">
-          Great design is about more than looks — it’s about creating spaces
-          that work for people and add measurable value. Whether you’re styling
-          a home for sale, furnishing a rental, or creating your dream living
-          space, Noornest’s interior design service delivers results.
+          Finding the right tenant or rental shouldn’t be stressful. At
+          Noornest, we make rentals simple and secure with verified listings,
+          tenant screening, and flexible options for both landlords and renters.
         </p>
       </section>
 
@@ -377,7 +430,7 @@ const PropertyRentalPage = () => {
                 id="why-noornest-heading"
                 className="text-3xl md:text-4xl font-bold text-primary leading-tight"
               >
-                Why choose Noornest <br /> interiors
+                Why choose Noornest <br /> Rentals
               </h2>
             </div>
 
@@ -386,34 +439,21 @@ const PropertyRentalPage = () => {
               className="list-disc text-gray-700 text-sm md:text-base pl-5 space-y-3 text-left"
             >
               <li role="listitem">
-                <strong>Style Meets Function:</strong> Designs that look great
-                and work in real life.
+                <strong>• Verified Tenants & Properties:</strong> No scams, no
+                risks
               </li>
               <li role="listitem">
-                <strong>Value-Focused:</strong> Interiors that boost sales &
-                rental appeal.
+                <strong>Flexibility :</strong> Choose between short-term lets or
+                long-term contracts
               </li>
               <li role="listitem">
-                <strong>Tailored Packages:</strong> From budget-friendly
-                furnishing to bespoke design.
+                <strong>Transparent Process:</strong> From contracts to payments
               </li>
               <li role="listitem">
-                <strong>Full Service:</strong> Design, sourcing, logistics, and
-                setup handled for you.
+                <strong>Wider Reach:</strong> Exposure to thousands of renters
+                across the UK
               </li>
             </ul>
-
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4">
-              <Link href="/explore" aria-label="Explore Noornest interiors">
-                <Button>Explore</Button>
-              </Link>
-
-              <Link href="/get-started" aria-label="Get started with Noornest">
-                <Button variant="ghost" className="flex items-center gap-2">
-                  Get Started <ChevronRight size={18} aria-hidden="true" />
-                </Button>
-              </Link>
-            </div>
           </div>
 
           {/* Right Column - Image collage */}
@@ -615,7 +655,7 @@ const PropertyRentalPage = () => {
 
       {/* Testimonial Section */}
       <TestimonialCarousel
-        testimonials={interiorTestimonials}
+        testimonials={testimonials}
         title="Testimonial"
         backgroundColor="bg-purple-50"
         cardBackgroundColor="#EADBC8"
@@ -627,9 +667,13 @@ const PropertyRentalPage = () => {
 
       {/* CTA Section */}
       <CTASection
-        title="Create spaces that sell and inspire"
-        description="Transform your property with design that adds real value and tells a compelling story."
+        title="Ready to Rent Smarter with Noornest?"
+        description="Connect with us today to explore rental solutions tailored to your needs. Whether you're a landlord seeking reliable tenants or a renter looking for verified properties, Noornest is here to help."
         primaryButton={{
+          text: "Rental Property",
+          href: "/properties",
+        }}
+        secondaryButton={{
           text: "Book a consultation",
           href: "/properties",
           className:
