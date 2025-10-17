@@ -1,8 +1,13 @@
+// components/ui/AnimatedList.tsx
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import { Variants } from "framer-motion";
+import React, { useRef } from "react";
+import {
+  motion,
+  useInView,
+  type Variants,
+  type UseInViewOptions,
+} from "framer-motion";
 import { scrollAnimationOptions } from "@/lib/animations";
 
 interface AnimatedListProps {
@@ -14,6 +19,53 @@ interface AnimatedListProps {
   itemDelay?: number;
 }
 
+/** Detect if an object already matches Framer Motion's UseInViewOptions */
+function isUseInViewOptions(obj: unknown): obj is UseInViewOptions {
+  if (!obj || typeof obj !== "object") return false;
+  const o = obj as Record<string, unknown>;
+  return "amount" in o || "margin" in o || "once" in o || "root" in o;
+}
+
+/** Narrow a rootMargin string to Framer Motion's branded MarginType */
+function toMarginType(m?: string): UseInViewOptions["margin"] | undefined {
+  if (!m) return undefined;
+  // Accepts 1–4 parts like "0px", "10%", "-10% 0px", etc.
+  const ok = /^-?\d+(\.\d+)?(px|%)(\s+-?\d+(\.\d+)?(px|%)){0,3}$/.test(
+    m.trim()
+  );
+  if (!ok) return undefined;
+  return m as unknown as NonNullable<UseInViewOptions["margin"]>;
+}
+
+/** Map IntersectionObserverInit → UseInViewOptions (safe best-effort) */
+function toInViewOptions(
+  opts: unknown,
+  fallback: UseInViewOptions = { amount: 0.25 }
+): UseInViewOptions {
+  if (isUseInViewOptions(opts)) return opts;
+
+  const io = opts as IntersectionObserverInit | undefined;
+  if (!io) return fallback;
+
+  const amount = Array.isArray(io.threshold)
+    ? (io.threshold[0] as number | undefined)
+    : typeof io.threshold === "number"
+    ? io.threshold
+    : undefined;
+
+  const mapped: UseInViewOptions = {
+    ...fallback,
+    ...(amount !== undefined ? { amount } : {}),
+  };
+
+  const margin = toMarginType(io.rootMargin);
+  if (margin) mapped.margin = margin;
+
+  // Note: UseInViewOptions.root expects RefObject<Element>; IO gives Element/Document.
+  // If you need a custom root, create a ref elsewhere and pass it in your own options.
+  return mapped;
+}
+
 export default function AnimatedList({
   children,
   variants,
@@ -22,13 +74,12 @@ export default function AnimatedList({
   staggerDelay = 0.1,
   itemDelay = 0.2,
 }: AnimatedListProps) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, scrollAnimationOptions);
+  const ref = useRef<HTMLDivElement>(null);
+  const inViewOptions = toInViewOptions(scrollAnimationOptions);
+  const isInView = useInView(ref, inViewOptions);
 
   const defaultContainerVariants: Variants = {
-    hidden: {
-      opacity: 0,
-    },
+    hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
@@ -39,19 +90,15 @@ export default function AnimatedList({
   };
 
   const defaultItemVariants: Variants = {
-    hidden: {
-      opacity: 0,
-      y: 20,
-    },
+    hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        duration: 0.5,
-        ease: [0.25, 0.46, 0.45, 0.94],
-      },
+      transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
     },
   };
+
+  const items = React.Children.toArray(children);
 
   return (
     <motion.div
@@ -61,20 +108,14 @@ export default function AnimatedList({
       animate={isInView ? "visible" : "hidden"}
       className={className}
     >
-      {Array.isArray(children) ? (
-        children.map((child, index) => (
-          <motion.div
-            key={index}
-            variants={itemVariants || defaultItemVariants}
-          >
-            {child}
-          </motion.div>
-        ))
-      ) : (
-        <motion.div variants={itemVariants || defaultItemVariants}>
-          {children}
+      {items.map((child, i) => (
+        <motion.div
+          key={(child as any)?.key ?? i}
+          variants={itemVariants || defaultItemVariants}
+        >
+          {child}
         </motion.div>
-      )}
+      ))}
     </motion.div>
   );
 }

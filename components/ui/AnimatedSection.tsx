@@ -1,8 +1,13 @@
+// components/ui/AnimatedSection.tsx
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import { Variants } from "framer-motion";
+import React, { useRef } from "react";
+import {
+  motion,
+  useInView,
+  type Variants,
+  type UseInViewOptions,
+} from "framer-motion";
 import { scrollAnimationOptions } from "@/lib/animations";
 
 interface AnimatedSectionProps {
@@ -14,22 +19,70 @@ interface AnimatedSectionProps {
   once?: boolean;
 }
 
+/** Detect if an object already matches Framer Motion's UseInViewOptions */
+function isUseInViewOptions(obj: unknown): obj is UseInViewOptions {
+  if (!obj || typeof obj !== "object") return false;
+  const o = obj as Record<string, unknown>;
+  return "amount" in o || "margin" in o || "once" in o || "root" in o;
+}
+
+/** Narrow a rootMargin string to Framer Motion's branded MarginType */
+function toMarginType(m?: string): UseInViewOptions["margin"] | undefined {
+  if (!m) return undefined;
+  const ok = /^-?\d+(\.\d+)?(px|%)(\s+-?\d+(\.\d+)?(px|%)){0,3}$/.test(
+    m.trim()
+  );
+  if (!ok) return undefined;
+  return m as unknown as NonNullable<UseInViewOptions["margin"]>;
+}
+
+/** Map IntersectionObserverInit → UseInViewOptions (safe best-effort) */
+function toInViewOptions(
+  opts: unknown,
+  fallback: UseInViewOptions = { amount: 0.25 }
+): UseInViewOptions {
+  if (isUseInViewOptions(opts)) return opts;
+
+  const io = opts as IntersectionObserverInit | undefined;
+  if (!io) return fallback;
+
+  const amount = Array.isArray(io.threshold)
+    ? (io.threshold[0] as number | undefined)
+    : typeof io.threshold === "number"
+    ? io.threshold
+    : undefined;
+
+  const mapped: UseInViewOptions = {
+    ...fallback,
+    ...(amount !== undefined ? { amount } : {}),
+  };
+
+  const margin = toMarginType(io.rootMargin);
+  if (margin) mapped.margin = margin;
+
+  // Note: UseInViewOptions.root expects RefObject<Element>; IO gives Element/Document.
+  // If you need a custom root, create a ref elsewhere and pass it directly.
+  return mapped;
+}
+
 export default function AnimatedSection({
   children,
   variants,
   className = "",
   delay = 0,
   duration = 0.6,
-}: // once = true,
-AnimatedSectionProps) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, scrollAnimationOptions);
+  once,
+}: AnimatedSectionProps) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  const baseOptions = toInViewOptions(scrollAnimationOptions);
+  const inViewOptions: UseInViewOptions =
+    typeof once === "boolean" ? { ...baseOptions, once } : baseOptions;
+
+  const isInView = useInView(ref, inViewOptions);
 
   const defaultVariants: Variants = {
-    hidden: {
-      opacity: 0,
-      y: 60,
-    },
+    hidden: { opacity: 0, y: 60 },
     visible: {
       opacity: 1,
       y: 0,

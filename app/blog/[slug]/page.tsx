@@ -25,7 +25,8 @@ import {
 import { BlogPost } from "@/types";
 import { getRelatedPosts } from "@/lib/mock-data";
 import Image from "next/image";
-import React from "react";
+// add this near the top with your other imports
+import React, { type ElementType } from "react";
 
 /** ---- Minimal EditorJS typing (covers the blocks you render) ---- */
 type HeaderLevel = 1 | 2 | 3 | 4 | 5 | 6;
@@ -295,12 +296,12 @@ export default function BlogPostPage() {
     return content.blocks.map((block, index) => {
       switch (block.type) {
         case "header": {
-          const Tag =
-            `h${block.data.level}` as unknown as keyof React.ReactElement;
+          const level = Math.min(Math.max(block.data?.level ?? 2, 1), 6);
+          const Tag = `h${level}` as unknown as ElementType; // ✅ ElementType instead of JSX.IntrinsicElements
           return (
-            <div key={block.id ?? index} className="mt-8 mb-4 font-bold">
+            <Tag key={block.id ?? index} className="mt-8 mb-4 font-bold">
               {block.data.text}
-            </div>
+            </Tag>
           );
         }
 
@@ -312,11 +313,16 @@ export default function BlogPostPage() {
           );
 
         case "list": {
-          const ListTag: React.ElementType =
-            block.data.style === "ordered" ? "ol" : "ul";
+          const ordered = block.data?.style === "ordered";
+          const ListTag = (ordered ? "ol" : "ul") as unknown as ElementType; // ✅
           return (
-            <ListTag key={block.id ?? index} className="mb-4 ml-6 list-inside">
-              {block.data.items.map((item, i) => (
+            <ListTag
+              key={block.id ?? index}
+              className={`mb-4 ml-6 list-inside ${
+                ordered ? "list-decimal" : "list-disc"
+              }`}
+            >
+              {block.data.items?.map((item: string, i: number) => (
                 <li key={i} className="mb-2">
                   {item}
                 </li>
@@ -346,29 +352,33 @@ export default function BlogPostPage() {
               <table className="w-full border-collapse border border-gray-300">
                 <thead>
                   <tr>
-                    {block.data.content[0]?.map((header, hIdx) => (
-                      <th
-                        key={hIdx}
-                        className="border border-gray-300 px-4 py-2 bg-gray-50 font-semibold"
-                      >
-                        {header}
-                      </th>
-                    ))}
+                    {block.data.content?.[0]?.map(
+                      (header: string, hIdx: number) => (
+                        <th
+                          key={hIdx}
+                          className="border border-gray-300 px-4 py-2 bg-gray-50 font-semibold"
+                        >
+                          {header}
+                        </th>
+                      )
+                    )}
                   </tr>
                 </thead>
                 <tbody>
-                  {block.data.content.slice(1).map((row, rIdx) => (
-                    <tr key={rIdx}>
-                      {row.map((cell, cIdx) => (
-                        <td
-                          key={cIdx}
-                          className="border border-gray-300 px-4 py-2"
-                        >
-                          {cell}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
+                  {block.data.content
+                    ?.slice(1)
+                    ?.map((row: string[], rIdx: number) => (
+                      <tr key={rIdx}>
+                        {row.map((cell: string, cIdx: number) => (
+                          <td
+                            key={cIdx}
+                            className="border border-gray-300 px-4 py-2"
+                          >
+                            {cell}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </div>
