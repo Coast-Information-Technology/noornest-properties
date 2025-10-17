@@ -1,9 +1,10 @@
+// components/layout/Header.tsx
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, User, Search, ChevronDown, Calendar } from "lucide-react";
+import { Menu, X, User, Search, ChevronDown, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -27,18 +28,18 @@ import {
 type MobileLink = { label: string; href: string };
 type MobileSection = { title?: string; links: MobileLink[] };
 type MobileGroup = {
-  key: string; // unique value for AccordionItem
-  label: string; // shown in the trigger
-  href?: string; // optional parent landing link (unused here, but handy)
-  prefixes: string[]; // route prefixes to detect active/open state
-  sections: MobileSection[]; // rendered inside dropdown
+  key: string;
+  label: string;
+  href?: string;
+  prefixes: string[];
+  sections: MobileSection[];
 };
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
 
-  // Early exits (same as your original)
+  // Early exits (no hooks below should be conditional)
   if (pathname.startsWith("/dashboard")) return null;
 
   const shouldHideHeader = disableHeaderWithFooter.some((path) => {
@@ -48,7 +49,8 @@ export default function Header() {
   });
   if (shouldHideHeader) return null;
 
-  const isActive = (href: string) => pathname === href;
+  const normalizePath = (href: string) => href.split("?")[0];
+  const isActiveExact = (href: string) => pathname === normalizePath(href);
   const isGroupActive = (prefixes: string[] | string) => {
     const arr = Array.isArray(prefixes) ? prefixes : [prefixes];
     return arr.some((p) => pathname === p || pathname.startsWith(`${p}/`));
@@ -57,7 +59,7 @@ export default function Header() {
   // Top “flat” mobile items (only Home stays flat)
   const mobileSingles: MobileLink[] = [{ href: "/", label: "Home" }];
 
-  // Dropdown groups for mobile (mirrors your desktop mega menu)
+  // Dropdown groups for mobile (mirrors desktop mega menu)
   const mobileGroups: MobileGroup[] = [
     {
       key: "company",
@@ -194,13 +196,10 @@ export default function Header() {
     },
   ];
 
-  // Open the matching group(s) by default when the sheet opens
-  const defaultOpen = useMemo(
-    () =>
-      mobileGroups.filter((g) => isGroupActive(g.prefixes)).map((g) => g.key),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [pathname]
-  );
+  // NOT a hook: avoids conditional hook call error
+  const defaultOpen = mobileGroups
+    .filter((g) => isGroupActive(g.prefixes))
+    .map((g) => g.key);
 
   return (
     <header
@@ -266,7 +265,7 @@ export default function Header() {
               aria-label="Toggle menu"
             >
               {isMenuOpen ? (
-                <Menu className="h-5 w-5" />
+                <X className="h-5 w-5" />
               ) : (
                 <Menu className="h-5 w-5" />
               )}
@@ -299,11 +298,11 @@ export default function Header() {
                     key={item.href}
                     href={item.href}
                     className={`block px-3 py-3 text-base font-medium rounded-md transition-colors ${
-                      isActive(item.href)
+                      isActiveExact(item.href)
                         ? "text-primary bg-primary/10"
                         : "text-muted-foreground hover:text-primary hover:bg-primary/10"
                     }`}
-                    aria-current={isActive(item.href) ? "page" : undefined}
+                    aria-current={isActiveExact(item.href) ? "page" : undefined}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {item.label}
@@ -326,9 +325,9 @@ export default function Header() {
                       className="border-b"
                     >
                       <AccordionTrigger
-                        className={`px-3 py-3 text-base font-medium rounded-md hover:no-underline
-                          ${active ? "text-primary" : "text-foreground"}
-                        `}
+                        className={`px-3 py-3 text-base font-medium rounded-md hover:no-underline ${
+                          active ? "text-primary" : "text-foreground"
+                        }`}
                       >
                         <span>{group.label}</span>
                       </AccordionTrigger>
@@ -346,7 +345,8 @@ export default function Header() {
                               )}
                               <div className="grid grid-cols-1 gap-2">
                                 {sec.links.map((link) => {
-                                  const current = isActive(link.href);
+                                  const current =
+                                    pathname === normalizePath(link.href);
                                   return (
                                     <Link
                                       key={link.href}
