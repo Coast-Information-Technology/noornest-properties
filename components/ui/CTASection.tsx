@@ -18,7 +18,7 @@ export interface CTASectionProps {
     className?: string;
   };
   secondaryButton?: {
-    text: string;
+    text?: string;
     href: string;
     className?: string;
   };
@@ -79,7 +79,7 @@ export default function CTASection({
             <div>
               <AnimatedText
                 as="h2"
-                className="text-2xl lg:text-3xl font-bold mb-4 text-center lg:text-left"
+                className="text-2xl lg:text-3xl font-bold mb-4 text-center lg:text-left max-w-xl"
               >
                 {title}
               </AnimatedText>

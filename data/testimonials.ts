@@ -100,3 +100,99 @@ export const interiorTestimonials: Testimonial[] = [
     image: "/interior/jonathan.png",
   },
 ];
+
+export const advisoryTestimonials: Testimonial[] = [
+  {
+    quote:
+      "The Noornest advisory team explained risks and returns clearly. I now have a portfolio that matches my goals, not just random deals.",
+    author: "Michael R.",
+    role: "Investor",
+    image: "/interior/michael.png",
+  },
+  {
+    quote:
+      "Their market insights and ROI projections helped me identify properties that deliver real, consistent returns. I trust their analysis completely.",
+    author: "Lisa K.",
+    role: "Real Estate Investor",
+    image: "/interior/lisa.png",
+  },
+  {
+    quote:
+      "I was new to property investing, but Noornest’s advisors made it simple. The data-backed guidance gave me the confidence to take action.",
+    author: "David E.",
+    role: "First-Time Investor",
+    image: "/interior/david.png",
+  },
+];
+
+export const refurbishmentTestimonials: Testimonial[] = [
+  {
+    quote:
+      "Noornest helped me renovate my rental property quickly and affordably. The upgrade increased my monthly rent by 20%.",
+    author: "Laura M.",
+    role: "Landlord",
+    image: "/interior/laura.png",
+  },
+  {
+    quote:
+      "Their project management team handled everything—from permits to final finishes. My renovation was stress-free and on time.",
+    author: "Daniel K.",
+    role: "Homeowner",
+    image: "/interior/daniel.png",
+  },
+  {
+    quote:
+      "The attention to detail and communication throughout my home extension project were excellent. Highly professional service.",
+    author: "Emma W.",
+    role: "Property Investor",
+    image: "/interior/emma.png",
+  },
+];
+
+export const consultancyTestimonials: Testimonial[] = [
+  {
+    quote:
+      "Noornest’s consultancy gave me the clarity I needed to expand into UK real estate. Their advice was professional, strategic, and invaluable.",
+    author: "Aisha K.",
+    role: "Overseas Investor",
+    image: "/interior/aisha.png",
+  },
+  {
+    quote:
+      "The team helped me identify profitable areas and structure my first property investment plan. I felt fully supported from start to finish.",
+    author: "James P.",
+    role: "First-time Investor",
+    image: "/interior/james.png",
+  },
+  {
+    quote:
+      "Their expert insights on market entry and compliance saved me months of research. Truly a partner for serious investors.",
+    author: "Sophia L.",
+    role: "Real Estate Developer",
+    image: "/interior/sophia.png",
+  },
+];
+
+export const dueDiligenceTestimonials = [
+  {
+    quote:
+      "The valuation report was detailed and fair, and the due diligence uncovered issues I wouldn’t have spotted. Noornest saved me from a bad purchase.",
+    author: "Claire H.",
+    role: "Investor",
+    image: "/interior/claire.png",
+  },
+  {
+    quote:
+      "Their report was well-structured and easy to understand. It helped me negotiate a better deal on my property purchase.",
+    author: "James R.",
+    role: "Homebuyer",
+    image: "/interior/james.png",
+  },
+  {
+    quote:
+      "From legal checks to ROI insights, Noornest’s due diligence service gave me confidence in my investment decisions.",
+    author: "Sophia L.",
+    role: "Developer",
+    image: "/interior/sophia.png",
+  },
+];

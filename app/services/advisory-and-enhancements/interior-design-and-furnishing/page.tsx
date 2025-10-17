@@ -27,7 +27,7 @@ const services = [
     title: "Interior Design Concepts",
     description:
       "Bespoke design concepts that balance style, functionality, and long-term property value.",
-    image: "/interior-design/interior-design.jpg",
+    image: "/services/interior-design.jpg",
     actions: [
       { label: "View Concepts", href: "/concepts", variant: "primary" },
       { label: "Start Design", href: "/start-design", variant: "link" },
@@ -41,7 +41,7 @@ const services = [
     title: "Furnishing Solutions",
     description:
       "Curated furniture packages — full or partial — crafted for homes and rental properties.",
-    image: "/interior-design/furnishing-solution.jpg",
+    image: "/services/furnishing-solution.jpg",
     actions: [
       { label: "Explore Packages", href: "/packages", variant: "primary" },
       { label: "Get Quote", href: "/quote", variant: "link" },
@@ -55,7 +55,7 @@ const services = [
     title: "Home Staging",
     description:
       "Professional staging that attracts buyers, shortens sales time, and increases property value.",
-    image: "/interior-design/home-staging.jpg",
+    image: "/services/home-staging.jpg",
     actions: [
       { label: "Stage Property", href: "/staging", variant: "primary" },
       { label: "Learn More", href: "/learn-more", variant: "link" },
@@ -69,7 +69,7 @@ const services = [
     title: "Rental-Ready Fit-Outs",
     description:
       "Durable, stylish interiors tailored for both short-let and long-term rental markets.",
-    image: "/interior-design/rental-ready.jpg",
+    image: "/services/rental-ready.jpg",
     actions: [
       { label: "Request Plan", href: "/request-plan", variant: "primary" },
     ],
@@ -83,7 +83,7 @@ const services = [
     title: "End-to-End Management",
     description:
       "Complete service from concept boards to final installation, managed seamlessly.",
-    image: "/interior-design/end-to-end.jpg",
+    image: "/services/end-to-end.jpg",
     actions: [{ label: "View Process", href: "/process", variant: "primary" }],
     rowSpan: "md:row-span-2",
   },
@@ -119,19 +119,17 @@ const faqData = [
 
 const steps = [
   {
-    icon: (
-      <MessageSquare className="w-7 h-7 text-yellow-700" aria-hidden="true" />
-    ),
+    icon: <MessageSquare className="w-7 h-7 text-primary" aria-hidden="true" />,
     title: "Consult & Plan",
     desc: "Discuss your style, goals, and budget.",
   },
   {
-    icon: <Palette className="w-7 h-7 text-yellow-700" aria-hidden="true" />,
+    icon: <Palette className="w-7 h-7 text-primary" aria-hidden="true" />,
     title: "Design & Curate",
     desc: "We create concepts, source furniture, and plan the layout.",
   },
   {
-    icon: <Truck className="w-7 h-7 text-yellow-700" aria-hidden="true" />,
+    icon: <Truck className="w-7 h-7 text-primary" aria-hidden="true" />,
     title: "Deliver & Style",
     desc: "Full setup and finishing touches handled by our team.",
   },
@@ -242,9 +240,11 @@ const InteriorDesignPage = () => {
               className="flex justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-16 md:mb-20"
             >
               {/* Using text-white for buttons for contrast against the gold/gray-700 */}
-              <Button className="bg-black hover:bg-gray-900 text-white font-semibold py-3 px-8 rounded-md shadow-lg transition-colors duration-300">
-                Book a consultation
-              </Button>
+              <Link href="/booking">
+                <Button className="bg-black hover:bg-gray-900 text-white font-semibold py-3 px-8 rounded-md shadow-lg transition-colors duration-300">
+                  Book a consultation
+                </Button>
+              </Link>
             </Link>
           </div>
 
@@ -426,7 +426,7 @@ const InteriorDesignPage = () => {
               {/* Main Image */}
               <div className="w-[350px] h-[500px] shadow-2xl shadow-black rounded-2xl mx-auto">
                 <Image
-                  src="/interior-design/why-3.png"
+                  src="/services/why-3.png"
                   alt="Modern living room interior with cozy decor"
                   width={300}
                   height={500}
@@ -437,7 +437,7 @@ const InteriorDesignPage = () => {
 
               {/* Top-right small image */}
               <Image
-                src="/interior-design/why-2.png"
+                src="/services/why-2.png"
                 alt="Elegant classic room design"
                 width={180}
                 height={120}
@@ -446,7 +446,7 @@ const InteriorDesignPage = () => {
 
               {/* Bottom-left small image */}
               <Image
-                src="/interior-design/why-1.png"
+                src="/services/why-1.png"
                 alt="Contemporary open space living area"
                 width={200}
                 height={120}
@@ -564,30 +564,28 @@ const InteriorDesignPage = () => {
         <div className="max-w-7xl mx-auto grid gap-12 lg:grid-cols-2 items-center">
           {/* Left Section */}
           <div>
-            <h2
+            <h3
               id="how-it-works-heading"
-              className="text-sm font-medium text-gray-800"
+              className="text-lg tracking-wide text-black uppercase font-bold mb-4"
             >
               Process
-            </h2>
-            <h3 className="mt-2 text-4xl font-bold text-yellow-700">
-              How It Works
             </h3>
+            <h2 className="text-3xl md:text-4xl font-bold text-primary leading-tight">
+              How It Works
+            </h2>
 
             <div className="mt-8 flex flex-wrap gap-4 items-center">
-              <button
-                className="bg-yellow-700 text-white px-6 py-3 rounded-md font-medium hover:bg-yellow-800 focus:outline-none focus:ring-2 focus:ring-yellow-600 transition"
-                aria-label="Book a Free Consultation"
-              >
+              <Button aria-label="Book a Free Consultation">
                 Book a Free Consultation
-              </button>
-              <button
-                className="flex items-center gap-2 text-gray-800 font-medium hover:text-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-600 transition"
+              </Button>
+              <Link
+                href="#"
+                className="flex items-center gap-2 text-gray-800 font-medium hover:text-primary focus:outline-none focus:ring-2 focus:ring-yellow-600 transition"
                 aria-label="Get Started"
               >
                 Get Started{" "}
                 <ChevronRight className="w-4 h-4" aria-hidden="true" />
-              </button>
+              </Link>
             </div>
           </div>
 
@@ -633,7 +631,7 @@ const InteriorDesignPage = () => {
         title="Create spaces that sell and inspire"
         description="Transform your property with design that adds real value and tells a compelling story."
         primaryButton={{
-          text: "Book a consultaion",
+          text: "Book a consultation",
           href: "/properties",
           className:
             "bg-black hover:bg-black/90 hover:shadow-lg hover:shadow-black/25",
