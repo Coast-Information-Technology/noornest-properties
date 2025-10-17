@@ -19,17 +19,14 @@ interface AnimatedListProps {
   itemDelay?: number;
 }
 
-/** Detect if an object already matches Framer Motion's UseInViewOptions */
 function isUseInViewOptions(obj: unknown): obj is UseInViewOptions {
   if (!obj || typeof obj !== "object") return false;
   const o = obj as Record<string, unknown>;
   return "amount" in o || "margin" in o || "once" in o || "root" in o;
 }
 
-/** Narrow a rootMargin string to Framer Motion's branded MarginType */
 function toMarginType(m?: string): UseInViewOptions["margin"] | undefined {
   if (!m) return undefined;
-  // Accepts 1–4 parts like "0px", "10%", "-10% 0px", etc.
   const ok = /^-?\d+(\.\d+)?(px|%)(\s+-?\d+(\.\d+)?(px|%)){0,3}$/.test(
     m.trim()
   );
@@ -37,7 +34,6 @@ function toMarginType(m?: string): UseInViewOptions["margin"] | undefined {
   return m as unknown as NonNullable<UseInViewOptions["margin"]>;
 }
 
-/** Map IntersectionObserverInit → UseInViewOptions (safe best-effort) */
 function toInViewOptions(
   opts: unknown,
   fallback: UseInViewOptions = { amount: 0.25 }
@@ -61,8 +57,6 @@ function toInViewOptions(
   const margin = toMarginType(io.rootMargin);
   if (margin) mapped.margin = margin;
 
-  // Note: UseInViewOptions.root expects RefObject<Element>; IO gives Element/Document.
-  // If you need a custom root, create a ref elsewhere and pass it in your own options.
   return mapped;
 }
 
@@ -110,7 +104,7 @@ export default function AnimatedList({
     >
       {items.map((child, i) => (
         <motion.div
-          key={(child as any)?.key ?? i}
+          key={React.isValidElement(child) && child.key != null ? child.key : i}
           variants={itemVariants || defaultItemVariants}
         >
           {child}
