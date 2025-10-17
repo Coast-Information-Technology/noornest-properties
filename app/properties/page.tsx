@@ -14,6 +14,7 @@ import {
 import { getProperties } from "@/lib/mock-data";
 import Link from "next/link";
 import PropertyImage from "@/components/ui/PropertyImage";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Properties for Sale in London | Noornest Properties",
@@ -139,37 +140,65 @@ export default function PropertiesPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white">
-        <div className="container mx-auto px-4 py-16">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              Find Your Perfect Property in London
-            </h1>
-            <p className="text-xl mb-8 text-blue-100">
-              Discover luxury flats, houses, and apartments in prime London
-              locations
-            </p>
+      <section
+        className="bg-[#b79243] text-white px-6 md:px-12 lg:px-24 py-16 flex flex-col lg:flex-row items-center justify-between gap-12"
+        aria-labelledby="hero-heading"
+      >
+        {/* Text Content */}
+        <div className="flex-1 max-w-xl space-y-6 text-center lg:text-left">
+          <h1
+            id="hero-heading"
+            className="text-3xl md:text-5xl font-bold leading-tight text-white"
+          >
+            Discover verified <br className="hidden md:block" />
+            properties with confidence
+          </h1>
 
-            {/* Search Bar */}
-            <div className="max-w-2xl mx-auto">
-              <div className="flex flex-col md:flex-row gap-4">
-                <div className="flex-1">
-                  <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5 -z-10" />
-                    <Input
-                      placeholder="Search by location, property type, or features..."
-                      className="pl-10 h-12 text-gray-900"
-                    />
-                  </div>
-                </div>
-                <Button size="lg" className="h-12 px-8">
-                  Search Properties
-                </Button>
-              </div>
-            </div>
+          <p className="text-base md:text-lg text-gray-100 max-w-md mx-auto lg:mx-0">
+            Browse a curated selection of properties across the UK. Each listing
+            is meticulously vetted to ensure quality and potential.
+          </p>
+
+          <div className="flex justify-center lg:justify-start gap-4">
+            <Link
+              href="/properties"
+              className="bg-white text-[#b79243] font-semibold px-5 py-2 rounded-lg shadow hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white transition"
+            >
+              Explore
+            </Link>
+            <Link
+              href="/consult"
+              className="border border-white text-white font-semibold px-5 py-2 rounded-lg hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white transition"
+            >
+              Consult
+            </Link>
           </div>
         </div>
-      </div>
+
+        {/* Image Content */}
+        <div className="flex-1 relative w-full max-w-xl mx-auto">
+          {/* Large background image */}
+          <div className="relative rounded-2xl overflow-hidden w-full aspect-[4/3]">
+            <Image
+              src="/images/house-main.jpg"
+              alt="Front view of a modern UK house with garden"
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
+
+          {/* Overlay smaller image */}
+          <div className="absolute -left-6 md:-left-10 -top-8 md:-top-10 w-1/2 sm:w-2/5 aspect-[4/3] rounded-2xl overflow-hidden border-4 border-[#b79243] shadow-lg">
+            <Image
+              src="/images/house-small.jpg"
+              alt="Side view of a luxury property"
+              fill
+              className="object-cover"
+            />
+          </div>
+        </div>
+      </section>
 
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
