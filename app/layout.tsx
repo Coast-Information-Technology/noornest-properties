@@ -89,7 +89,7 @@ export default function RootLayout({
           {children}
           <Footer />
           <BackToTopButton />
-          <Toaster />
+          <Toaster richColors closeButton />
         </AnimationProvider>
       </body>
     </html>
