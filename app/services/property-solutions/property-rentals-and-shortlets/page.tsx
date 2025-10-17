@@ -301,7 +301,7 @@ const PropertyRentalPage = () => {
               role="group"
               tabIndex={0}
               aria-labelledby={`service-${service.id}-title`}
-              className={`relative overflow-hidden rounded-2xl focus:ring-4 focus:ring-offset-2 focus:ring-yellow-600 ${
+              className={`relative overflow-hidden h-[300px] lg:h-full rounded-2xl focus:ring-4 focus:ring-offset-2 focus:ring-yellow-600 ${
                 service.colSpan ?? ""
               } ${service.rowSpan ?? ""}`}
             >
