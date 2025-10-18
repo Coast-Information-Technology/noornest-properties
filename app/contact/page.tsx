@@ -16,6 +16,7 @@ import {
   Instagram,
   Globe,
 } from "lucide-react";
+import Link from "next/link";
 
 const ContactPage = () => {
   return (
@@ -105,21 +106,21 @@ const ContactPage = () => {
                   </li>
                   <li className="flex items-center gap-3">
                     <Mail className="w-4 h-4 text-yellow-800" />
-                    <a
+                    <Link
                       href="mailto:support@noornest.co.uk"
                       className="hover:underline focus:underline"
                     >
                       support@noornest.co.uk
-                    </a>
+                    </Link>
                   </li>
                   <li className="flex items-center gap-3">
                     <Phone className="w-4 h-4 text-yellow-800" />
-                    <a
+                    <Link
                       href="tel:+442012345678"
                       className="hover:underline focus:underline"
                     >
-                      +44 (0)20 1234 5678
-                    </a>
+                      +44 (0)20 3983 8559
+                    </Link>
                   </li>
                   <li className="flex items-center gap-3">
                     <Clock className="w-4 h-4 text-yellow-800" />
@@ -129,27 +130,27 @@ const ContactPage = () => {
               </div>
 
               <div className="flex gap-6 mt-10" aria-label="Social media links">
-                <a
+                <Link
                   href="#"
                   aria-label="Twitter"
                   className="hover:text-yellow-700 focus:text-yellow-700"
                 >
                   <Twitter className="w-5 h-5" />
-                </a>
-                <a
+                </Link>
+                <Link
                   href="#"
                   aria-label="Instagram"
                   className="hover:text-yellow-700 focus:text-yellow-700"
                 >
                   <Instagram className="w-5 h-5" />
-                </a>
-                <a
+                </Link>
+                <Link
                   href="#"
                   aria-label="Website"
                   className="hover:text-yellow-700 focus:text-yellow-700"
                 >
                   <Globe className="w-5 h-5" />
-                </a>
+                </Link>
               </div>
             </div>
 

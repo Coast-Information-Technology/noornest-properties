@@ -59,6 +59,38 @@ export default function Footer() {
             <p className="text-sm text-white">
               Making Property Simple, Secure & Smarter
             </p>
+
+            {/* Contact Info */}
+            <div className="space-y-3">
+              <div className="flex items-center space-x-3">
+                <Mail className="h-5 w-5 text-primary" />
+                <Link
+                  href={`mailto:${CONTACT_INFO.email}`}
+                  className="text-white hover:text-primary transition-colors text-sm"
+                >
+                  {CONTACT_INFO.email}
+                </Link>
+              </div>
+              <div className="flex items-center space-x-3">
+                <Phone className="h-5 w-5 text-primary" />
+                <Link
+                  href={`tel:${CONTACT_INFO.phone}`}
+                  className="text-white hover:text-primary transition-colors text-sm"
+                >
+                  {CONTACT_INFO.phone}
+                </Link>
+              </div>
+              <div className="flex items-start space-x-3">
+                <MapPin className="h-5 w-5 text-primary mt-0.5" />
+                <span className="text-white text-sm">
+                  {CONTACT_INFO.address}
+                </span>
+              </div>
+              <div className="flex items-start space-x-3">
+                <Clock className="h-5 w-5 text-primary mt-0.5" />
+                <div className="text-white text-sm">{CONTACT_INFO.hours}</div>
+              </div>
+            </div>
           </div>
 
           {/* Quick Links */}
@@ -87,14 +119,6 @@ export default function Footer() {
                   className="text-white hover:text-primary transition-colors text-sm"
                 >
                   Services
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/blog"
-                  className="text-white hover:text-primary transition-colors text-sm"
-                >
-                  Blog
                 </Link>
               </li>
               <li>
@@ -155,42 +179,49 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact Info */}
+          {/* Investments */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-primary">Contact Info</h3>
-            <div className="space-y-3">
-              <div className="flex items-center space-x-3">
-                <Mail className="h-5 w-5 text-primary" />
+            <h3 className="text-lg font-semibold text-primary">
+              Investments Plan
+            </h3>
+            <ul className="space-y-2 ">
+              <li>
                 <Link
-                  href={`mailto:${CONTACT_INFO.email}`}
+                  href="/services/property-investment"
                   className="text-white hover:text-primary transition-colors text-sm"
                 >
-                  {CONTACT_INFO.email}
+                  Equity Nest
                 </Link>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Phone className="h-5 w-5 text-primary" />
+              </li>
+              <li>
                 <Link
-                  href={`tel:${CONTACT_INFO.phone}`}
+                  href="/services/bmv-analysis"
                   className="text-white hover:text-primary transition-colors text-sm"
                 >
-                  {CONTACT_INFO.phone}
+                  Yield Nest
                 </Link>
-              </div>
-              <div className="flex items-start space-x-3">
-                <MapPin className="h-5 w-5 text-primary mt-0.5" />
-                <span className="text-white text-sm">
-                  {CONTACT_INFO.address}
-                </span>
-              </div>
-              <div className="flex items-start space-x-3">
-                <Clock className="h-5 w-5 text-primary mt-0.5" />
-                <div className="text-white text-sm">{CONTACT_INFO.hours}</div>
-              </div>
-            </div>
+              </li>
+              <li>
+                <Link
+                  href="/services/property-management"
+                  className="text-white hover:text-primary transition-colors text-sm"
+                >
+                  Secure Nest
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/services/investment-consulting"
+                  className="text-white hover:text-primary transition-colors text-sm"
+                >
+                  Opportunity Nest
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
 
+        {/* Social Media */}
         <div className="flex justify-center mt-8 space-x-2">
           <Link
             href={SOCIAL_LINKS.facebook}

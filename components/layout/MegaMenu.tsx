@@ -62,9 +62,11 @@ export default function MegaMenu() {
           <NavigationMenuTrigger
             aria-label="Open Company menu"
             className={`h-10 relative
-              ${isGroupActive("/about")
-                ? "text-primary after:absolute after:left-3 after:right-3 after:-bottom-[2px] after:h-0.5 after:bg-primary"
-                : "text-foreground"}
+              ${
+                isGroupActive("/about")
+                  ? "text-primary after:absolute after:left-3 after:right-3 after:-bottom-[2px] after:h-0.5 after:bg-primary"
+                  : "text-foreground"
+              }
               data-[state=open]:text-primary
             `}
           >
@@ -137,12 +139,25 @@ export default function MegaMenu() {
                 <div className="text-sm font-medium text-muted-foreground">
                   Contact
                 </div>
-
                 <NavigationMenuLink asChild>
                   <Link
                     href="/contact"
+                    aria-current={pathname === "/contact" ? "page" : undefined}
+                    className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                  >
+                    <div className="text-sm font-medium leading-none">
+                      Contact us
+                    </div>
+                  </Link>
+                </NavigationMenuLink>
+
+                <NavigationMenuLink asChild>
+                  <Link
+                    href="/contact#contact-heading"
                     aria-current={
-                      pathname === "/contact" ? "page" : undefined
+                      pathname === "/contact#contact-heading"
+                        ? "page"
+                        : undefined
                     }
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
@@ -157,9 +172,9 @@ export default function MegaMenu() {
 
                 <NavigationMenuLink asChild>
                   <Link
-                    href="/contact/location"
+                    href="/contact#contact"
                     aria-current={
-                      pathname === "/contact/location" ? "page" : undefined
+                      pathname === "/contact#contact" ? "page" : undefined
                     }
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
@@ -174,9 +189,9 @@ export default function MegaMenu() {
 
                 <NavigationMenuLink asChild>
                   <Link
-                    href="/contact/whatsapp"
+                    href="/contact#contact"
                     aria-current={
-                      pathname === "/contact/whatsapp" ? "page" : undefined
+                      pathname === "/contact#contact" ? "page" : undefined
                     }
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
@@ -198,9 +213,11 @@ export default function MegaMenu() {
           <NavigationMenuTrigger
             aria-label="Open Properties menu"
             className={`h-10 relative
-              ${isGroupActive("/properties")
-                ? "text-primary after:absolute after:left-3 after:right-3 after:-bottom-[2px] after:h-0.5 after:bg-primary"
-                : "text-foreground"}
+              ${
+                isGroupActive("/properties")
+                  ? "text-primary after:absolute after:left-3 after:right-3 after:-bottom-[2px] after:h-0.5 after:bg-primary"
+                  : "text-foreground"
+              }
               data-[state=open]:text-primary
             `}
           >
@@ -306,9 +323,16 @@ export default function MegaMenu() {
           <NavigationMenuTrigger
             aria-label="Open Blog menu"
             className={`h-10 relative
-              ${isGroupActive(["/blog","/blog/market-trends","/blog/investment-education","/blog/property-tips"])
-                ? "text-primary after:absolute after:left-3 after:right-3 after:-bottom-[2px] after:h-0.5 after:bg-primary"
-                : "text-foreground"}
+              ${
+                isGroupActive([
+                  "/blog",
+                  "/blog/?=market-trends",
+                  "/blog/?=investment-education",
+                  "/blog/?=property-tips",
+                ])
+                  ? "text-primary after:absolute after:left-3 after:right-3 after:-bottom-[2px] after:h-0.5 after:bg-primary"
+                  : "text-foreground"
+              }
               data-[state=open]:text-primary
             `}
           >
@@ -328,7 +352,9 @@ export default function MegaMenu() {
                   aria-current={pathname === "/blog" ? "page" : undefined}
                   className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                 >
-                  <div className="text-sm font-medium leading-none">Insights</div>
+                  <div className="text-sm font-medium leading-none">
+                    Insights
+                  </div>
                   <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                     Latest insights
                   </p>
@@ -337,9 +363,9 @@ export default function MegaMenu() {
 
               <NavigationMenuLink asChild>
                 <Link
-                  href="/blog/market-trends"
+                  href="/blog?=market-trends"
                   aria-current={
-                    pathname === "/blog/market-trends" ? "page" : undefined
+                    pathname === "/blog?=market-trends" ? "page" : undefined
                   }
                   className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                 >
@@ -354,9 +380,11 @@ export default function MegaMenu() {
 
               <NavigationMenuLink asChild>
                 <Link
-                  href="/blog/investment-education"
+                  href="/blog?=investment-education"
                   aria-current={
-                    pathname === "/blog/investment-education" ? "page" : undefined
+                    pathname === "/blog?=investment-education"
+                      ? "page"
+                      : undefined
                   }
                   className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                 >
@@ -371,9 +399,9 @@ export default function MegaMenu() {
 
               <NavigationMenuLink asChild>
                 <Link
-                  href="/blog/property-tips"
+                  href="/blog?=property-tips"
                   aria-current={
-                    pathname === "/blog/property-tips" ? "page" : undefined
+                    pathname === "/blog?=property-tips" ? "page" : undefined
                   }
                   className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                 >
@@ -394,9 +422,11 @@ export default function MegaMenu() {
           <NavigationMenuTrigger
             aria-label="Open Investment Plans menu"
             className={`h-10 relative
-              ${isGroupActive("/investment-plans")
-                ? "text-primary after:absolute after:left-3 after:right-3 after:-bottom-[2px] after:h-0.5 after:bg-primary"
-                : "text-foreground"}
+              ${
+                isGroupActive("#")
+                  ? "text-primary after:absolute after:left-3 after:right-3 after:-bottom-[2px] after:h-0.5 after:bg-primary"
+                  : "text-foreground"
+              }
               data-[state=open]:text-primary
             `}
           >
@@ -506,9 +536,11 @@ export default function MegaMenu() {
           <NavigationMenuTrigger
             aria-label="Open Services menu"
             className={`h-10 relative
-              ${isGroupActive("/services")
-                ? "text-primary after:absolute after:left-3 after:right-3 after:-bottom-[2px] after:h-0.5 after:bg-primary"
-                : "text-foreground"}
+              ${
+                isGroupActive("/services")
+                  ? "text-primary after:absolute after:left-3 after:right-3 after:-bottom-[2px] after:h-0.5 after:bg-primary"
+                  : "text-foreground"
+              }
               data-[state=open]:text-primary
             `}
           >
