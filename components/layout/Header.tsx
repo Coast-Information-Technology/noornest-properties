@@ -220,7 +220,7 @@ export default function Header() {
       <MegaMenu />
 
       {/* Right Side Actions */}
-      <button className="hidden xl:flex items-center space-x-4">
+      <button className="flex items-center space-x-4">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <label className="flex items-center gap-2 bg-primary">
