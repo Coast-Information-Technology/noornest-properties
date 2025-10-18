@@ -203,209 +203,204 @@ export default function Header() {
 
   return (
     <header
-      className="top-0 z-[10000] w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 h-[10vh] md:h-[15vh] flex items-center"
+      className="top-0 z-[10000] border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex items-center justify-between w-full px-3 lg:px-6 py-4"
       style={{ zIndex: 10000 }}
     >
-      <div className="container mx-auto px-4">
-        <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="space-x-3">
-            <Image
-              src="/noornest-logo.png"
-              alt="Noornest Properties logo"
-              width={150}
-              height={150}
-            />
-          </Link>
+      {/* Logo */}
+      <Link href="/" className="space-x-3">
+        <Image
+          src="/noornest-logo.png"
+          alt="Noornest Properties logo"
+          width={150}
+          height={150}
+        />
+      </Link>
 
-          {/* Desktop Navigation */}
-          <MegaMenu />
+      {/* Desktop Navigation */}
+      <MegaMenu />
 
-          {/* Right Side Actions */}
-          <div className="flex items-center space-x-4">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button className="flex items-center gap-2">
-                  Get Started
-                  <ChevronDown className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
-                <DropdownMenuLabel>Get Started</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link href="/register" className="flex items-center">
-                    <User className="mr-2 h-4 w-4" />
-                    <span>Register</span>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/login" className="flex items-center">
-                    <User className="mr-2 h-4 w-4" />
-                    <span>Login</span>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link href="/booking" className="flex items-center">
-                    <Calendar className="mr-2 h-4 w-4" />
-                    <span>Book a Consultation</span>
-                  </Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-
-            {/* Mobile Menu Button */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="xl:hidden"
-              onClick={() => setIsMenuOpen((v) => !v)}
-              aria-expanded={isMenuOpen}
-              aria-label="Toggle menu"
-            >
-              {isMenuOpen ? (
-                <X className="h-5 w-5" />
-              ) : (
-                <Menu className="h-5 w-5" />
-              )}
+      {/* Right Side Actions */}
+      <button className="flex items-center space-x-4">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button className="flex items-center gap-2">
+              Get Started
+              <ChevronDown className="h-4 w-4" />
             </Button>
-          </div>
-        </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-56">
+            <DropdownMenuLabel>Get Started</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem asChild>
+              <Link href="/register" className="flex items-center">
+                <User className="mr-2 h-4 w-4" />
+                <span>Register</span>
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/login" className="flex items-center">
+                <User className="mr-2 h-4 w-4" />
+                <span>Login</span>
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem asChild>
+              <Link href="/booking" className="flex items-center">
+                <Calendar className="mr-2 h-4 w-4" />
+                <span>Book a Consultation</span>
+              </Link>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
-        {/* Mobile/Tablet Menu */}
-        {isMenuOpen && (
-          <div
-            className="xl:hidden absolute top-full left-0 right-0 bg-white border-b shadow-lg z-[200] animate-in slide-in-from-top-2 duration-200"
-            style={{ zIndex: 200 }}
-          >
-            <div className="px-4 py-6 space-y-4 max-h-[80vh] overflow-y-auto">
-              {/* Mobile Search */}
-              <div className="mb-4">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                  <Input
-                    placeholder="Search properties..."
-                    className="pl-10 w-full"
-                  />
-                </div>
-              </div>
+        {/* Mobile Menu Button */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="xl:hidden"
+          onClick={() => setIsMenuOpen((v) => !v)}
+          aria-expanded={isMenuOpen}
+          aria-label="Toggle menu"
+        >
+          {isMenuOpen ? (
+            <X className="h-5 w-5" />
+          ) : (
+            <Menu className="h-5 w-5" />
+          )}
+        </Button>
+      </button>
 
-              {/* Flat items (Home) */}
-              <div className="grid grid-cols-1 gap-2">
-                {mobileSingles.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`block px-3 py-3 text-base font-medium rounded-md transition-colors ${
-                      isActiveExact(item.href)
-                        ? "text-primary bg-primary/10"
-                        : "text-muted-foreground hover:text-primary hover:bg-primary/10"
-                    }`}
-                    aria-current={isActiveExact(item.href) ? "page" : undefined}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
-
-              {/* Dropdown groups */}
-              <Accordion
-                type="multiple"
-                defaultValue={defaultOpen}
-                className="w-full"
-              >
-                {mobileGroups.map((group) => {
-                  const active = isGroupActive(group.prefixes);
-                  return (
-                    <AccordionItem
-                      key={group.key}
-                      value={group.key}
-                      className="border-b"
-                    >
-                      <AccordionTrigger
-                        className={`px-3 py-3 text-base font-medium rounded-md hover:no-underline ${
-                          active ? "text-primary" : "text-foreground"
-                        }`}
-                      >
-                        <span>{group.label}</span>
-                      </AccordionTrigger>
-                      <AccordionContent className="pb-3">
-                        <div className="space-y-3">
-                          {group.sections.map((sec, sIdx) => (
-                            <div
-                              key={`${group.key}-sec-${sIdx}`}
-                              className="space-y-2"
-                            >
-                              {sec.title && (
-                                <div className="px-3 text-sm font-medium text-muted-foreground">
-                                  {sec.title}
-                                </div>
-                              )}
-                              <div className="grid grid-cols-1 gap-2">
-                                {sec.links.map((link) => {
-                                  const current =
-                                    pathname === normalizePath(link.href);
-                                  return (
-                                    <Link
-                                      key={link.href}
-                                      href={link.href}
-                                      className={`block px-3 py-2 rounded-md transition-colors ${
-                                        current
-                                          ? "text-primary bg-primary/10"
-                                          : "text-muted-foreground hover:text-primary hover:bg-primary/10"
-                                      }`}
-                                      aria-current={
-                                        current ? "page" : undefined
-                                      }
-                                      onClick={() => setIsMenuOpen(false)}
-                                    >
-                                      {link.label}
-                                    </Link>
-                                  );
-                                })}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-                  );
-                })}
-              </Accordion>
-
-              {/* Additional Mobile Actions */}
-              <div className="pt-4 border-t space-y-2">
-                <Link
-                  href="/register"
-                  className="flex items-center px-3 py-2 text-base font-medium rounded-md transition-colors text-primary hover:bg-primary/10"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <User className="mr-2 h-4 w-4" />
-                  Register
-                </Link>
-                <Link
-                  href="/login"
-                  className="flex items-center px-3 py-2 text-base font-medium rounded-md transition-colors text-primary hover:bg-primary/10"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <User className="mr-2 h-4 w-4" />
-                  Login
-                </Link>
-                <Link
-                  href="/booking"
-                  className="flex items-center px-3 py-2 text-base font-medium rounded-md transition-colors bg-primary text-primary-foreground hover:bg-primary/90"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <Calendar className="mr-2 h-4 w-4" />
-                  Book a Consultation
-                </Link>
+      {/* Mobile/Tablet Menu */}
+      {isMenuOpen && (
+        <div
+          className="xl:hidden absolute top-full left-0 right-0 bg-white border-b shadow-lg z-[200] animate-in slide-in-from-top-2 duration-200"
+          style={{ zIndex: 200 }}
+        >
+          <div className="px-4 py-6 space-y-4 max-h-[80vh] overflow-y-auto">
+            {/* Mobile Search */}
+            <div className="mb-4">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  placeholder="Search properties..."
+                  className="pl-10 w-full"
+                />
               </div>
             </div>
+
+            {/* Flat items (Home) */}
+            <div className="grid grid-cols-1 gap-2">
+              {mobileSingles.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`block px-3 py-3 text-base font-medium rounded-md transition-colors ${
+                    isActiveExact(item.href)
+                      ? "text-primary bg-primary/10"
+                      : "text-muted-foreground hover:text-primary hover:bg-primary/10"
+                  }`}
+                  aria-current={isActiveExact(item.href) ? "page" : undefined}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+
+            {/* Dropdown groups */}
+            <Accordion
+              type="multiple"
+              defaultValue={defaultOpen}
+              className="w-full"
+            >
+              {mobileGroups.map((group) => {
+                const active = isGroupActive(group.prefixes);
+                return (
+                  <AccordionItem
+                    key={group.key}
+                    value={group.key}
+                    className="border-b"
+                  >
+                    <AccordionTrigger
+                      className={`px-3 py-3 text-base
+                           font-medium rounded-md hover:no-underline ${
+                             active ? "text-primary" : "text-foreground"
+                           }`}
+                    >
+                      <span>{group.label}</span>
+                    </AccordionTrigger>
+                    <AccordionContent className="pb-3">
+                      <div className="space-y-3">
+                        {group.sections.map((sec, sIdx) => (
+                          <div
+                            key={`${group.key}-sec-${sIdx}`}
+                            className="space-y-2"
+                          >
+                            {sec.title && (
+                              <div className="px-3 text-base font-medium text-muted-foreground">
+                                {sec.title}
+                              </div>
+                            )}
+                            <div className="grid grid-cols-1 gap-2">
+                              {sec.links.map((link) => {
+                                const current =
+                                  pathname === normalizePath(link.href);
+                                return (
+                                  <Link
+                                    key={link.href}
+                                    href={link.href}
+                                    className={`block px-3 py-2 text-base rounded-md transition-colors ${
+                                      current
+                                        ? "text-primary bg-primary/10"
+                                        : "text-muted-foreground hover:text-primary hover:bg-primary/10"
+                                    }`}
+                                    aria-current={current ? "page" : undefined}
+                                    onClick={() => setIsMenuOpen(false)}
+                                  >
+                                    {link.label}
+                                  </Link>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                );
+              })}
+            </Accordion>
+
+            {/* Additional Mobile Actions */}
+            <div className="pt-4 border-t space-y-2">
+              <Link
+                href="/register"
+                className="flex items-center px-3 py-2 text-base font-medium rounded-md transition-colors text-primary hover:bg-primary/10"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <User className="mr-2 h-4 w-4" />
+                Register
+              </Link>
+              <Link
+                href="/login"
+                className="flex items-center px-3 py-2 text-base font-medium rounded-md transition-colors text-primary hover:bg-primary/10"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <User className="mr-2 h-4 w-4" />
+                Login
+              </Link>
+              <Link
+                href="/booking"
+                className="flex items-center px-3 py-2 text-base font-medium rounded-md transition-colors bg-primary text-primary-foreground hover:bg-primary/90"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <Calendar className="mr-2 h-4 w-4" />
+                Book a Consultation
+              </Link>
+            </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </header>
   );
 }
