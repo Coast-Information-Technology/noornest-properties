@@ -104,7 +104,7 @@ export default function BackToTopButton({
           whileTap={{ scale: 0.95 }}
           onClick={scrollToTop}
           className={`
-            fixed z-[9995] rounded-full p-6 shadow-lg transition-all duration-300
+            fixed z-[9995] rounded-full text-white flex justify-center items-center shadow-lg transition-all duration-300
             ${positionClasses[position]}
             ${sizeClasses[size]}
             ${getColorClasses()}

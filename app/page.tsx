@@ -610,7 +610,7 @@ export default function Home() {
 
           {/* Right Section (Image) */}
           <div className="flex-1">
-            <div className="rounded-2xl overflow-hidden shadow-lg h-[600px] w-[400px] md:h-[500px] md:w-[600px] relative">
+            <div className="rounded-2xl overflow-hidden shadow-lg h-[400px] w-full md:h-[500px] md:w-[600px] relative">
               <Image
                 src="/hero-img.png" // replace with your actual image path
                 alt="Investment Houses"
@@ -792,6 +792,7 @@ export default function Home() {
         secondaryButton={{
           text: "Book a Consultation",
           href: "/booking",
+          className: "text-primary",
         }}
         backgroundImage="/hero-img3.webp"
         overlayClassName="bg-gradient-to-r from-black/40 to-black/60 backdrop-blur-sm"

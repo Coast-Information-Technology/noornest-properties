@@ -220,13 +220,13 @@ export default function Header() {
       <MegaMenu />
 
       {/* Right Side Actions */}
-      <button className="flex items-center space-x-4">
+      <button className="hidden xl:flex items-center space-x-4">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button className="flex items-center gap-2">
+            <label className="flex items-center gap-2 bg-primary">
               Get Started
               <ChevronDown className="h-4 w-4" />
-            </Button>
+            </label>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuLabel>Get Started</DropdownMenuLabel>
@@ -372,7 +372,7 @@ export default function Header() {
             </Accordion>
 
             {/* Additional Mobile Actions */}
-            <div className="pt-4 border-t space-y-2">
+            {/* <div className="hidden pt-4 border-t space-y-2">
               <Link
                 href="/register"
                 className="flex items-center px-3 py-2 text-base font-medium rounded-md transition-colors text-primary hover:bg-primary/10"
@@ -397,7 +397,7 @@ export default function Header() {
                 <Calendar className="mr-2 h-4 w-4" />
                 Book a Consultation
               </Link>
-            </div>
+            </div> */}
           </div>
         </div>
       )}
