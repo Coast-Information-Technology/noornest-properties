@@ -527,6 +527,28 @@ export default function MegaMenu() {
                   </p>
                 </Link>
               </NavigationMenuLink>
+
+              <NavigationMenuLink asChild>
+                <Link
+                  href="/investment-plans/compare-investment-plans"
+                  aria-current={
+                    pathname === "/investment-plans/compare-investment-plans"
+                      ? "page"
+                      : undefined
+                  }
+                  className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                >
+                  <div className="flex items-center">
+                    <Target className="mr-2 h-4 w-4" />
+                    <div className="text-sm font-medium leading-none">
+                      Compare Investment Plans
+                    </div>
+                  </div>
+                  <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                    Complare value properties
+                  </p>
+                </Link>
+              </NavigationMenuLink>
             </div>
           </NavigationMenuContent>
         </NavigationMenuItem>

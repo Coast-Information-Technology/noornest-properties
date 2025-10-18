@@ -1,7 +1,7 @@
 import React from "react";
 
 const page = () => {
-  return <div>Secure Nest Investment Plans Page</div>;
+  return <div>Compare Investment Plans Page</div>;
 };
 
 export default page;
