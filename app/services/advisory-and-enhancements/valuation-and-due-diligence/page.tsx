@@ -450,9 +450,9 @@ const ValuationPage = () => {
             className="relative w-full lg:w-1/2 flex items-center justify-center"
             aria-hidden="true"
           >
-            <div className="relative w-full max-w-md h-[420px] sm:h-[500px]">
+            <div className="relative w-full max-w-md h-[420px] md:h-[500px]">
               {/* Main Image */}
-              <div className="w-[350px] h-[500px] shadow-2xl shadow-black rounded-2xl mx-auto">
+              <div className="w-full h-full md:w-[350px] md:h-[500px] shadow-2xl shadow-black rounded-2xl mx-auto">
                 <Image
                   src="/services/why-3.png"
                   alt="Modern living room interior with cozy decor"
