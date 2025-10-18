@@ -268,3 +268,27 @@ export const salesTestimonials = [
     image: "/sales/michael.png",
   },
 ];
+
+export const equityTestimonials = [
+  {
+    quote:
+      "Equity Nest allowed me to participate in property development without the hassle of managing projects. My investment grew along with the property value.",
+    author: "Daniel M.",
+    role: "Investor",
+    image: "/investments/daniel.png",
+  },
+  {
+    quote:
+      "The transparency and regular updates from Equity Nest gave me confidence in my investments. I could see exactly how my money was being used.",
+    author: "Sophia L.",
+    role: "Developer",
+    image: "/investments/sophia.png",
+  },
+  {
+    quote:
+      "I appreciated the flexibility of Equity Nest. I could choose projects that aligned with my risk tolerance and investment goals.",
+    author: "Mark T.",
+    role: "Landlord",
+    image: "/investments/mark.png",
+  },
+];

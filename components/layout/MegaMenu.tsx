@@ -102,9 +102,9 @@ export default function MegaMenu() {
 
                 <NavigationMenuLink asChild>
                   <Link
-                    href="/about/why-choose-us"
+                    href="/about#why-choose-us"
                     aria-current={
-                      pathname === "/about/why-choose-us" ? "page" : undefined
+                      pathname === "/about#why-choose-us" ? "page" : undefined
                     }
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
@@ -119,9 +119,9 @@ export default function MegaMenu() {
 
                 <NavigationMenuLink asChild>
                   <Link
-                    href="/about/partners"
+                    href="/about#partners"
                     aria-current={
-                      pathname === "/about/partners" ? "page" : undefined
+                      pathname === "/about#partners" ? "page" : undefined
                     }
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
