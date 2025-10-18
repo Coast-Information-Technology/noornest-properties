@@ -62,7 +62,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
         aria-label="Authentication section"
         className="flex flex-col w-full md:w-1/2 items-center justify-center p-6 md:p-12"
       >
-        <div className="flex justify-end max-w-md w-full">
+        <Link href="/" className="flex justify-end max-w-md w-full">
           <Image
             src="/noornest-logo.png"
             alt="Noornest"
@@ -70,7 +70,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
             height={120}
             className="mb-6"
           />
-        </div>
+        </Link>
         <div className="w-full max-w-md">
           {/* Tabs */}
           <div

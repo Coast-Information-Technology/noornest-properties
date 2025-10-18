@@ -203,7 +203,7 @@ export default function Header() {
 
   return (
     <header
-      className="top-0 z-[10000] inset-0 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex items-center justify-between w-full px-3 lg:px-6 py-4"
+      className="top-full h-full z-[10000] border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex items-center justify-between w-full px-3 lg:px-6 py-4"
       style={{ zIndex: 10000 }}
     >
       {/* Logo */}
@@ -223,10 +223,10 @@ export default function Header() {
       <button className="flex items-center space-x-4">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <label className="flex items-center gap-2">
+            <div className="flex items-center gap-2 bg-primary py-2 px-3 rounded-[8px] text-white font-bold">
               Get Started
               <ChevronDown className="h-4 w-4" />
-            </label>
+            </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuLabel className="bg-primary rounded-[5px]">
@@ -275,7 +275,7 @@ export default function Header() {
       {/* Mobile/Tablet Menu */}
       {isMenuOpen && (
         <div
-          className="xl:hidden absolute top-full left-0 right-0 bg-white border-b shadow-lg z-[200] animate-in slide-in-from-top-2 duration-200"
+          className="xl:hidden absolute top-0 left-0 right-0 bg-white border-b shadow-lg z-[200] animate-in slide-in-from-top-2 duration-200"
           style={{ zIndex: 200 }}
         >
           <div className="px-4 py-6 space-y-4 max-h-[80vh] overflow-y-auto">
@@ -339,7 +339,7 @@ export default function Header() {
                             className="space-y-2"
                           >
                             {sec.title && (
-                              <div className="px-3 text-base font-medium text-muted-foreground">
+                              <div className="px-3 text-base font-medium text-black border-b">
                                 {sec.title}
                               </div>
                             )}

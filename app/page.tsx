@@ -624,7 +624,7 @@ export default function Home() {
       </section>
 
       {/* Why Choose Noornest Section */}
-      <section className="bg-[#f5e9db] py-16 px-6 md:px-16">
+      <section className="bg-accent py-16 px-6 md:px-16">
         <div className="">
           <h3 className="text-lg tracking-wide text-black uppercase font-bold">
             Why Choose Noornest
