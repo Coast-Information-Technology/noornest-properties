@@ -144,6 +144,7 @@ export default function Header() {
       sections: [
         {
           links: [
+            { href: "/properties", label: "Properties" },
             { href: "/properties?type=apartments", label: "Apartments" },
             { href: "/properties?type=houses", label: "Houses" },
             { href: "/properties?type=land", label: "Land" },
@@ -158,20 +159,20 @@ export default function Header() {
       label: "Blog",
       prefixes: [
         "/blog",
-        "/blog/market-trends",
-        "/blog/investment-education",
-        "/blog/property-tips",
+        "/blog?=market-trends",
+        "/blog?investment-education",
+        "/blog?property-tips",
       ],
       sections: [
         {
           links: [
             { href: "/blog", label: "Insights" },
-            { href: "/blog/market-trends", label: "Market Trends" },
+            { href: "/blog?=market-trends", label: "Market Trends" },
             {
-              href: "/blog/investment-education",
+              href: "/blog?=investment-education",
               label: "Investment Education",
             },
-            { href: "/blog/property-tips", label: "Property Tips" },
+            { href: "/blog?=property-tips", label: "Property Tips" },
           ],
         },
       ],
