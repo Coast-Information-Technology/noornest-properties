@@ -204,7 +204,7 @@ export default function Header() {
 
   return (
     <header
-      className="top-full h-full z-[10000] border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex items-center justify-between w-full px-3 lg:px-6 py-4"
+      className="top-full z-[10000] border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex items-center justify-between w-full px-3 lg:px-6 py-4"
       style={{ zIndex: 10000 }}
     >
       {/* Logo */}
@@ -276,7 +276,7 @@ export default function Header() {
       {/* Mobile/Tablet Menu */}
       {isMenuOpen && (
         <div
-          className="xl:hidden absolute top-0 left-0 right-0 bg-white border-b shadow-lg z-[200] animate-in slide-in-from-top-2 duration-200"
+          className="xl:hidden absolute top-full left-0 right-0 bg-white border-b shadow-lg z-[200] animate-in slide-in-from-top-2 duration-200"
           style={{ zIndex: 200 }}
         >
           <div className="px-4 py-6 space-y-4 max-h-[80vh] overflow-y-auto">
