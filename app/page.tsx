@@ -671,7 +671,7 @@ export default function Home() {
               {propertySolutions.map((item, idx) => (
                 <div
                   key={idx}
-                  className="flex flex-col md:flex-row items-center gap-3 bg-[#f5f5f5] rounded-xl py-6 px-4 shadow-sm"
+                  className="flex flex-col lg:flex-row items-center gap-3 bg-[#f5f5f5] rounded-xl py-6 px-4 shadow-sm"
                 >
                   {item.icon}
                   <p className="text-xl font-medium">{item.title}</p>
