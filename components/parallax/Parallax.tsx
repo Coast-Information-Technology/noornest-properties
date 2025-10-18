@@ -80,7 +80,7 @@ export const Parallax: React.FC<ParallaxProps> = ({
             }`}
           >
             <div className="px-6 py-20">
-              <div className="w-full h-[220px] md:w-[420px] rounded-xl overflow-hidden shadow-sm">
+              <div className="w-full h-[220px] lg:w-[420px] rounded-xl overflow-hidden shadow-sm">
                 <Image
                   src={item.image}
                   alt={item.title}
