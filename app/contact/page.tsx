@@ -155,7 +155,7 @@ const ContactPage = () => {
             </div>
 
             {/* ---- Contact Form ---- */}
-            <div className="order-1 lg:order-none bg-white p-6 rounded-xl">
+            <div className="order-1 lg:order-none bg-white p-6 rounded-xl text-left">
               <h2
                 id="contact-heading"
                 className="text-2xl font-bold mb-6 text-gray-900"
