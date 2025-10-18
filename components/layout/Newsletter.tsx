@@ -57,6 +57,7 @@ export default function Newsletter() {
             <NewsletterForm
               placeholder="Enter your email address"
               buttonText="Subscribe Now"
+              buttonClassName="text-center"
               onSubmit={handleNewsletterSubmit}
             />
           </motion.div>

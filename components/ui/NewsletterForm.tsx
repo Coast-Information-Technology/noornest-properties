@@ -62,7 +62,7 @@ export default function NewsletterForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className={`flex flex-col sm:flex-row gap-2.5 sm:gap-0 justify-center ${className}`}
+      className={`flex flex-col sm:flex-row text-center lg:text-left gap-2.5 sm:gap-0 justify-center ${className}`}
     >
       <motion.div
         className="relative"

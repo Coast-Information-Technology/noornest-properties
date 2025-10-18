@@ -553,7 +553,7 @@ export default function Home() {
 
       {/* Investment Plans Section */}
       <section className="w-full bg-amber-50 py-16 px-6 md:px-16 relative">
-        <div className="flex flex-col md:flex-row items-center md:items-start gap-12">
+        <div className="flex flex-col lg:flex-row items-center md:items-start gap-12">
           {/* Left Section */}
           <div className="flex-1">
             <h3 className="text-lg tracking-wide text-black uppercase font-bold">
@@ -610,7 +610,7 @@ export default function Home() {
 
           {/* Right Section (Image) */}
           <div className="flex-1">
-            <div className="rounded-2xl overflow-hidden shadow-lg h-[400px] w-full md:h-[500px] md:w-[600px] relative">
+            <div className="rounded-2xl overflow-hidden shadow-lg h-[400px] w-full md:h-[500px] lg:w-[600px] relative">
               <Image
                 src="/hero-img.png" // replace with your actual image path
                 alt="Investment Houses"
