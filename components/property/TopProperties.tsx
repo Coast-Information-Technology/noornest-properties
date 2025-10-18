@@ -1,3 +1,5 @@
+"use client";
+
 import { useRef, useState, useEffect } from "react";
 import {
   ChevronLeft,
@@ -49,7 +51,9 @@ export default function TopProperties() {
     <section className="bg-primary py-16 px-4 md:px-12 lg:px-20">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h3 className="text-lg tracking-wide text-black uppercase font-bold">Highlights</h3>
+          <h3 className="text-lg tracking-wide text-black uppercase font-bold">
+            Highlights
+          </h3>
           <h2 className="text-3xl md:text-4xl font-bold text-white leading-snug mb-3 max-w-2xl">
             Top performing property investments
           </h2>
