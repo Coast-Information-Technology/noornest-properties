@@ -298,38 +298,38 @@ const features = [
 
 const propertySolutions = [
   {
-    icon: <Briefcase className="text-primary font-light" size={60} />,
+    icon: <Briefcase className="text-primary font-light w-14 h-14" />,
     title: "Management",
   },
   {
-    icon: <LineChart className="text-primary font-light" size={60} />,
+    icon: <LineChart className="text-primary font-light w-14 h-14" />,
     title: "Sales & Marketing",
   },
   {
-    icon: <Key className="text-primary font-light" size={60} />,
+    icon: <Key className="text-primary font-light w-14 h-14" />,
     title: "Rentals",
   },
   {
-    icon: <DollarSign className="text-primary" size={60} />,
+    icon: <DollarSign className="text-primary w-14 h-14" />,
     title: "Sourcing",
   },
 ];
 
 const advisoryEnhancements = [
   {
-    icon: <FileText className="text-primary font-light" size={60} />,
+    icon: <FileText className="text-primary font-light w-14 h-14" />,
     title: "Valuation",
   },
   {
-    icon: <MessageSquare className="text-primary font-light" size={60} />,
+    icon: <MessageSquare className="text-primary font-light w-14 h-14" />,
     title: "Consultancy",
   },
   {
-    icon: <Hammer className="text-primary font-light" size={60} />,
+    icon: <Hammer className="text-primary font-light w-14 h-14" />,
     title: "Renovation",
   },
   {
-    icon: <Sofa className="text-primary font-light" size={60} />,
+    icon: <Sofa className="text-primary font-light w-14 h-14" />,
     title: "Interior Design",
   },
 ];
@@ -671,10 +671,10 @@ export default function Home() {
               {propertySolutions.map((item, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center gap-3 bg-[#f5f5f5] rounded-xl py-6 px-4 shadow-sm"
+                  className="flex flex-col md:flex-row items-center gap-3 bg-[#f5f5f5] rounded-xl py-6 px-4 shadow-sm"
                 >
                   {item.icon}
-                  <p className="text-md lg:text-xl font-medium">{item.title}</p>
+                  <p className="text-xl font-medium">{item.title}</p>
                 </div>
               ))}
             </div>
@@ -689,10 +689,10 @@ export default function Home() {
               {advisoryEnhancements.map((item, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center gap-3 bg-[#f5f5f5] rounded-xl py-6 px-4 shadow-sm"
+                  className="flex flex-col md:flex-row  items-center gap-3 bg-[#f5f5f5] rounded-xl py-6 px-4 shadow-sm"
                 >
                   {item.icon}
-                  <p className="text-md lg:text-xl font-medium">{item.title}</p>
+                  <p className="text-xl font-medium">{item.title}</p>
                 </div>
               ))}
             </div>

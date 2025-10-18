@@ -92,7 +92,7 @@ export default function NewsletterForm({
         <button
           type="submit"
           disabled={isLoading || !email}
-          className={`w-full lg:w-auto px-4 py-3 bg-primary hover:bg-primary/90 text-white border border-primary rounded-r-[10px] sm:rounded-r-[10px] rounded-l-[10px] sm:rounded-l-[0px] font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 ${buttonClassName}`}
+          className={`w-full lg:w-auto px-4 py-3 bg-primary hover:bg-primary/90 text-white border border-primary rounded-r-[10px] sm:rounded-r-[10px] rounded-l-[10px] sm:rounded-l-[0px] font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 ${buttonClassName} text-center`}
         >
           {isLoading ? (
             <motion.div
