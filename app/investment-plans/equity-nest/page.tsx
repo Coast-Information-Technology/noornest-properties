@@ -1,11 +1,44 @@
 import Newsletter from "@/components/layout/Newsletter";
 import TestimonialCarousel from "@/components/testimonial/TestimonialCarousel";
+import AnimatedSection from "@/components/ui/AnimatedSection";
+import AnimatedText from "@/components/ui/AnimatedText";
 import { Button } from "@/components/ui/button";
+import CTASection from "@/components/ui/CTASection";
 import FAQSection from "@/components/ui/FAQSection";
 import { equityTestimonials } from "@/data/testimonials";
+import { fadeInUp } from "@/lib/animations";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { BsGraphUpArrow } from "react-icons/bs";
+import { TbGrowth, TbTarget } from "react-icons/tb";
+
+const equityNest = [
+  {
+    title: "Long-Term Wealth",
+    subtitle: "Growth",
+    description: "Participate in property appreciation.",
+    image: "/investments/wealth.png",
+  },
+  {
+    title: "Verified Projects",
+    subtitle: "Screened",
+    description: "Every deal screened and due-diligenced by Noornest.",
+    image: "/investments/project.png",
+  },
+  {
+    title: "Diversification",
+    subtitle: "Portfolio",
+    description: "Spread risk across multiple developments.",
+    image: "/investments/diversification.png",
+  },
+  {
+    title: "Aligned Incentives",
+    subtitle: "Partners",
+    description: "Partners motivated to maximize project success.",
+    image: "/investments/incentives.png",
+  },
+];
 
 const faqData = [
   {
@@ -28,6 +61,23 @@ const faqData = [
   {
     question: "Is my capital at risk?",
     answer: "Yes — as with any equity investment, returns are not guaranteed.",
+  },
+];
+
+const pricing = [
+  {
+    minimumInvestment: "£5,000",
+    expectedDuration: "2-5 years",
+    returnType: "Profit-sharing (varies based on performance)",
+  },
+];
+
+const returnsIllustration = [
+  {
+    investment: "£10,000",
+    term: "3 years",
+    exitValue: "25% capital growth",
+    totalReturn: "£12,500",
   },
 ];
 
@@ -102,29 +152,19 @@ const page = () => {
       </section>
 
       {/* Invest Equity Nest */}
-      <section className="py-20 px-6 md:px-16 text-center">
-        <div className="w-full md:max-w-4xl mx-auto">
-          <h3 className="text-lg tracking-wide text-black uppercase font-bold">
-            Invest
-          </h3>
-          <h2 className="text-3xl md:text-4xl font-bold text-primary leading-snug mb-3">
-            Making property simple, secure, and smarter for everyone.
-          </h2>
-          <p className="text-gray-600 mb-8 md:max-w-3xl">
-            Equity Nest is designed for investors who want to participate in the
-            ownership and profit-sharing side of property investment. Instead of
-            fixed returns, your investment grows with the project — giving you
-            exposure to property appreciation and development profits.
-          </p>
-          <div className="flex items-center gap-4 justify-center">
-            <Link href="/about">
-              <Button>Learn more</Button>
-            </Link>
-            <Link href="/contact">
-              <Button variant="ghost">Contact us</Button>
-            </Link>
-          </div>
-        </div>
+      <section className="py-20 px-6 md:px-16 text-center w-full md:max-w-4xl mx-auto">
+        <h3 className="text-lg tracking-wide text-black uppercase font-bold">
+          Invest
+        </h3>
+        <h2 className="text-3xl md:text-4xl font-bold text-primary leading-snug mb-3">
+          Making property simple, secure, and smarter for everyone.
+        </h2>
+        <p className="text-gray-600 mb-8 md:max-w-3xl mx-auto">
+          Equity Nest is designed for investors who want to participate in the
+          ownership and profit-sharing side of property investment. Instead of
+          fixed returns, your investment grows with the project — giving you
+          exposure to property appreciation and development profits.
+        </p>
       </section>
 
       {/* How Equity Nest Works */}
@@ -141,7 +181,7 @@ const page = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-6 md:px-16 max-w-6xl mx-auto text-center md:text-left">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-6 md:px-16 max-w-6xl mx-auto text-center md:text-left">
           {/* Step 1 */}
           <div className="bg-white rounded-lg shadow-lg flex flex-col justify-between">
             <div className="p-6">
@@ -199,6 +239,273 @@ const page = () => {
         </div>
       </section>
 
+      {/* Why Choose Equity Nest Section */}
+      <section className="text-center py-12 lg:py-20 px-8 md:px-16 w-full">
+        <div className="max-w-5xl mx-auto gap-12">
+          <h3 className="text-lg tracking-wide text-black uppercase font-bold">
+            Featured
+          </h3>
+          <h2 className="text-3xl md:text-4xl font-bold text-primary leading-snug mb-3">
+            Why Choose Equity Nest
+          </h2>
+          <p className="text-gray-600 mb-12 md:max-w-3xl mx-auto">
+            Curated articles that provide strategic perspectives on property
+            investment.
+          </p>
+
+          {/* Dynamic Content */}
+          {equityNest.map((article, idx) => {
+            const isReversed = idx % 2 !== 0; // Alternate layout for odd items
+
+            return (
+              <div
+                key={idx}
+                className={`flex flex-col lg:flex-row ${
+                  isReversed ? "lg:flex-row-reverse" : ""
+                } items-center justify-center border-primary border rounded-[10px] mt-8 overflow-hidden bg-white gap-12`}
+              >
+                {/* Image Section */}
+                <div className="w-full h-[250px] lg:w-1/2 lg:h-[400px]">
+                  <Image
+                    src={article.image}
+                    alt={article.title}
+                    width={600}
+                    height={400}
+                    className="w-full h-full object-cover"
+                    priority={idx === 0}
+                  />
+                </div>
+
+                {/* Text Section */}
+                <div
+                  className={`w-full lg:w-1/2 text-center lg:text-left px-6 md:px-12 py-8 ${
+                    isReversed ? "lg:pl-12 lg:pr-6" : "lg:pl-6 lg:pr-12"
+                  }`}
+                >
+                  <h3 className="text-base md:text-lg tracking-wide text-gray-700 uppercase font-semibold mb-3 md:mb-5">
+                    {article.subtitle}
+                  </h3>
+                  <h2 className="text-2xl md:text-4xl font-bold text-primary leading-snug mb-4">
+                    {article.title}
+                  </h2>
+                  <p className="text-gray-600 mb-6 md:max-w-md mx-auto lg:mx-0 leading-relaxed">
+                    {article.description}
+                  </p>
+                  <div className="flex items-center justify-center lg:justify-start gap-4">
+                    <Link
+                      href="/about"
+                      className="focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary"
+                    >
+                      <Button>Discover</Button>
+                    </Link>
+                    <Link
+                      href="/contact"
+                      className="focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary"
+                    >
+                      <Button variant="ghost">Research</Button>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Returns Section */}
+      <section className="bg-amber-100/50 min-h-screen py-16 md:py-20 lg:py-24">
+        <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-4">
+          {/* Top Section: Header Content */}
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <h3 className="text-lg tracking-wide text-black uppercase font-bold mb-2">
+              Returns Illustrative
+            </h3>
+            <h2 className="text-3xl md:text-4xl font-bold text-primary leading-snug mb-3">
+              Equity Nest Return Examples
+            </h2>
+          </div>
+
+          {/* Bottom Section: Two-Column Layout (Text Left, Image Right) */}
+          {/* On mobile, stacks vertically. On medium screens and up, becomes two columns. */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 items-center max-w-5xl mx-auto mb-8">
+            {/* Left Column */}
+            <div className="relative w-full min-h-[300px] bg-gray-200 rounded-xl shadow-lg overflow-hidden">
+              <Image
+                src="/investments/investment-returns.jpg"
+                alt="A modern, detached house with a beige facade, white window frames, and solar panels on the roof."
+                layout="fill"
+                objectFit="cover"
+                className="rounded-xl"
+                priority
+              />
+            </div>
+
+            {/* Right Column */}
+            <div className="pr-0 md:pr-8 lg:pr-12">
+              {/* Add some right padding on larger screens */}
+              {returnsIllustration.map((section, id) => (
+                <div
+                  key={id}
+                  className={`py-6 ${
+                    id < returnsIllustration.length - 1
+                      ? "border-b border-gray-300 space-y-6"
+                      : "space-y-6"
+                  }`}
+                >
+                  {/* WCAG: Use appropriate heading levels (h2 here as sub-sections to the main h1) */}
+                  <h2 className="text-2xl font-bold text-gray-900">
+                    Investment: {section.investment}
+                  </h2>
+                  <p className="text-xl font-semibold text-gray-700">
+                    Term: {section.term}
+                  </p>
+                  <p className="text-xl font-semibold text-gray-700">
+                    Exit Value: {section.exitValue}
+                  </p>
+                  <p className="text-xl font-semibold text-gray-700">
+                    Total Return: {section.totalReturn}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <p className="text-center text-sm text-gray-500 italic">
+            (Figures are illustrative only. Actual returns may vary.)
+          </p>
+        </div>
+      </section>
+
+      {/* Who is Equity Nest For? */}
+      <section className="bg-background pb-12">
+        <AnimatedSection
+          variants={fadeInUp}
+          className="space-y-6 grid grid-cols-1 lg:grid-cols-2 lg:items-center w-full py-12 px-6 md:px-16"
+        >
+          {/* Text Content */}
+          <div className="space-y-4">
+            <div className="text-center space-y-4 sm:space-y-6 lg:text-left">
+              <AnimatedText
+                as="h3"
+                className="text-lg tracking-wide text-black uppercase font-bold"
+              >
+                Equity Nest
+              </AnimatedText>
+              <AnimatedText
+                as="h2"
+                className="text-3xl lg:text-[2.5rem] font-bold tracking-tight text-primary leading-tight"
+                delay={0.2}
+              >
+                Who is <br />
+                Equity Nest For?
+              </AnimatedText>
+            </div>
+          </div>
+
+          {/* Description + Buttons */}
+          <div className="space-y-4">
+            <div className="text-center lg:text-left">
+              <AnimatedText
+                as="h2"
+                className="text-xl text-gray-900 font-bold flex max-w-4xl mx-auto leading-relaxed px-4 mb-5"
+              >
+                Equity Nest is ideal for:
+              </AnimatedText>
+              <AnimatedText
+                as="p"
+                className="text-sm text-gray-700 font-semibold max-w-4xl mx-auto leading-relaxed px-4 mb-3"
+                delay={0.2}
+              >
+                <span className="flex items-center gap-4">
+                  <TbTarget className="w-6 h-6" />
+                  <p>Investors with medium to long-term goals</p>
+                </span>
+              </AnimatedText>
+              <AnimatedText
+                as="p"
+                className="text-sm text-gray-700 font-semibold max-w-4xl mx-auto leading-relaxed px-4 mb-3"
+                delay={0.2}
+              >
+                <span className="flex items-center gap-4">
+                  <BsGraphUpArrow className="w-6 h-6" />
+                  Those seeking growth over fixed returns
+                </span>
+              </AnimatedText>
+              <AnimatedText
+                as="p"
+                className="text-sm text-gray-700 font-semibold max-w-4xl mx-auto leading-relaxed px-4 mb-3"
+                delay={0.2}
+              >
+                <span className="flex items-center gap-4">
+                  <TbGrowth className="w-6 h-6" />
+                  Individuals looking to diversify into property ownership
+                  without direct management
+                </span>
+              </AnimatedText>
+            </div>
+          </div>
+        </AnimatedSection>
+
+        {/* Hero Image */}
+        <div className="flex justify-center w-full h-[250px] md:max-w-[60vw] lg:h-[400px] mx-auto rounded-[10px] lg:rounded-[20px] px-8 mb-16">
+          <Image
+            src="/about/about-hero.png"
+            alt="simplified properties in the UK"
+            width={500}
+            height={300}
+            className="object-cover w-full h-full rounded-[20px]"
+          />
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section
+        className="py-16 px-6 md:px-10 lg:px-20 text-center bg-white text-gray-900"
+        aria-labelledby="pricing-heading"
+      >
+        <h2 className="text-3xl md:text-4xl font-bold text-primary leading-tight">
+          Investments
+        </h2>
+        <p className="text-gray-600 mb-8 md:max-w-3xl mx-auto">
+          Flexible design solutions for every budget and vision.
+        </p>
+
+        {/* Plans */}
+        <div className="mt-12 w-fit mx-auto text-left">
+          {pricing.map((plan, i) => (
+            <div
+              key={i}
+              className="rounded-2xl border border-gray-200 shadow-sm bg-white p-8 flex flex-col items-start justify-between focus-within:ring-2 focus-within:ring-primary transition hover:shadow-md"
+              role="region"
+              aria-labelledby={`plan-${i}`}
+            >
+              <TbGrowth className="w-10 h-10 mb-4" />
+              <h4
+                id={`plan-${i}`}
+                className="text-2xl font-semibold text-primaey"
+              >
+                Minimum Investment: {plan.minimumInvestment}
+              </h4>
+              <p className="mt-3 text-xl font-bold text-gray-900">
+                Investment Duration: {plan.expectedDuration}
+              </p>
+              <p className="mt-3 text-lg text-gray-600">
+                Type: {plan.returnType}
+              </p>
+
+              {/* CTA */}
+              <Link href="/booking" aria-label="Book a Design Consultation">
+                <Button
+                  className="mt-12 inline-block w-full"
+                  aria-label="Book a Design Consultation"
+                >
+                  Book an Investment Consultation
+                </Button>
+              </Link>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Testimonial Section */}
       <TestimonialCarousel
         testimonials={equityTestimonials}
@@ -210,6 +517,25 @@ const page = () => {
       />
 
       <FAQSection title="Frequently Asked Questions" faqs={faqData} />
+
+      {/* CTA Section */}
+      <CTASection
+        title="Ready to Build Long-Term Wealth with Equity Nest?"
+        description="Transform your property with design that adds real value and tells a compelling story."
+        primaryButton={{
+          text: "Invest in Equity Nest",
+          href: "#",
+        }}
+        secondaryButton={{
+          text: "Book a consultation",
+          href: "/properties",
+          className:
+            "bg-black hover:bg-black/90 hover:shadow-lg hover:shadow-black/25",
+        }}
+        backgroundColor="bg-primary"
+        className="text-white"
+        overlayClassName="bg-gradient-to-r from-black/40 to-black/60 backdrop-blur-sm"
+      />
 
       <Newsletter />
     </>

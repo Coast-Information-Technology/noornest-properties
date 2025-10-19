@@ -454,6 +454,7 @@ export default function InteriorDesignAndFurnishingPage() {
         </div>
       </section>
 
+      {/* Pricing Section */}
       <section
         className="py-16 px-6 md:px-10 lg:px-20 text-center bg-white text-gray-900"
         aria-labelledby="pricing-heading"

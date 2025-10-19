@@ -26,7 +26,7 @@ export default function FAQSection({
 
   return (
     <section
-      className="w-full px-4 sm:px-6 lg:px-8 py-16 bg-white"
+      className="w-full px-4 sm:px-6 lg:px-8 py-20 bg-white"
       aria-labelledby="faq-heading"
     >
       <h2
