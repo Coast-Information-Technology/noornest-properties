@@ -292,3 +292,75 @@ export const equityTestimonials = [
     image: "/investments/mark.png",
   },
 ];
+
+export const opportunityTestimonials = [
+  {
+    quote:
+      "Through Opportunity Nest, I secured a property 20% below market value. It gave me instant equity and strong rental potential.",
+    author: "Samuel D.",
+    role: "Investor",
+    image: "/investments/samuel.png",
+  },
+  {
+    quote:
+      "I never thought I could afford to invest in prime locations until I found Opportunity Nest. The discounted deals made entry so much easier.",
+    author: "Grace N.",
+    role: "Homebuyer",
+    image: "/investments/grace.png",
+  },
+  {
+    quote:
+      "The vetting process gave me confidence. Every deal I’ve joined through Opportunity Nest has been well-researched and transparent.",
+    author: "Emeka O.",
+    role: "Property Enthusiast",
+    image: "/investments/emeka.png",
+  },
+];
+
+export const secureTestimonials = [
+  {
+    quote:
+      "I like knowing exactly what I’ll earn. Secure Nest gave me fixed returns that matched my goals without the stress of market changes.",
+    author: "Helen S.",
+    role: "Investor",
+    image: "/investments/helen.png",
+  },
+  {
+    quote:
+      "Secure Nest made property investment simple and predictable. I could plan my finances knowing exactly when and how much I’d receive.",
+    author: "James O.",
+    role: "Retiree",
+    image: "/investments/james.png",
+  },
+  {
+    quote:
+      "As a first-time investor, Secure Nest was perfect. The process was transparent, and the fixed return gave me confidence to start building wealth.",
+    author: "Aisha K.",
+    role: "First-time Investor",
+    image: "/investments/aisha.png",
+  },
+];
+
+export const yieldNestTestimonials = [
+  {
+    quote:
+      "With Yield Nest, I get consistent monthly income without worrying about tenants or property management. It’s a stress-free way to invest.",
+    author: "Grace O.",
+    role: "Investor",
+    image: "/investments/grace-o.png",
+  },
+  {
+    quote:
+      "Yield Nest has simplified property investing for me. I earn steady income while professionals handle everything behind the scenes.",
+    author: "Michael B.",
+    role: "Investor",
+    image: "/investments/michael-b.png",
+  },
+  {
+    quote:
+      "It feels great to know my capital is working for me without the day-to-day hassles. Yield Nest offers the balance between security and returns I was looking for.",
+    author: "Tolu A.",
+    role: "Investor",
+    image: "/investments/tolu-a.png",
+  },
+];

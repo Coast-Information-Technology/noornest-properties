@@ -108,11 +108,11 @@ const page = () => {
               alongside verified property partners.
             </p>
             <Link
-              href="/booking"
+              href="#"
               className="flex justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-16 md:mb-20"
             >
               <Button className="bg-black hover:bg-gray-900 text-white font-semibold py-3 px-8 rounded-md shadow-lg transition-colors duration-300">
-                Book to Invest
+                Invest in Equity Nest
               </Button>
             </Link>
           </div>
@@ -157,7 +157,7 @@ const page = () => {
           Invest
         </h3>
         <h2 className="text-3xl md:text-4xl font-bold text-primary leading-snug mb-3">
-          Making property simple, secure, and smarter for everyone.
+          Making Strategic Property Investments
         </h2>
         <p className="text-gray-600 mb-8 md:max-w-3xl mx-auto">
           Equity Nest is designed for investors who want to participate in the
@@ -265,7 +265,7 @@ const page = () => {
                 } items-center justify-center border-primary border rounded-[10px] mt-8 overflow-hidden bg-white gap-12`}
               >
                 {/* Image Section */}
-                <div className="w-full h-[250px] lg:w-1/2 lg:h-[400px]">
+                <div className="w-full h-[250px] lg:w-1/2 lg:h-[350px]">
                   <Image
                     src={article.image}
                     alt={article.title}
@@ -525,12 +525,13 @@ const page = () => {
         primaryButton={{
           text: "Invest in Equity Nest",
           href: "#",
+          className: "bg-accent text-primary hover:bg-white hover:shadow-lg",
         }}
         secondaryButton={{
           text: "Book a consultation",
           href: "/properties",
           className:
-            "bg-black hover:bg-black/90 hover:shadow-lg hover:shadow-black/25",
+            "border border-black bg-transparent text-black hover:bg-black hover:shadow-lg hover:shadow-black hover:text-white",
         }}
         backgroundColor="bg-primary"
         className="text-white"
