@@ -364,3 +364,27 @@ export const yieldNestTestimonials = [
     image: "/investments/tolu-a.png",
   },
 ];
+
+export const testimonialsData = [
+  {
+    quote:
+      "The comparison made it clear which plan fit my needs. I started with Secure Nest and later expanded into Yield Nest for income.",
+    author: "Victoria L.",
+    role: "Investor",
+    image: "/investments/victoria.png",
+  },
+  {
+    quote:
+      "Equity Nest helped me grow my capital through property development partnerships. I could see my returns increase as projects progressed.",
+    author: "James O.",
+    role: "Investor",
+    image: "/investments/james.png",
+  },
+  {
+    quote:
+      "Opportunity Nest gave me access to discounted properties I’d never have found on my own. It’s a smart way to build wealth with expert support.",
+    author: "Caroline A.",
+    role: "Investor",
+    image: "/investments/caroline.png",
+  },
+];
