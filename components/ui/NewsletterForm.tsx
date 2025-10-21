@@ -51,7 +51,6 @@ export default function NewsletterForm({
       setIsLoading(false);
     }
 
-    // Reset success state after specified duration
     if (showSuccessState) {
       setTimeout(() => {
         setIsSubscribed(false);
@@ -64,8 +63,9 @@ export default function NewsletterForm({
       onSubmit={handleSubmit}
       className={`flex flex-col sm:flex-row text-center lg:text-left gap-2.5 sm:gap-0 justify-center ${className}`}
     >
+      {/* Input */}
       <motion.div
-        className="relative"
+        className="relative w-full sm:w-auto"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.4 }}
@@ -77,11 +77,12 @@ export default function NewsletterForm({
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className={`w-full sm:w-[16rem] px-4 py-3 bg-white/90 border border-white/30 rounded-l-[10px] sm:rounded-l-[10px] rounded-r-[10px] sm:rounded-r-[0px] text-black placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-primary transition-all duration-300 ${inputClassName}`}
+          className={`w-full sm:w-[16rem] px-4 py-3 bg-white/90 border border-white/30 rounded-l-[10px] sm:rounded-l-[10px] rounded-r-[10px] sm:rounded-r-[0px] text-black placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-primary transition-all duration-300 text-center md:text-center lg:text-left ${inputClassName}`}
           required
         />
       </motion.div>
 
+      {/* Button */}
       <motion.div
         className="w-full sm:w-auto"
         initial={{ opacity: 0, y: 20 }}
@@ -92,11 +93,11 @@ export default function NewsletterForm({
         <button
           type="submit"
           disabled={isLoading || !email}
-          className={`w-full lg:w-auto px-4 py-3 bg-primary hover:bg-primary/90 text-white border border-primary rounded-r-[10px] sm:rounded-r-[10px] rounded-l-[10px] sm:rounded-l-[0px] font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 ${buttonClassName}`}
+          className={`w-full lg:w-auto px-4 py-3 bg-primary hover:bg-primary/90 text-white border border-primary rounded-r-[10px] sm:rounded-r-[10px] rounded-l-[10px] sm:rounded-l-[0px] font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 text-center md:text-center lg:text-left ${buttonClassName}`}
         >
           {isLoading ? (
             <motion.div
-              className="flex items-center gap-2"
+              className="flex items-center justify-center gap-2"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
@@ -105,7 +106,7 @@ export default function NewsletterForm({
             </motion.div>
           ) : isSubscribed && showSuccessState ? (
             <motion.div
-              className="flex items-center gap-2"
+              className="flex items-center justify-center gap-2"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3 }}
@@ -114,7 +115,9 @@ export default function NewsletterForm({
               Subscribed!
             </motion.div>
           ) : (
-            <div className="flex items-center gap-2">{buttonText}</div>
+            <div className="flex items-center justify-center gap-2">
+              {buttonText}
+            </div>
           )}
         </button>
       </motion.div>

@@ -379,7 +379,7 @@ export default function BlogPage() {
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mb-16 md:mb-20">
               {/* Using text-white for buttons for contrast against the gold/gray-700 */}
-              <Button className="bg-black hover:bg-gray-900 text-white font-semibold py-3 px-8 rounded-md shadow-lg transition-colors duration-300">
+              <Button className="bg-black hover:bg-gray-900 text-white font-semibold py-4 px-8 rounded-md shadow-lg transition-colors duration-300">
                 Subscribe
               </Button>
               <Button variant="ghost">Learn more</Button>
