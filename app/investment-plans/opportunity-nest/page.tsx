@@ -153,7 +153,7 @@ const page = () => {
         </div>
       </section>
 
-      {/* Invest Equity Nest */}
+      {/* Invest Opportunity Nest */}
       <section className="py-20 px-6 md:px-16 text-center w-full md:max-w-4xl mx-auto">
         <h3 className="text-lg tracking-wide text-black uppercase font-bold">
           Invest
@@ -169,14 +169,14 @@ const page = () => {
         </p>
       </section>
 
-      {/* How Equity Nest Works */}
+      {/* How Opportunity Nest Works */}
       <section className="bg-gray-100 py-20 text-center">
         <div className="w-full px-6 md:px-16 md:max-w-4xl mx-auto text-center mb-12">
           <h3 className="text-lg tracking-wide text-black uppercase font-bold">
             Process
           </h3>
           <h2 className="text-3xl md:text-4xl font-bold text-primary leading-snug mb-3">
-            How Equity Nest Works
+            How Opportunity Nest Works
           </h2>
           <p className="text-gray-600 mb-8 md:max-w-3xl">
             Simple steps to invest
@@ -394,7 +394,7 @@ const page = () => {
 
           {/* Description + Buttons */}
           <div className="space-y-4">
-            <div className="text-center lg:text-left">
+            <div className="text-left">
               <AnimatedText
                 as="h2"
                 className="text-xl text-gray-900 font-bold flex max-w-4xl mx-auto leading-relaxed px-4 mb-5"
@@ -513,10 +513,10 @@ const page = () => {
 
       {/* CTA Section */}
       <CTASection
-        title="Ready to Build Long-Term Wealth with Equity Nest?"
-        description="Transform your property with design that adds real value and tells a compelling story."
+        title="Ready to Unlock High-Value Property Opportunities?"
+        description="Start your journey with Opportunity Nest today."
         primaryButton={{
-          text: "Invest in Equity Nest",
+          text: "Invest in Opportunity Nest",
           href: "#",
           className: "bg-accent text-primary hover:bg-white hover:shadow-lg",
         }}

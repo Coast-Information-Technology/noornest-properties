@@ -403,7 +403,7 @@ const page = () => {
 
           {/* Description + Buttons */}
           <div className="space-y-4">
-            <div className="text-center lg:text-left">
+            <div className="text-left">
               <AnimatedText
                 as="h2"
                 className="text-xl text-gray-900 font-bold flex max-w-4xl mx-auto leading-relaxed px-4 mb-5"
