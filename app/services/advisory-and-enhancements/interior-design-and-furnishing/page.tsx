@@ -216,11 +216,7 @@ export default function InteriorDesignAndFurnishingPage() {
       <section className="relative w-full min-h-screen bg-white overflow-hidden -z-30">
         {/* Absolute Pseudo-Element for Gold Background (bg-primary) 
               This creates the fixed-height gold block sitting underneath the content. */}
-        <div
-          className="absolute inset-x-0 top-0 h-[90vh] bg-primary z-0"
-          // Note: I'm using a fixed height (e.g., 400px) here. Adjust this value
-          // to control how much of the gold background you want visible.
-        />
+        <div className="absolute inset-x-0 top-0 h-[90vh] bg-primary z-0" />
 
         {/* Hero Content Area - Relative z-index to sit on top of the gold background */}
         <div className="relative z-10 py-16">

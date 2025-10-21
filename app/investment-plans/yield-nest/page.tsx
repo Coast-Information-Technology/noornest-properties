@@ -87,35 +87,31 @@ const page = () => {
     <>
       {/* Hero Section */}
       <section className="relative w-full min-h-screen bg-white overflow-hidden -z-30">
-        {/* Absolute Pseudo-Element for Gold Background (bg-primary) 
-                This creates the fixed-height gold block sitting underneath the content. */}
-        <div
-          className="absolute inset-x-0 top-0 h-[90vh] bg-primary z-0"
-          // Note: I'm using a fixed height (e.g., 400px) here. Adjust this value
-          // to control how much of the gold background you want visible.
-        />
+        <div className="absolute inset-x-0 top-0 h-[90vh] bg-primary z-0" />
 
         {/* Hero Content Area - Relative z-index to sit on top of the gold background */}
         <div className="relative z-10 py-16">
           {/* Top Section with Text and Buttons */}
-          <div className="flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-            <h1 className="text-3xl md:text-5xl font-bold text-white leading-tight mb-4">
+          <div className="flex flex-col lg:flex-row items-center justify-center lg:items-start lg:justify-between text-center lg:text-left px-4 sm:px-6 lg:px-16  mx-auto">
+            <h1 className="text-3xl md:text-4xl xl:text-5xl font-bold text-white leading-tight mb-4">
               Steady Rental Income. <br />
               Smarter Property Returns.
             </h1>
-            <p className="text-base text-white max-w-2xl mb-8">
-              Yield Nest gives you access to rental-focused property
-              investments, delivering consistent monthly income from verified
-              and managed properties across the UK.
-            </p>
-            <Link
-              href="/booking"
-              className="flex justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-16 md:mb-20"
-            >
-              <Button className="bg-black hover:bg-gray-900 text-white font-semibold py-4 px-8 rounded-md shadow-lg transition-colors duration-300">
-                Book to Invest
-              </Button>
-            </Link>
+            <div>
+              <p className="text-base text-white max-w-2xl lg:max-w-lg mb-8 lg:mb-4">
+                Yield Nest gives you access to rental-focused property
+                investments, delivering consistent monthly income from verified
+                and managed properties across the UK.
+              </p>
+              <Link
+                href="/booking"
+                className="flex justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-4 mb-16 md:mb-20"
+              >
+                <Button className="bg-black hover:bg-gray-900 text-white font-semibold py-4 px-8 rounded-md shadow-lg transition-colors duration-300">
+                  Book to Invest
+                </Button>
+              </Link>
+            </div>
           </div>
 
           {/* Image Section - Positioned relative to the main content flow, pulled down to overlap */}
