@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import CTASection from "@/components/ui/CTASection";
 import FAQSection from "@/components/ui/FAQSection";
 import {
-  equityTestimonials,
   opportunityTestimonials,
 } from "@/data/testimonials";
 import { fadeInUp } from "@/lib/animations";

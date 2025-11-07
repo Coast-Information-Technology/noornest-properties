@@ -5,7 +5,6 @@ import TestimonialCarousel from "@/components/testimonial/TestimonialCarousel";
 import { Button } from "@/components/ui/button";
 import CTASection from "@/components/ui/CTASection";
 import {
-  interiorTestimonials,
   propertyManagementTestimonials,
 } from "@/data/testimonials";
 import Image from "next/image";

@@ -5,7 +5,7 @@ import AnimatedText from "@/components/ui/AnimatedText";
 import { Button } from "@/components/ui/button";
 import CTASection from "@/components/ui/CTASection";
 import FAQSection from "@/components/ui/FAQSection";
-import { equityTestimonials, yieldNestTestimonials } from "@/data/testimonials";
+import { yieldNestTestimonials } from "@/data/testimonials";
 import { fadeInUp } from "@/lib/animations";
 import Image from "next/image";
 import Link from "next/link";

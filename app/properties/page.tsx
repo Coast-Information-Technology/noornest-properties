@@ -1,8 +1,6 @@
 "use client";
 
 import {
-  Search,
-  Filter,
   MapPin,
   Bed,
   Bath,

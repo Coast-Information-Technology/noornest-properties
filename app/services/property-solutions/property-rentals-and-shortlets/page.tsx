@@ -4,7 +4,6 @@ import Newsletter from "@/components/layout/Newsletter";
 import TestimonialCarousel from "@/components/testimonial/TestimonialCarousel";
 import { Button } from "@/components/ui/button";
 import CTASection from "@/components/ui/CTASection";
-import { interiorTestimonials } from "@/data/testimonials";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";

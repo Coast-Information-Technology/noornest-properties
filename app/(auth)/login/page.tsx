@@ -9,6 +9,12 @@ export default function LoginPage() {
         Sign in to explore verified properties, manage bookings, and access
         exclusive investment plans.
       </p>
+      {/* <p className="text-sm text-gray-600 mb-6">
+        You don't have an account yet?{" "}
+        <Link href="/register" className="text-primary hover:underline font-bold">
+          Create an Account.
+        </Link>
+      </p> */}
 
       <form className="space-y-4">
         <div>
@@ -53,7 +59,7 @@ export default function LoginPage() {
           </label>
           <Link
             href="/forgot-password"
-            className="text-primary hover:underline"
+            className="text-primary hover:underline font-bold"
           >
             Forgot Password?
           </Link>
@@ -61,7 +67,7 @@ export default function LoginPage() {
 
         <button
           type="submit"
-          className="w-full bg-primary text-background text-lg font-medium py-3 rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary"
+          className="w-full bg-primary text-background text-lg font-medium py-3 rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
         >
           Login
         </button>

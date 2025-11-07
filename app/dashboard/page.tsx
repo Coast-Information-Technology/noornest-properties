@@ -25,9 +25,9 @@ export default function ClientDashboard() {
   return (
     <div className="space-y-8">
       {/* Welcome Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg p-6 text-white">
+      <div className="bg-gradient-to-r from-primary to-gold-800 rounded-lg p-6 text-white">
         <h1 className="text-3xl font-bold mb-2">Welcome back, John!</h1>
-        <p className="text-blue-100">
+        <p className="text-gray-700">
           Here&apos;s what&apos;s happening with your property search and
           investments.
         </p>
