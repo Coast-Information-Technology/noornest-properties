@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Calendar, Camera, Save, Edit, Eye, EyeOff, Globe } from "lucide-react";
+import { Calendar, Camera, Save, Edit, Globe } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -17,7 +17,6 @@ import { Switch } from "@/components/ui/switch";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Select,
   SelectContent,
@@ -70,14 +69,10 @@ const mockUserData = {
 
 export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     name: mockUserData.name,
     email: mockUserData.email,
     phone: mockUserData.phone,
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
   });
 
   const handleInputChange = (field: string, value: string) => {
@@ -98,9 +93,6 @@ export default function ProfilePage() {
       name: mockUserData.name,
       email: mockUserData.email,
       phone: mockUserData.phone,
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: "",
     });
     setIsEditing(false);
   };
@@ -129,9 +121,9 @@ export default function ProfilePage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Profile Settings</h1>
+          <h1 className="text-3xl font-bold text-gray-900">My Profile</h1>
           <p className="text-gray-600">
-            Manage your account information and preferences
+            Manage your personal information and account details
           </p>
         </div>
 
@@ -155,16 +147,8 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      <Tabs defaultValue="profile" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="profile">Profile</TabsTrigger>
-          <TabsTrigger value="notifications">Notifications</TabsTrigger>
-          <TabsTrigger value="privacy">Privacy</TabsTrigger>
-          <TabsTrigger value="preferences">Preferences</TabsTrigger>
-        </TabsList>
-
-        {/* Profile Tab */}
-        <TabsContent value="profile" className="space-y-6">
+      {/* Profile Content */}
+      <div className="space-y-6">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Profile Overview */}
             <Card className="lg:col-span-1">
@@ -322,334 +306,10 @@ export default function ProfilePage() {
                   </div>
                 </div>
 
-                {/* Password Section */}
-                {isEditing && (
-                  <div className="space-y-4 pt-6 border-t">
-                    <h4 className="font-medium">Change Password</h4>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="currentPassword">
-                          Current Password
-                        </Label>
-                        <div className="relative">
-                          <Input
-                            id="currentPassword"
-                            type={showPassword ? "text" : "password"}
-                            value={formData.currentPassword}
-                            onChange={(e) =>
-                              handleInputChange(
-                                "currentPassword",
-                                e.target.value
-                              )
-                            }
-                          />
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="sm"
-                            className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                            onClick={() => setShowPassword(!showPassword)}
-                          >
-                            {showPassword ? (
-                              <EyeOff className="h-4 w-4" />
-                            ) : (
-                              <Eye className="h-4 w-4" />
-                            )}
-                          </Button>
-                        </div>
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="newPassword">New Password</Label>
-                        <Input
-                          id="newPassword"
-                          type={showPassword ? "text" : "password"}
-                          value={formData.newPassword}
-                          onChange={(e) =>
-                            handleInputChange("newPassword", e.target.value)
-                          }
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="confirmPassword">
-                          Confirm Password
-                        </Label>
-                        <Input
-                          id="confirmPassword"
-                          type={showPassword ? "text" : "password"}
-                          value={formData.confirmPassword}
-                          onChange={(e) =>
-                            handleInputChange("confirmPassword", e.target.value)
-                          }
-                        />
-                      </div>
-                    </div>
-                  </div>
-                )}
               </CardContent>
             </Card>
           </div>
-        </TabsContent>
-
-        {/* Notifications Tab */}
-        <TabsContent value="notifications" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Notification Preferences</CardTitle>
-              <CardDescription>
-                Choose how you want to be notified about updates and activities
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="space-y-0.5">
-                    <Label>Email Notifications</Label>
-                    <p className="text-sm text-gray-500">
-                      Receive notifications via email
-                    </p>
-                  </div>
-                  <Switch
-                    defaultChecked={
-                      mockUserData.preferences.notifications.email
-                    }
-                  />
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="space-y-0.5">
-                    <Label>SMS Notifications</Label>
-                    <p className="text-sm text-gray-500">
-                      Receive notifications via text message
-                    </p>
-                  </div>
-                  <Switch
-                    defaultChecked={mockUserData.preferences.notifications.sms}
-                  />
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="space-y-0.5">
-                    <Label>Push Notifications</Label>
-                    <p className="text-sm text-gray-500">
-                      Receive push notifications in your browser
-                    </p>
-                  </div>
-                  <Switch
-                    defaultChecked={mockUserData.preferences.notifications.push}
-                  />
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="space-y-0.5">
-                    <Label>Marketing Emails</Label>
-                    <p className="text-sm text-gray-500">
-                      Receive promotional content and updates
-                    </p>
-                  </div>
-                  <Switch
-                    defaultChecked={
-                      mockUserData.preferences.notifications.marketing
-                    }
-                  />
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="space-y-0.5">
-                    <Label>Property Alerts</Label>
-                    <p className="text-sm text-gray-500">
-                      Get notified about new properties matching your criteria
-                    </p>
-                  </div>
-                  <Switch
-                    defaultChecked={
-                      mockUserData.preferences.notifications.propertyAlerts
-                    }
-                  />
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="space-y-0.5">
-                    <Label>Booking Reminders</Label>
-                    <p className="text-sm text-gray-500">
-                      Receive reminders about upcoming property viewings
-                    </p>
-                  </div>
-                  <Switch
-                    defaultChecked={
-                      mockUserData.preferences.notifications.bookingReminders
-                    }
-                  />
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="space-y-0.5">
-                    <Label>BMV Analysis Updates</Label>
-                    <p className="text-sm text-gray-500">
-                      Get notified about BMV analysis results and updates
-                    </p>
-                  </div>
-                  <Switch
-                    defaultChecked={
-                      mockUserData.preferences.notifications.bmvUpdates
-                    }
-                  />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        {/* Privacy Tab */}
-        <TabsContent value="privacy" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Privacy Settings</CardTitle>
-              <CardDescription>
-                Control your privacy and data sharing preferences
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label>Profile Visibility</Label>
-                  <Select
-                    defaultValue={
-                      mockUserData.preferences.privacy.profileVisibility
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="public">Public</SelectItem>
-                      <SelectItem value="private">Private</SelectItem>
-                      <SelectItem value="friends">Friends Only</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <p className="text-sm text-gray-500">
-                    Control who can see your profile information
-                  </p>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="space-y-0.5">
-                    <Label>Show Email Address</Label>
-                    <p className="text-sm text-gray-500">
-                      Display your email address on your profile
-                    </p>
-                  </div>
-                  <Switch
-                    defaultChecked={mockUserData.preferences.privacy.showEmail}
-                  />
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="space-y-0.5">
-                    <Label>Show Phone Number</Label>
-                    <p className="text-sm text-gray-500">
-                      Display your phone number on your profile
-                    </p>
-                  </div>
-                  <Switch
-                    defaultChecked={mockUserData.preferences.privacy.showPhone}
-                  />
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="space-y-0.5">
-                    <Label>Show Activity Status</Label>
-                    <p className="text-sm text-gray-500">
-                      Let others see when you&apos;re online
-                    </p>
-                  </div>
-                  <Switch
-                    defaultChecked={
-                      mockUserData.preferences.privacy.showActivity
-                    }
-                  />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        {/* Preferences Tab */}
-        <TabsContent value="preferences" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Search Preferences</CardTitle>
-              <CardDescription>
-                Set your default search criteria for property searches
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <Label>Price Range</Label>
-                  <div className="flex items-center space-x-2">
-                    <Input
-                      type="number"
-                      placeholder="Min Price"
-                      value={mockUserData.preferences.search.priceRange.min}
-                    />
-                    <span className="text-gray-500">to</span>
-                    <Input
-                      type="number"
-                      placeholder="Max Price"
-                      value={mockUserData.preferences.search.priceRange.max}
-                    />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label>Property Types</Label>
-                  <Select defaultValue="apartment">
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select property types" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="apartment">Apartment</SelectItem>
-                      <SelectItem value="house">House</SelectItem>
-                      <SelectItem value="condo">Condo</SelectItem>
-                      <SelectItem value="penthouse">Penthouse</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label>Bedrooms</Label>
-                  <div className="flex items-center space-x-2">
-                    <Input
-                      type="number"
-                      placeholder="Min"
-                      value={mockUserData.preferences.search.bedrooms.min}
-                    />
-                    <span className="text-gray-500">to</span>
-                    <Input
-                      type="number"
-                      placeholder="Max"
-                      value={mockUserData.preferences.search.bedrooms.max}
-                    />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label>Bathrooms</Label>
-                  <div className="flex items-center space-x-2">
-                    <Input
-                      type="number"
-                      placeholder="Min"
-                      value={mockUserData.preferences.search.bathrooms.min}
-                    />
-                    <span className="text-gray-500">to</span>
-                    <Input
-                      type="number"
-                      placeholder="Max"
-                      value={mockUserData.preferences.search.bathrooms.max}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-2">
-                <Label>Preferred Locations</Label>
-                <Textarea
-                  placeholder="Enter preferred locations (one per line)"
-                  value={mockUserData.preferences.search.locations.join("\n")}
-                  rows={3}
-                />
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+      </div>
     </div>
   );
 }

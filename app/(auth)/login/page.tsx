@@ -1,7 +1,67 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import AuthLayout from "../App-layout";
+import { useUser } from "@/contexts/UserContext";
+import { toast } from "sonner";
 
 export default function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [showCredentials, setShowCredentials] = useState(false);
+  const { login } = useUser();
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      const result = await login(email, password);
+
+      if (result.success) {
+        toast.success("Login successful!", {
+          description: "Redirecting to your dashboard...",
+        });
+
+        // Redirect to dashboard
+        setTimeout(() => {
+          router.push("/dashboard");
+        }, 500);
+      } else {
+        toast.error("Login failed", {
+          description: result.message || "Invalid credentials",
+        });
+      }
+    } catch (error) {
+      toast.error("An error occurred", {
+        description: "Please try again later",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const quickLogin = (role: string) => {
+    const credentials = {
+      super_admin: { email: "superadmin@noornest.com", password: "super123" },
+      admin: { email: "admin@noornest.com", password: "admin123" },
+      agent: { email: "agent@noornest.com", password: "agent123" },
+      investor: { email: "investor@noornest.com", password: "investor123" },
+      client: { email: "client@noornest.com", password: "client123" },
+      guest: { email: "guest@noornest.com", password: "guest123" },
+    };
+
+    const creds = credentials[role as keyof typeof credentials];
+    if (creds) {
+      setEmail(creds.email);
+      setPassword(creds.password);
+    }
+  };
+
   return (
     <AuthLayout>
       <h1 className="sr-only">Login to Noornest</h1>
@@ -9,14 +69,8 @@ export default function LoginPage() {
         Sign in to explore verified properties, manage bookings, and access
         exclusive investment plans.
       </p>
-      {/* <p className="text-sm text-gray-600 mb-6">
-        You don't have an account yet?{" "}
-        <Link href="/register" className="text-primary hover:underline font-bold">
-          Create an Account.
-        </Link>
-      </p> */}
 
-      <form className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label
             htmlFor="email"
@@ -28,8 +82,11 @@ export default function LoginPage() {
             id="email"
             type="email"
             required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your Email Address"
             className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-primary focus:border-primary"
+            disabled={isLoading}
           />
         </div>
 
@@ -44,8 +101,11 @@ export default function LoginPage() {
             id="password"
             type="password"
             required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter your Password"
             className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-primary focus:border-primary"
+            disabled={isLoading}
           />
         </div>
 
@@ -67,11 +127,69 @@ export default function LoginPage() {
 
         <button
           type="submit"
-          className="w-full bg-primary text-background text-lg font-medium py-3 rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
+          disabled={isLoading}
+          className="w-full bg-primary text-background text-lg font-medium py-3 rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Login
+          {isLoading ? "Logging in..." : "Login"}
         </button>
       </form>
+
+      {/* Demo Credentials Section - Development Only */}
+      {process.env.NODE_ENV === "development" && (
+        <div className="mt-6 border-t pt-6">
+          <button
+            type="button"
+            onClick={() => setShowCredentials(!showCredentials)}
+            className="w-full text-sm text-gray-600 hover:text-gray-800 font-medium mb-3"
+          >
+            {showCredentials ? "Hide" : "Show"} Demo Credentials
+          </button>
+
+          {showCredentials && (
+            <div className="space-y-3">
+              <p className="text-xs text-gray-500 mb-3">
+                Click any role below to auto-fill credentials:
+              </p>
+
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => quickLogin("agent")}
+                  className="px-3 py-2 text-xs bg-green-50 text-green-700 rounded-md hover:bg-green-100 border border-green-200"
+                >
+                  Agent
+                </button>
+                <button
+                  type="button"
+                  onClick={() => quickLogin("investor")}
+                  className="px-3 py-2 text-xs bg-yellow-50 text-yellow-700 rounded-md hover:bg-yellow-100 border border-yellow-200"
+                >
+                  Investor
+                </button>
+                <button
+                  type="button"
+                  onClick={() => quickLogin("client")}
+                  className="px-3 py-2 text-xs bg-pink-50 text-pink-700 rounded-md hover:bg-pink-100 border border-pink-200"
+                >
+                  Client
+                </button>
+                <button
+                  type="button"
+                  onClick={() => quickLogin("guest")}
+                  className="px-3 py-2 text-xs bg-gray-50 text-gray-700 rounded-md hover:bg-gray-100 border border-gray-200"
+                >
+                  Guest
+                </button>
+              </div>
+
+              <div className="mt-4 p-3 bg-gray-50 rounded-md text-xs space-y-1">
+                <p className="font-semibold text-gray-700">All passwords: [role]123</p>
+                <p className="text-gray-600">Example: admin123, agent123, etc.</p>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
 
       <p className="mt-4 text-xs text-gray-500">
         Secure login—your data is protected with bank-level encryption.

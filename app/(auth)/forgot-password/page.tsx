@@ -3,8 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 const ForgotPasswordPage = () => {
-  return (
-    <main className="flex min-h-screen flex-col md:flex-row bg-white">
+    return(
+        <main className="flex min-h-screen flex-col md:flex-row bg-white">
       {/* Left Section (Hero + Benefits) */}
       <section
         aria-label="Property showcase"
@@ -50,54 +50,76 @@ const ForgotPasswordPage = () => {
           </div>
         </div>
       </section>
-      <section className="flex flex-col w-full md:w-1/2 items-center lg:items-start justify-start p-6 md:p-12">
-      
-        <Link href="/" className="flex justify-end max-w-md w-full">
-          <Image
-            src="/noornest-logo.png"
-            alt="Noornest"
-            width={120}
-            height={120}
-            className="mb-6"
-          />
-        </Link>
+      <section>
+      <h1 className="sr-only">Login to Noornest</h1>
+      <p className="text-sm text-gray-600 mb-6">
+        Sign in to explore verified properties, manage bookings, and access
+        exclusive investment plans.
+      </p>
 
-        <h1 className="sr-only">Send Verification Email</h1>
-        <p className="text-sm text-gray-600 mb-6">
-          Forgot Password? Kindly provide your email to reset your password.
-        </p>
-
-        <form className="space-y-6 w-full">
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Email Address
-            </label>
-            <input
-              id="email"
-              type="email"
-              required
-              placeholder="Enter your Email Address"
-              className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-primary focus:border-primary"
-            />
-          </div>
-          
-          <button
-            type="submit"
-            className="w-full bg-primary text-background text-lg font-medium py-3 rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
+      <form className="space-y-4">
+        <div>
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-gray-700"
           >
-            Send Verification Email
-          </button>
-        </form>
+            Email Address
+          </label>
+          <input
+            id="email"
+            type="email"
+            required
+            placeholder="Enter your Email Address"
+            className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-primary focus:border-primary"
+          />
+        </div>
 
-        <p className="mt-4 text-xs text-gray-500">
-          Your data is protected with bank-level encryption.
-        </p>
+        <div>
+          <label
+            htmlFor="password"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Password
+          </label>
+          <input
+            id="password"
+            type="password"
+            required
+            placeholder="Enter your Password"
+            className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-primary focus:border-primary"
+          />
+        </div>
+
+        <div className="flex items-center justify-between text-sm">
+          <label className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              className="h-4 w-4 rounded border-gray-300 bg-primary focus:ring-primary focus:border-primary"
+            />
+            Remember me
+          </label>
+          <Link
+            href="/forgot-password"
+            className="text-primary hover:underline"
+          >
+            Forgot Password?
+          </Link>
+        </div>
+
+        <button
+          type="submit"
+          className="w-full bg-primary text-background text-lg font-medium py-3 rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary"
+        >
+          Login
+        </button>
+      </form>
+
+      <p className="mt-4 text-xs text-gray-500">
+        Secure login—your data is protected with bank-level encryption.
+      </p>
       </section>
-    </main>
-  );
-};
+      </main>
+    )
+}
 
 export default ForgotPasswordPage;

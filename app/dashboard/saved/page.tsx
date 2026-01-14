@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Heart,
   MapPin,
@@ -15,6 +15,8 @@ import {
   List,
   Trash2,
   MoreVertical,
+  AlertCircle,
+  RefreshCw,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -37,8 +39,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Link from "next/link";
+import { clientDashboardApi } from "@/lib/api/dashboard";
+import { getSavedProperties } from "@/lib/mock-data";
 
 // Mock data - replace with actual API calls
+// TODO: Remove this when API is implemented
 const mockSavedProperties = [
   {
     id: 1,
@@ -156,6 +161,43 @@ export default function SavedPropertiesPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("savedDate");
   const [filterType, setFilterType] = useState("all");
+  
+  // API State Management
+  const [properties, setProperties] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [removing, setRemoving] = useState(false);
+
+  // Fetch saved properties
+  useEffect(() => {
+    const fetchProperties = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        
+        // TODO: Replace with actual API call
+        // const response = await clientDashboardApi.getSavedProperties({
+        //   page: 1,
+        //   limit: 50,
+        //   search: searchTerm,
+        // });
+        // setProperties(response.data);
+        
+        // Temporary: Use mock data
+        const mockData = getSavedProperties();
+        setProperties(mockData);
+      } catch (err: any) {
+        setError(err.message || "Failed to load saved properties");
+        console.error("Error fetching saved properties:", err);
+        // Fallback to mock data on error
+        setProperties(mockSavedProperties);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProperties();
+  }, [searchTerm]); // Refetch when search changes
 
   const handleSelectProperty = (propertyId: number) => {
     setSelectedProperties((prev) =>
@@ -173,13 +215,33 @@ export default function SavedPropertiesPage() {
     }
   };
 
-  const handleRemoveSelected = () => {
-    // TODO: Implement API call to remove selected properties
-    console.log("Removing properties:", selectedProperties);
-    setSelectedProperties([]);
+  const handleRemoveSelected = async () => {
+    if (selectedProperties.length === 0) return;
+    
+    try {
+      setRemoving(true);
+      
+      // TODO: Replace with actual API call
+      // await Promise.all(
+      //   selectedProperties.map((id) =>
+      //     clientDashboardApi.toggleSaveProperty(id)
+      //   )
+      // );
+      
+      // Temporary: Remove from local state
+      setProperties((prev) =>
+        prev.filter((p) => !selectedProperties.includes(p.id))
+      );
+      setSelectedProperties([]);
+    } catch (err: any) {
+      setError(err.message || "Failed to remove properties");
+      console.error("Error removing properties:", err);
+    } finally {
+      setRemoving(false);
+    }
   };
 
-  const filteredProperties = mockSavedProperties
+  const filteredProperties = properties
     .filter((property) => {
       const matchesSearch =
         property.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -227,6 +289,41 @@ export default function SavedPropertiesPage() {
     });
   };
 
+  // Loading State
+  if (loading && properties.length === 0) {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-center h-64">
+          <div className="text-center">
+            <RefreshCw className="w-8 h-8 animate-spin text-primary mx-auto mb-4" />
+            <p className="text-gray-600">Loading saved properties...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Error State
+  if (error && properties.length === 0) {
+    return (
+      <div className="space-y-6">
+        <Card>
+          <CardContent className="p-12 text-center">
+            <AlertCircle className="w-12 h-12 text-red-400 mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
+              Error Loading Properties
+            </h3>
+            <p className="text-gray-600 mb-4">{error}</p>
+            <Button onClick={() => window.location.reload()}>
+              <RefreshCw className="w-4 h-4 mr-2" />
+              Retry
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -234,9 +331,18 @@ export default function SavedPropertiesPage() {
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Saved Properties</h1>
           <p className="text-gray-600">
-            {filteredProperties.length} saved properties
-            {selectedProperties.length > 0 &&
-              ` • ${selectedProperties.length} selected`}
+            {loading ? (
+              <span className="flex items-center">
+                <RefreshCw className="w-4 h-4 animate-spin mr-2" />
+                Loading...
+              </span>
+            ) : (
+              <>
+                {filteredProperties.length} saved properties
+                {selectedProperties.length > 0 &&
+                  ` • ${selectedProperties.length} selected`}
+              </>
+            )}
           </p>
         </div>
 
@@ -246,13 +352,34 @@ export default function SavedPropertiesPage() {
               variant="destructive"
               size="sm"
               onClick={handleRemoveSelected}
+              disabled={removing}
             >
-              <Trash2 className="w-4 h-4 mr-2" />
-              Remove Selected
+              {removing ? (
+                <>
+                  <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+                  Removing...
+                </>
+              ) : (
+                <>
+                  <Trash2 className="w-4 h-4 mr-2" />
+                  Remove Selected
+                </>
+              )}
             </Button>
           </div>
         )}
       </div>
+
+      {error && properties.length > 0 && (
+        <Card className="border-yellow-200 bg-yellow-50">
+          <CardContent className="p-4">
+            <div className="flex items-center space-x-2 text-yellow-800">
+              <AlertCircle className="w-5 h-5" />
+              <span className="text-sm">{error}</span>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Filters and Search */}
       <Card>

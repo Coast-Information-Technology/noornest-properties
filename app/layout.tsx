@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { AnimationProvider } from "@/components/providers/AnimationProvider";
 import BackToTopButton from "@/components/ui/BackToTopButton";
 import JsonLd from "@/components/seo/JsonLd";
+import { UserProvider } from "@/contexts/UserContext";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -103,13 +104,15 @@ export default function RootLayout({
     <html lang="en" className={`${roboto.variable} ${montserrat.variable}`}>
       <body className="min-h-screen bg-background font-sans antialiased">
         <JsonLd data={organizationSchema} id="organization-schema" />
-        <AnimationProvider>
-          <Header />
-          {children}
-          <Footer />
-          <BackToTopButton />
-          <Toaster richColors closeButton />
-        </AnimationProvider>
+        <UserProvider>
+          <AnimationProvider>
+            <Header />
+            {children}
+            <Footer />
+            <BackToTopButton />
+            <Toaster richColors closeButton />
+          </AnimationProvider>
+        </UserProvider>
       </body>
     </html>
   );
