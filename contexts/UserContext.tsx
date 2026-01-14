@@ -22,12 +22,13 @@ interface UserContextType {
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 // Dummy user credentials for each role
+// Passwords are stored in environment variables for security
 const DUMMY_USERS = [
   {
     id: "3",
     name: "Agent Smith",
     email: "agent@noornest.com",
-    password: "agent123",
+    password: process.env.NEXT_PUBLIC_DUMMY_AGENT_PASSWORD || "",
     role: "agent" as UserRole,
     avatar: "/avatars/agent.jpg",
   },
@@ -35,7 +36,7 @@ const DUMMY_USERS = [
     id: "4",
     name: "Investor Johnson",
     email: "investor@noornest.com",
-    password: "investor123",
+    password: process.env.NEXT_PUBLIC_DUMMY_INVESTOR_PASSWORD || "",
     role: "investor" as UserRole,
     avatar: "/avatars/investor.jpg",
   },
@@ -43,7 +44,7 @@ const DUMMY_USERS = [
     id: "5",
     name: "Client Williams",
     email: "client@noornest.com",
-    password: "client123",
+    password: process.env.NEXT_PUBLIC_DUMMY_CLIENT_PASSWORD || "",
     role: "client" as UserRole,
     avatar: "/avatars/client.jpg",
   },
@@ -51,7 +52,7 @@ const DUMMY_USERS = [
     id: "6",
     name: "Guest User",
     email: "guest@noornest.com",
-    password: "guest123",
+    password: process.env.NEXT_PUBLIC_DUMMY_GUEST_PASSWORD || "",
     role: "guest" as UserRole,
     avatar: "/avatars/guest.jpg",
   },
