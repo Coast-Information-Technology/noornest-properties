@@ -188,7 +188,10 @@ export default function SavedPropertiesPage() {
         setProperties(mockData);
       } catch (err: any) {
         setError(err.message || "Failed to load saved properties");
-        console.error("Error fetching saved properties:", err);
+        // Error handled silently in production
+        if (process.env.NODE_ENV !== "production") {
+          console.error("Error fetching saved properties:", err);
+        }
         // Fallback to mock data on error
         setProperties(mockSavedProperties);
       } finally {
@@ -235,7 +238,10 @@ export default function SavedPropertiesPage() {
       setSelectedProperties([]);
     } catch (err: any) {
       setError(err.message || "Failed to remove properties");
-      console.error("Error removing properties:", err);
+      // Error handled silently in production
+      if (process.env.NODE_ENV !== "production") {
+        console.error("Error removing properties:", err);
+      }
     } finally {
       setRemoving(false);
     }

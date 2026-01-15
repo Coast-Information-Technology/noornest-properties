@@ -50,7 +50,9 @@ export default function HeroCarousel({ images }: HeroCarouselProps) {
                             alt={`Property ${index + 1}`}
                             fill
                             priority={index === 0}
+                            fetchPriority={index === 0 ? "high" : "auto"}
                             sizes="100vw"
+                            quality={index === 0 ? 90 : 85}
                             className="object-cover"
                         />
                     </div>

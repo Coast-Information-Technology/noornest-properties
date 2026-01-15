@@ -2,6 +2,7 @@
 // This file shows different ways to use the NewsletterForm component
 
 import NewsletterForm from "./NewsletterForm";
+import safeConsole from "@/lib/console";
 
 // Example 1: Default newsletter form
 export function DefaultNewsletterForm() {
@@ -17,7 +18,7 @@ export function DefaultNewsletterForm() {
 export function CustomStyledNewsletterForm() {
   const handleSubmit = async (email: string) => {
     // Custom logic for this specific form
-    console.log("Custom newsletter subscription:", email);
+    safeConsole.log("Custom newsletter subscription:", email);
 
     // Example: Send to different newsletter service
     // await customNewsletterService.subscribe(email, { source: 'landing-page' });
@@ -61,7 +62,7 @@ export function MinimalNewsletterForm() {
 export function FooterNewsletterForm() {
   const handleFooterSubmit = async (email: string) => {
     // Footer-specific newsletter logic
-    console.log("Footer newsletter subscription:", email);
+    safeConsole.log("Footer newsletter subscription:", email);
 
     // Example: Track footer newsletter signups
     // analytics.track('newsletter_signup', { location: 'footer' });

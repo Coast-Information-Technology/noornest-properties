@@ -6,6 +6,7 @@
  */
 
 import { endpoints, api } from "../api";
+import safeConsole from "../console";
 
 // Types
 export interface ApiResponse<T> {
@@ -46,7 +47,7 @@ async function apiCall<T>(
       success: true,
     };
   } catch (error: any) {
-    console.error(`API Error (${endpoint}):`, error);
+    safeConsole.error(`API Error (${endpoint}):`, error);
     throw {
       message: error.response?.data?.message || "An error occurred",
       status: error.response?.status || 500,

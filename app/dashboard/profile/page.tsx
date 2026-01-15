@@ -84,7 +84,7 @@ export default function ProfilePage() {
 
   const handleSave = () => {
     // TODO: Implement API call to update user profile
-    console.log("Saving profile:", formData);
+    // Removed console.log for production
     setIsEditing(false);
   };
 

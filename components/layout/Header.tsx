@@ -208,12 +208,15 @@ export default function Header() {
       style={{ zIndex: 10000 }}
     >
       {/* Logo */}
-      <Link href="/" className="space-x-3" aria-label="Noornest Properties Home">
+      <Link href="/" className="space-x-3 flex-shrink-0" aria-label="Noornest Properties Home">
         <Image
           src="/noornest-logo.png"
           alt="Noornest Properties logo"
           width={150}
           height={150}
+          quality={85}
+          sizes="150px"
+          className="h-auto w-[150px]"
         />
       </Link>
 
@@ -221,7 +224,7 @@ export default function Header() {
       <MegaMenu />
 
       {/* Right Side Actions */}
-      <button className="flex items-center space-x-4">
+      <div className="flex items-center space-x-4">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button
@@ -274,7 +277,7 @@ export default function Header() {
             <Menu className="h-5 w-5" />
           )}
         </Button>
-      </button>
+      </div>
 
       {/* Mobile/Tablet Menu */}
       {isMenuOpen && (

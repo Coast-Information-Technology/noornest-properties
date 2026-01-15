@@ -115,12 +115,12 @@ export default function ReportsPage() {
 
   const handleGenerateReport = () => {
     // TODO: Implement report generation
-    console.log("Generating new report...");
+    // Removed console.log for production
   };
 
   const handleDownloadReport = (reportId: number) => {
     // TODO: Implement report download
-    console.log("Downloading report:", reportId);
+    // Removed console.log for production
   };
 
   return (

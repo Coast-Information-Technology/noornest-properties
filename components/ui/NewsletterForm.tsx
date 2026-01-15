@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Check } from "lucide-react";
 import { motion } from "framer-motion";
+import safeConsole from "@/lib/console";
 
 export interface NewsletterFormProps {
   placeholder?: string;
@@ -46,7 +47,7 @@ export default function NewsletterForm({
       setIsSubscribed(true);
       setEmail("");
     } catch (error) {
-      console.error("Newsletter subscription failed:", error);
+      safeConsole.error("Newsletter subscription failed:", error);
     } finally {
       setIsLoading(false);
     }

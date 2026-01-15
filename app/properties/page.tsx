@@ -241,7 +241,7 @@ export default function PropertiesPage() {
       {/* Search Box - Outside the carousel */}
       <PropertySearchBox
         onSearch={(searchData) => {
-          console.log("Search submitted:", searchData);
+          // Removed console.log for production
           // Handle search logic here
         }}
         onTabChange={(newTab) => {

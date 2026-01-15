@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { UserRole } from "@/types";
+import safeConsole from "@/lib/console";
 
 interface User {
   id: string;
@@ -70,7 +71,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
         const parsedUser = JSON.parse(storedUser);
         setUser(parsedUser);
       } catch (error) {
-        console.error("Error parsing stored user:", error);
+        safeConsole.error("Error parsing stored user:", error);
         localStorage.removeItem("currentUser");
       }
     }

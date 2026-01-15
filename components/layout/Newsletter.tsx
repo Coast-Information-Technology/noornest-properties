@@ -5,12 +5,13 @@ import AnimatedSection from "@/components/ui/AnimatedSection";
 import AnimatedText from "@/components/ui/AnimatedText";
 import NewsletterForm from "@/components/ui/NewsletterForm";
 import { motion } from "framer-motion";
+import safeConsole from "@/lib/console";
 
 export default function Newsletter() {
   const handleNewsletterSubmit = async (email: string) => {
     // Here you can integrate with your newsletter service
     // For now, we'll simulate the API call
-    console.log("Subscribing email:", email);
+    safeConsole.log("Subscribing email:", email);
 
     // Example: Send to your newsletter service
     // await newsletterService.subscribe(email);

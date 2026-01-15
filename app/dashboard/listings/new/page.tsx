@@ -93,7 +93,7 @@ export default function NewListingPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // TODO: Implement API call to create property listing
-    console.log("Submitting property:", formData);
+    // Removed console.log for production
     // Navigate back to listings page after successful submission
     router.push("/dashboard/listings");
   };

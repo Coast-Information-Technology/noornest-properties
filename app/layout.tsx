@@ -1,24 +1,36 @@
 import type { Metadata } from "next";
 import { Montserrat, Roboto } from "next/font/google";
 import "./globals.css";
+import dynamic from "next/dynamic";
 import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import { Toaster } from "@/components/ui/sonner";
 import { AnimationProvider } from "@/components/providers/AnimationProvider";
-import BackToTopButton from "@/components/ui/BackToTopButton";
 import JsonLd from "@/components/seo/JsonLd";
 import { UserProvider } from "@/contexts/UserContext";
+import BackToTopButton from "@/components/ui/BackToTopButton";
+
+// Dynamically import heavy components
+const Footer = dynamic(() => import("@/components/layout/Footer"), {
+  loading: () => null,
+  ssr: true,
+});
 
 const roboto = Roboto({
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  weight: ["300", "400", "500", "700"],
   variable: "--font-roboto",
+  display: "swap",
+  preload: true,
+  fallback: ["system-ui", "arial"],
 });
 
 const montserrat = Montserrat({
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-montserrat",
+  display: "swap",
+  preload: true,
+  fallback: ["system-ui", "arial"],
 });
 
 export const metadata: Metadata = {

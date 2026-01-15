@@ -1,6 +1,6 @@
 /**
- * Safe console utility that removes logs in production
- * Keeps console.error and console.warn for debugging
+ * Safe console utility that removes all logs in production
+ * No console output in production builds
  */
 
 const isProduction = process.env.NODE_ENV === "production";
@@ -54,13 +54,17 @@ export const safeConsole = {
     }
   },
 
-  // Always keep these in production
+  // Suppress errors and warnings in production too
   error: (...args: any[]) => {
-    console.error(...args);
+    if (!isProduction) {
+      console.error(...args);
+    }
   },
 
   warn: (...args: any[]) => {
-    console.warn(...args);
+    if (!isProduction) {
+      console.warn(...args);
+    }
   },
 };
 

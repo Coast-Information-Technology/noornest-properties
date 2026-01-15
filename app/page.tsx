@@ -24,15 +24,30 @@ import AnimatedText from "@/components/ui/AnimatedText";
 import { fadeInUp } from "@/lib/animations";
 import Image from "next/image";
 import { clientTestimonials } from "@/data/testimonials";
-import Newsletter from "@/components/layout/Newsletter";
-import CTASection from "@/components/ui/CTASection";
-import FeaturedPropertiesSection from "@/components/ui/FeaturedPropertiesSection";
-import BlogSection from "@/components/ui/BlogSection";
 
-// Dynamically import interactive components
-const HeroCarousel = dynamic(() => import("@/components/ui/HeroCarousel"), {
-  loading: () => <div className="h-[70vh] bg-gray-100 animate-pulse" />,
+// Dynamically import heavy components below the fold
+const Newsletter = dynamic(() => import("@/components/layout/Newsletter"), {
+  loading: () => <div className="h-40 bg-gray-50 animate-pulse" />,
+  ssr: true,
 });
+
+const CTASection = dynamic(() => import("@/components/ui/CTASection"), {
+  loading: () => <div className="h-96 bg-gray-50 animate-pulse" />,
+  ssr: true,
+});
+
+const FeaturedPropertiesSection = dynamic(() => import("@/components/ui/FeaturedPropertiesSection"), {
+  loading: () => <div className="h-96 bg-gray-50 animate-pulse" />,
+  ssr: true,
+});
+
+const BlogSection = dynamic(() => import("@/components/ui/BlogSection"), {
+  loading: () => <div className="h-96 bg-gray-50 animate-pulse" />,
+  ssr: true,
+});
+
+// HeroCarousel is above the fold - load immediately for better LCP
+import HeroCarousel from "@/components/ui/HeroCarousel";
 
 const PropertySearchBox = dynamic(() => import("@/components/ui/PropertySearchBox"), {
   loading: () => <div className="h-20 bg-gray-50 animate-pulse" />,
@@ -455,7 +470,7 @@ export default function Home() {
             {/* Plans Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8 md:mt-8">
               <div>
-                <h3 className="font-semibold text-gray-900 mb-1">
+                <h3 className="font-semibold text-gray-900 mb-1 text-lg">
                   Equity Nest
                 </h3>
                 <p className="text-sm text-gray-600">
@@ -463,13 +478,13 @@ export default function Home() {
                 </p>
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900 mb-1">Yield Nest</h3>
+                <h3 className="font-semibold text-gray-900 mb-1 text-lg">Yield Nest</h3>
                 <p className="text-sm text-gray-600">
                   Earn steady income from rental properties.
                 </p>
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900 mb-1">
+                <h3 className="font-semibold text-gray-900 mb-1 text-lg">
                   Secure Nest
                 </h3>
                 <p className="text-sm text-gray-600">
@@ -477,7 +492,7 @@ export default function Home() {
                 </p>
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900 mb-1">
+                <h3 className="font-semibold text-gray-900 mb-1 text-lg">
                   Opportunity Nest
                 </h3>
                 <p className="text-sm text-gray-600">
@@ -505,6 +520,8 @@ export default function Home() {
                 height={400}
                 style={{ objectFit: "cover" }}
                 className="h-full w-full"
+                loading="lazy"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
               />
             </div>
           </div>
@@ -552,9 +569,9 @@ export default function Home() {
 
           {/* Property Solutions */}
           <div className="mt-10">
-            <h4 className="text-xl font-bold text-primary mb-4">
+            <h3 className="text-xl font-bold text-primary mb-4">
               Property Solutions:
-            </h4>
+            </h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {propertySolutions.map((item, idx) => (
                 <div
@@ -570,9 +587,9 @@ export default function Home() {
 
           {/* Advisory & Enhancements */}
           <div className="mt-10">
-            <h4 className="text-xl font-bold text-primary mb-4">
+            <h3 className="text-xl font-bold text-primary mb-4">
               Advisory & Enhancements:
-            </h4>
+            </h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {advisoryEnhancements.map((item, idx) => (
                 <div

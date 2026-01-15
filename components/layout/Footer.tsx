@@ -34,19 +34,27 @@ export default function Footer() {
   if (shouldHideHeader) return null;
 
   return (
-    <footer
-      className="bg-accent/30 border-t border-accent"
-      style={{
-        background: `url('/footer-bg-image.png') no-repeat center center`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundAttachment: "fixed",
-        backgroundColor: "rgba(0, 0, 0, 0.8)",
-        backgroundBlendMode: "overlay",
-      }}
-    >
-      <div className="container mx-auto px-4 py-12">
+    <footer className="bg-accent/30 border-t border-accent relative overflow-hidden">
+      {/* Optimized background image - lazy loaded below the fold */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/footer-bg-image.png"
+          alt=""
+          fill
+          className="object-cover"
+          quality={60}
+          loading="lazy"
+          sizes="100vw"
+          priority={false}
+          fetchPriority="low"
+        />
+        <div 
+          className="absolute inset-0 bg-black/80"
+          style={{ mixBlendMode: "overlay" }}
+          aria-hidden="true"
+        />
+      </div>
+      <div className="container mx-auto px-4 py-12 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="space-y-4">

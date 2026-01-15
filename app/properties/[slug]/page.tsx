@@ -67,7 +67,10 @@ export default function PropertyDetailPage() {
         setIsSaved(savedProperties.includes(propertyData.id));
       } catch (err) {
         setError("Failed to load property");
-        console.error(err);
+        // Error handled silently in production
+        if (process.env.NODE_ENV !== "production") {
+          console.error(err);
+        }
       } finally {
         setLoading(false);
       }
@@ -106,7 +109,10 @@ export default function PropertyDetailPage() {
           url: window.location.href,
         });
       } catch (err) {
-        console.error("Error sharing:", err);
+        // Error handled silently in production
+        if (process.env.NODE_ENV !== "production") {
+          console.error("Error sharing:", err);
+        }
       }
     } else {
       // Fallback: Copy to clipboard

@@ -41,6 +41,26 @@ export default function PropertyImage({
     );
   }
 
+  // Calculate proper sizes attribute when width/height are provided
+  const getSizes = () => {
+    if (fill) {
+      return "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw";
+    }
+    if (width) {
+      // For fixed width images, use responsive sizes based on viewport
+      // Property cards display at h-64 (256px height), aspect ratio ~1.5:1 = ~384px width
+      if (width === 400) {
+        // Property cards: displayed as ~378px width on desktop (based on grid), full width on mobile
+        // Use smaller sizes to match actual display dimensions
+        return "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 384px";
+      }
+      if (width <= 384) return "(max-width: 768px) 100vw, 384px";
+      if (width <= 640) return "(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 640px";
+      return "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 640px";
+    }
+    return undefined;
+  };
+
   return (
     <Image
       src={src}
@@ -51,7 +71,8 @@ export default function PropertyImage({
       fill={fill}
       priority={priority}
       loading={priority ? undefined : "lazy"}
-      sizes={fill ? "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" : undefined}
+      quality={85}
+      sizes={getSizes()}
       onError={() => setImageError(true)}
     />
   );

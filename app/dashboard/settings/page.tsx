@@ -98,12 +98,7 @@ export default function SettingsPage() {
 
   const handleSave = () => {
     // TODO: Implement API call to save settings
-    console.log("Saving settings:", {
-      notifications: notificationSettings,
-      privacy: privacySettings,
-      search: searchPreferences,
-      password: passwordData,
-    });
+    // Removed console.log for production
   };
 
   return (
