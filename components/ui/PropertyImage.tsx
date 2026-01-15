@@ -50,6 +50,8 @@ export default function PropertyImage({
       className={className}
       fill={fill}
       priority={priority}
+      loading={priority ? undefined : "lazy"}
+      sizes={fill ? "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" : undefined}
       onError={() => setImageError(true)}
     />
   );

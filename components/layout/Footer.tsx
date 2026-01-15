@@ -226,32 +226,37 @@ export default function Footer() {
           <Link
             href={SOCIAL_LINKS.facebook}
             className="text-primary hover:text-primary transition-colors p-2 rounded-lg hover:bg-accent"
+            aria-label="Follow us on Facebook"
           >
-            <Facebook className="h-7 w-7" />
+            <Facebook className="h-7 w-7" aria-hidden="true" />
           </Link>
           <Link
             href={SOCIAL_LINKS.twitter}
             className="text-primary hover:text-primary transition-colors p-2 rounded-lg hover:bg-accent"
+            aria-label="Follow us on Twitter"
           >
-            <Twitter className="h-7 w-7" />
+            <Twitter className="h-7 w-7" aria-hidden="true" />
           </Link>
           <Link
             href={SOCIAL_LINKS.instagram}
             className="text-primary hover:text-primary transition-colors p-2 rounded-lg hover:bg-accent"
+            aria-label="Follow us on Instagram"
           >
-            <Instagram className="h-7 w-7" />
+            <Instagram className="h-7 w-7" aria-hidden="true" />
           </Link>
           <Link
             href={SOCIAL_LINKS.linkedin}
             className="text-primary hover:text-primary transition-colors p-2 rounded-lg hover:bg-accent"
+            aria-label="Follow us on LinkedIn"
           >
-            <Linkedin className="h-7 w-7" />
+            <Linkedin className="h-7 w-7" aria-hidden="true" />
           </Link>
           <Link
             href={SOCIAL_LINKS.youtube}
             className="text-primary hover:text-primary transition-colors p-2 rounded-lg hover:bg-accent"
+            aria-label="Follow us on YouTube"
           >
-            <Youtube className="h-7 w-7" />
+            <Youtube className="h-7 w-7" aria-hidden="true" />
           </Link>
         </div>
 

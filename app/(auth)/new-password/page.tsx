@@ -1,3 +1,5 @@
+"use client";
+
 import { resetPassword } from "@/lib/apiServices/authServices";
 import { CheckCircle, Lock, SquareCheck } from "lucide-react";
 import Image from "next/image";
@@ -63,7 +65,7 @@ const ForgotPasswordPage = () => {
         ...prevErrors,
         confirmPassword:
           updatedFormData.confirmPassword &&
-          updatedFormData.confirmPassword !== updatedFormData.password
+            updatedFormData.confirmPassword !== updatedFormData.password
             ? "Passwords do not match."
             : "",
       }));
@@ -127,8 +129,8 @@ const ForgotPasswordPage = () => {
       setIsPasswordReset(true);
     } catch (error: any) {
       setErrors(process.env.NEXT_PUBLIC_NODE_ENV === "production"
-          ? "Failed to reset password"
-          : error.message || "Failed to reset password")
+        ? "Failed to reset password"
+        : error.message || "Failed to reset password")
     }
   };
 

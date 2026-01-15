@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { resendVerificationEmail, verifyEmail } from "@/lib/apiServices/authServices";
 
-const VerifyEmailPage = () => {
+const VerifyEmailContent = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [status, setStatus] = useState<"pending" | "success" | "error">(
@@ -127,6 +127,30 @@ const VerifyEmailPage = () => {
         )}
       </div>
     </section>
+  );
+};
+
+const VerifyEmailPage = () => {
+  return (
+    <Suspense
+      fallback={
+        <section className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+          <div className="w-full max-w-md bg-white rounded-[10px] shadow-xl p-8 text-center">
+            <div className="mb-6 animate-pulse">
+              <Loader2 className="w-12 h-12 text-blue-500 mx-auto animate-spin" />
+            </div>
+            <h2 className="text-2xl font-bold mb-2 text-gray-900">
+              Verifying Email...
+            </h2>
+            <p className="text-gray-600">
+              Please wait while we verify your email address.
+            </p>
+          </div>
+        </section>
+      }
+    >
+      <VerifyEmailContent />
+    </Suspense>
   );
 };
 

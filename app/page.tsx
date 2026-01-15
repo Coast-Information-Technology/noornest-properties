@@ -1,14 +1,11 @@
-"use client";
-
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
   TrendingUp,
   ArrowRight,
   HomeIcon,
-  ChevronLeft,
-  ChevronRight,
   CheckCircle,
   Search,
   Newspaper,
@@ -24,24 +21,30 @@ import {
 } from "lucide-react";
 import AnimatedSection from "@/components/ui/AnimatedSection";
 import AnimatedText from "@/components/ui/AnimatedText";
-import {
-  fadeInUp,
-  // fadeInLeft,
-  // fadeInRight,
-  // staggerContainer,
-  // staggerItem,
-  // slideInFromBottom,
-} from "@/lib/animations";
+import { fadeInUp } from "@/lib/animations";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import TestimonialCarousel from "@/components/testimonial/TestimonialCarousel";
 import { clientTestimonials } from "@/data/testimonials";
 import Newsletter from "@/components/layout/Newsletter";
 import CTASection from "@/components/ui/CTASection";
 import FeaturedPropertiesSection from "@/components/ui/FeaturedPropertiesSection";
-import PropertySearchBox from "@/components/ui/PropertySearchBox";
 import BlogSection from "@/components/ui/BlogSection";
-import CountUp from "react-countup";
+
+// Dynamically import interactive components
+const HeroCarousel = dynamic(() => import("@/components/ui/HeroCarousel"), {
+  loading: () => <div className="h-[70vh] bg-gray-100 animate-pulse" />,
+});
+
+const PropertySearchBox = dynamic(() => import("@/components/ui/PropertySearchBox"), {
+  loading: () => <div className="h-20 bg-gray-50 animate-pulse" />,
+});
+
+const ImpactMetrics = dynamic(() => import("@/components/ui/ImpactMetrics"), {
+  loading: () => <div className="h-40 bg-gray-50 animate-pulse" />,
+});
+
+const TestimonialCarousel = dynamic(() => import("@/components/testimonial/TestimonialCarousel"), {
+  loading: () => <div className="h-80 bg-gray-50 animate-pulse" />,
+});
 
 const heroImages = ["/hero-img.png", "/hero-img2.webp", "/hero-img3.webp"];
 
@@ -275,22 +278,22 @@ const blogPosts = [
 
 const features = [
   {
-    icon: <CheckCircle className="text-primary font-light" size={60} />,
+    icon: <CheckCircle className="text-primary font-light" size={60} aria-hidden="true" />,
     title: "Verified Listings",
     desc: "No scams, only trusted properties",
   },
   {
-    icon: <Search className="text-primary font-light" size={60} />,
+    icon: <Search className="text-primary font-light" size={60} aria-hidden="true" />,
     title: "Fast Search",
     desc: "Find what you need in seconds",
   },
   {
-    icon: <Newspaper className="text-primary font-light" size={60} />,
+    icon: <Newspaper className="text-primary font-light" size={60} aria-hidden="true" />,
     title: "Market Insights",
     desc: "Blogs, tips, and trends for smarter decisions",
   },
   {
-    icon: <Handshake className="text-primary font-light" size={60} />,
+    icon: <Handshake className="text-primary font-light" size={60} aria-hidden="true" />,
     title: "Easy Connections",
     desc: "Reach agents and property owners directly",
   },
@@ -298,248 +301,132 @@ const features = [
 
 const propertySolutions = [
   {
-    icon: <Briefcase className="text-primary font-light w-14 h-14" />,
+    icon: <Briefcase className="text-primary font-light w-14 h-14" aria-hidden="true" />,
     title: "Management",
   },
   {
-    icon: <LineChart className="text-primary font-light w-14 h-14" />,
+    icon: <LineChart className="text-primary font-light w-14 h-14" aria-hidden="true" />,
     title: "Sales & Marketing",
   },
   {
-    icon: <Key className="text-primary font-light w-14 h-14" />,
+    icon: <Key className="text-primary font-light w-14 h-14" aria-hidden="true" />,
     title: "Rentals",
   },
   {
-    icon: <DollarSign className="text-primary w-14 h-14" />,
+    icon: <DollarSign className="text-primary w-14 h-14" aria-hidden="true" />,
     title: "Sourcing",
   },
 ];
 
 const advisoryEnhancements = [
   {
-    icon: <FileText className="text-primary font-light w-14 h-14" />,
+    icon: <FileText className="text-primary font-light w-14 h-14" aria-hidden="true" />,
     title: "Valuation",
   },
   {
-    icon: <MessageSquare className="text-primary font-light w-14 h-14" />,
+    icon: <MessageSquare className="text-primary font-light w-14 h-14" aria-hidden="true" />,
     title: "Consultancy",
   },
   {
-    icon: <Hammer className="text-primary font-light w-14 h-14" />,
+    icon: <Hammer className="text-primary font-light w-14 h-14" aria-hidden="true" />,
     title: "Renovation",
   },
   {
-    icon: <Sofa className="text-primary font-light w-14 h-14" />,
+    icon: <Sofa className="text-primary font-light w-14 h-14" aria-hidden="true" />,
     title: "Interior Design",
   },
 ];
 
-// const metrics = [
-//   { value: "500+", label: "Verified Properties" },
-//   { value: "200+", label: "Blog Articles" },
-//   { value: "150+", label: "Agent Partnerships" },
-//   { value: "1K+", label: "Active Users" },
-//   { value: "50+", label: "Cities Covered" },
-// ];
-
 export default function Home() {
-  const [current, setCurrent] = useState(0);
-  const [tab, setTab] = useState<"sale" | "rent">("sale");
-  const [isPaused, setIsPaused] = useState(false);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-
-  const prevSlide = () => {
-    setCurrent((prev) => (prev === 0 ? heroImages.length - 1 : prev - 1));
-  };
-
-  const nextSlide = () => {
-    setCurrent((prev) => (prev === heroImages.length - 1 ? 0 : prev + 1));
-  };
-
-  // Auto-play effect
-  useEffect(() => {
-    if (!isPaused) {
-      intervalRef.current = setInterval(() => {
-        setCurrent((prev) => (prev === heroImages.length - 1 ? 0 : prev + 1));
-      }, 3000); // change every 5 seconds
-    }
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [isPaused]);
-
   return (
     <main>
       {/* Hero Section */}
-      {/* Top Content Section */}
       <section className="bg-background py-6 sm:py-8">
         <div className="container mx-auto lg:mx-0 px-6 lg:px-16">
-          <div className="">
-            <AnimatedSection
-              variants={fadeInUp}
-              className="space-y-6 grid grid-cols-1 lg:grid-cols-2 lg:items-center w-full"
-            >
-              <div className="space-y-4">
-                {/* Badge */}
-                <div className="flex justify-center lg:justify-start">
-                  <Badge variant="secondary" className="w-fit">
-                    <TrendingUp className="w-4 h-4 mr-2" />
-                    <span className="text-xs sm:text-sm">
-                      Smart Real Estate Investment
-                    </span>
-                  </Badge>
-                </div>
-
-                {/* Main Heading */}
-                <div className="text-center space-y-4 sm:space-y-6 lg:text-left">
-                  <AnimatedText
-                    as="h1"
-                    className="text-3xl lg:text-[2.5rem] font-bold tracking-tight text-primary leading-tight"
-                    delay={0.2}
-                  >
-                    Making Property Simple,
-                    <br /> Secure & Smarter
-                  </AnimatedText>
-                </div>
+          <AnimatedSection
+            variants={fadeInUp}
+            className="space-y-6 grid grid-cols-1 lg:grid-cols-2 lg:items-center w-full"
+          >
+            <div className="space-y-4">
+              {/* Badge */}
+              <div className="flex justify-center lg:justify-start">
+                <Badge variant="secondary" className="w-fit">
+                  <TrendingUp className="w-4 h-4 mr-2" aria-hidden="true" />
+                  <span className="text-xs sm:text-sm">
+                    Smart Real Estate Investment
+                  </span>
+                </Badge>
               </div>
 
-              <div className="space-y-4">
-                {/* Description */}
-                <div className="text-center lg:text-left">
-                  <AnimatedText
-                    as="p"
-                    className="text-sm text-muted-foreground max-w-4xl mx-auto leading-relaxed px-4"
-                    delay={0.2}
-                  >
-                    Discover verified properties and tailored investment
-                    opportunities with Noornest — all in one trusted platform.
-                  </AnimatedText>
-                </div>
-
-                {/* Action Buttons */}
-                <AnimatedSection
-                  className="flex flex-col sm:flex-row gap-4 justify-center items-center lg:justify-start px-4"
-                  delay={0.4}
+              {/* Main Heading */}
+              <div className="text-center space-y-4 sm:space-y-6 lg:text-left">
+                <AnimatedText
+                  as="h1"
+                  className="text-3xl lg:text-[2.5rem] font-bold tracking-tight text-primary leading-tight"
+                  delay={0.2}
                 >
-                  <Button
-                    asChild
-                    variant="ghost"
-                    size="sm"
-                    className="w-full sm:w-auto text-sm"
-                  >
-                    <Link href="/properties">
-                      <Search className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                      <span className="hidden sm:inline">
-                        Browse Properties
-                      </span>
-                      <span className="sm:hidden">Browse</span>
-                    </Link>
-                  </Button>
-                  <Button
-                    asChild
-                    size="sm"
-                    className="w-full sm:w-auto text-sm"
-                  >
-                    <Link href="/tools/bmv-analyzer">
-                      <HomeIcon className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                      <span className="hidden sm:inline">
-                        Explore Investment Plans
-                      </span>
-                      <span className="sm:hidden">Investment Plans</span>
-                    </Link>
-                  </Button>
-                </AnimatedSection>
+                  Making Property Simple,
+                  <br /> Secure & Smarter
+                </AnimatedText>
               </div>
-            </AnimatedSection>
-          </div>
-        </div>
-      </section>
-
-      {/* Background Image Carousel Section */}
-      <section className="relative w-full h-[70vh] overflow-hidden">
-        {/* Carousel Images */}
-        <div
-          className="absolute -z-30 inset-0 flex transition-transform duration-700 ease-in-out"
-          style={{ transform: `translateX(-${current * 100}%)` }}
-        >
-          {heroImages.map((image, index) => (
-            <div
-              key={index}
-              className="relative -z-30 w-full h-full flex-shrink-0"
-            >
-              <Image
-                src={image}
-                alt={`Property ${index + 1}`}
-                fill
-                priority={index === 0}
-                className="object-cover"
-              />
             </div>
-          ))}
-        </div>
 
-        {/* Overlay */}
-        <div
-          className="absolute -z-30 inset-0 bg-black/40"
-          aria-hidden="true"
-        />
+            <div className="space-y-4">
+              {/* Description */}
+              <div className="text-center lg:text-left">
+                <AnimatedText
+                  as="p"
+                  className="text-sm text-muted-foreground max-w-4xl mx-auto leading-relaxed px-4"
+                  delay={0.2}
+                >
+                  Discover verified properties and tailored investment
+                  opportunities with Noornest — all in one trusted platform.
+                </AnimatedText>
+              </div>
 
-        {/* Controls */}
-        <button
-          onClick={() => {
-            setIsPaused(true);
-            prevSlide();
-          }}
-          onMouseLeave={() => setIsPaused(false)}
-          aria-label="Previous slide"
-          className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/70 rounded-md p-2 shadow-md hover:bg-white focus:outline-none focus:ring-2 focus:ring-primary z-20"
-        >
-          <ChevronLeft className="w-6 h-6 text-gray-700" />
-        </button>
-        <button
-          onClick={() => {
-            setIsPaused(true);
-            nextSlide();
-          }}
-          onMouseLeave={() => setIsPaused(false)}
-          aria-label="Next slide"
-          className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/70 rounded-md p-2 shadow-md hover:bg-white focus:outline-none focus:ring-2 focus:ring-primary z-20"
-        >
-          <ChevronRight className="w-6 h-6 text-gray-700" />
-        </button>
-
-        {/* Dots Indicator */}
-        <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-10 flex space-x-2">
-          {heroImages.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => {
-                setIsPaused(true);
-                setCurrent(index);
-              }}
-              onMouseLeave={() => setIsPaused(false)}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                index === current
-                  ? "bg-white w-8"
-                  : "bg-white/50 hover:bg-white/75"
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
+              {/* Action Buttons */}
+              <AnimatedSection
+                className="flex flex-col sm:flex-row gap-4 justify-center items-center lg:justify-start px-4"
+                delay={0.4}
+              >
+                <Button
+                  asChild
+                  variant="ghost"
+                  size="sm"
+                  className="w-full sm:w-auto text-sm"
+                >
+                  <Link href="/properties">
+                    <Search className="w-4 h-4 sm:w-5 sm:h-5 mr-2" aria-hidden="true" />
+                    <span className="hidden sm:inline">
+                      Browse Properties
+                    </span>
+                    <span className="sm:hidden">Browse</span>
+                  </Link>
+                </Button>
+                <Button
+                  asChild
+                  size="sm"
+                  className="w-full sm:w-auto text-sm"
+                >
+                  <Link href="/tools/bmv-analyzer">
+                    <HomeIcon className="w-4 h-4 sm:w-5 sm:h-5 mr-2" aria-hidden="true" />
+                    <span className="hidden sm:inline">
+                      Explore Investment Plans
+                    </span>
+                    <span className="sm:hidden">Investment Plans</span>
+                  </Link>
+                </Button>
+              </AnimatedSection>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
+
+      {/* Hero Carousel Section */}
+      <HeroCarousel images={heroImages} />
 
       {/* Search Box - Outside the carousel */}
-      <PropertySearchBox
-        onSearch={(searchData) => {
-          console.log("Search submitted:", searchData);
-          // Handle search logic here
-        }}
-        onTabChange={(newTab) => {
-          setTab(newTab);
-        }}
-        initialTab={tab}
-      />
+      <PropertySearchBox />
 
       {/* Featured Properties Section */}
       <FeaturedPropertiesSection
@@ -603,7 +490,7 @@ export default function Home() {
             <div className="flex items-center gap-4">
               <Button>Explore All Plans</Button>
               <Button variant="ghost">
-                Learn more <ArrowRight size={16} />
+                Learn more <ArrowRight size={16} aria-hidden="true" />
               </Button>
             </div>
           </div>
@@ -612,11 +499,12 @@ export default function Home() {
           <div className="flex-1">
             <div className="rounded-2xl overflow-hidden shadow-lg h-[400px] w-full md:h-[500px] lg:w-[600px] relative">
               <Image
-                src="/hero-img.png" // replace with your actual image path
+                src="/hero-img.png"
                 alt="Investment Houses"
                 width={600}
                 height={400}
-                className="object-cover h-full w-full"
+                style={{ objectFit: "cover" }}
+                className="h-full w-full"
               />
             </div>
           </div>
@@ -625,7 +513,7 @@ export default function Home() {
 
       {/* Why Choose Noornest Section */}
       <section className="bg-accent py-16 px-6 md:px-16">
-        <div className="">
+        <div>
           <h3 className="text-lg tracking-wide text-black uppercase font-bold">
             Why Choose Noornest
           </h3>
@@ -650,7 +538,7 @@ export default function Home() {
 
       {/* Our Service Section */}
       <section className="bg-white py-16 px-6 md:px-16">
-        <div className="">
+        <div>
           <h3 className="text-lg tracking-wide text-black uppercase font-bold">
             Our Service
           </h3>
@@ -703,7 +591,6 @@ export default function Home() {
       {/* Impact Metrics Section */}
       <section className="w-full bg-[#E9DAC6] py-16 px-6">
         <div className="max-w-6xl mx-auto px-4">
-          {/* Header */}
           <h3 className="text-lg tracking-wide text-black uppercase font-bold">
             Impact Metrics
           </h3>
@@ -711,62 +598,7 @@ export default function Home() {
             Our Impact So Far
           </h2>
 
-          {/* Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[150px]">
-            {/* Tall first card */}
-            <div className="row-span-3 bg-accent rounded-lg shadow-sm p-6 flex flex-col justify-center items-center text-center">
-              <CountUp
-                end={500}
-                suffix="+"
-                duration={3.5}
-                className="text-2xl md:text-3xl font-bold"
-              />
-              <p className="mt-2 text-gray-700 text-base">
-                Verified Properties
-              </p>
-            </div>
-
-            {/* Rest of the cards */}
-            <div className="row-span-2 bg-accent rounded-lg shadow-sm p-6 flex flex-col justify-center items-center text-center">
-              <CountUp
-                end={200}
-                suffix="+"
-                duration={3.5}
-                className="text-3xl md:text-4xl font-bold"
-              />
-              <p className="mt-2 text-gray-700">Blog Articles</p>
-            </div>
-
-            <div className="bg-accent rounded-lg shadow-sm p-6 flex flex-col justify-center items-center text-center">
-              <CountUp
-                end={150}
-                suffix="+"
-                duration={3.5}
-                className="text-3xl md:text-4xl font-bold"
-              />
-              <p className="mt-2 text-gray-700">Agent Partnerships</p>
-            </div>
-
-            <div className="row-span-2 bg-accent rounded-lg shadow-sm p-6 flex flex-col justify-center items-center text-center">
-              <CountUp
-                end={1000}
-                suffix="+"
-                duration={3.5}
-                className="text-3xl md:text-4xl font-bold"
-              />
-              <p className="mt-2 text-gray-700">Active Users</p>
-            </div>
-
-            <div className="bg-accent rounded-lg shadow-sm p-6 flex flex-col justify-center items-center text-center">
-              <CountUp
-                end={50}
-                suffix="+"
-                duration={3.5}
-                className="text-3xl md:text-4xl font-bold"
-              />
-              <p className="mt-2 text-gray-700">Cities Covered</p>
-            </div>
-          </div>
+          <ImpactMetrics />
         </div>
       </section>
 
@@ -780,6 +612,17 @@ export default function Home() {
         primaryColor="#BFA14A"
         accentColor="#EADBC8"
       />
+
+      {/* Blog Section */}
+      <BlogSection
+        title="Latest Insights"
+        subtitle="OUR BLOG"
+        description="Stay updated with the latest trends and news in the property market."
+        posts={blogPosts}
+      />
+
+      {/* Newsletter Section */}
+      <Newsletter />
 
       {/* CTA Section */}
       <CTASection
@@ -797,20 +640,6 @@ export default function Home() {
         backgroundImage="/hero-img3.webp"
         overlayClassName="bg-gradient-to-r from-black/40 to-black/60 backdrop-blur-sm"
       />
-
-      {/* Blog Section */}
-      <BlogSection
-        title="From Our Blog"
-        subtitle="INSIGHTS"
-        description="Stay informed with property insights, investment tips, and market updates."
-        posts={blogPosts}
-        viewAllHref="/blog"
-        viewAllText="Read More Insights"
-        maxPosts={3}
-      />
-
-      {/* Newsletter Section */}
-      <Newsletter />
     </main>
   );
 }

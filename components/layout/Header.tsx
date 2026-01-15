@@ -208,7 +208,7 @@ export default function Header() {
       style={{ zIndex: 10000 }}
     >
       {/* Logo */}
-      <Link href="/" className="space-x-3">
+      <Link href="/" className="space-x-3" aria-label="Noornest Properties Home">
         <Image
           src="/noornest-logo.png"
           alt="Noornest Properties logo"
@@ -224,10 +224,13 @@ export default function Header() {
       <button className="flex items-center space-x-4">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <div className="flex items-center gap-2 bg-primary py-2 px-3 rounded-[8px] text-white font-bold">
+            <button
+              className="flex items-center gap-2 bg-primary py-2 px-3 rounded-[8px] text-white font-bold cursor-pointer"
+              aria-label="Get Started Options"
+            >
               Get Started
-              <ChevronDown className="h-4 w-4" />
-            </div>
+              <ChevronDown className="h-4 w-4" aria-hidden="true" />
+            </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuLabel className="bg-primary rounded-[5px]">
@@ -297,11 +300,10 @@ export default function Header() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`block px-3 py-3 text-base font-medium rounded-md transition-colors ${
-                    isActiveExact(item.href)
+                  className={`block px-3 py-3 text-base font-medium rounded-md transition-colors ${isActiveExact(item.href)
                       ? "text-primary bg-primary/10"
                       : "text-muted-foreground hover:text-primary hover:bg-primary/10"
-                  }`}
+                    }`}
                   aria-current={isActiveExact(item.href) ? "page" : undefined}
                   onClick={() => setIsMenuOpen(false)}
                 >
@@ -326,9 +328,8 @@ export default function Header() {
                   >
                     <AccordionTrigger
                       className={`px-3 py-3 text-base
-                           font-medium rounded-md hover:no-underline ${
-                             active ? "text-primary" : "text-foreground"
-                           }`}
+                           font-medium rounded-md hover:no-underline ${active ? "text-primary" : "text-foreground"
+                        }`}
                     >
                       <span>{group.label}</span>
                     </AccordionTrigger>
@@ -352,11 +353,10 @@ export default function Header() {
                                   <Link
                                     key={link.href}
                                     href={link.href}
-                                    className={`block px-3 py-2 text-base rounded-md transition-colors ${
-                                      current
+                                    className={`block px-3 py-2 text-base rounded-md transition-colors ${current
                                         ? "text-primary bg-primary/10"
                                         : "text-muted-foreground hover:text-primary hover:bg-primary/10"
-                                    }`}
+                                      }`}
                                     aria-current={current ? "page" : undefined}
                                     onClick={() => setIsMenuOpen(false)}
                                   >
