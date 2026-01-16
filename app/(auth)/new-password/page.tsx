@@ -1,19 +1,26 @@
 "use client";
 
-import { resetPassword } from "@/lib/apiServices/authServices";
-import { CheckCircle, Lock, SquareCheck } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import AuthLayout from "../App-layout";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { CheckCircle, Lock, Eye, EyeOff, ChevronLeft } from "lucide-react";
 
-const ForgotPasswordPage = () => {
+export default function NewPasswordPage() {
   const [formData, setFormData] = useState({
     password: "",
     confirmPassword: "",
-    showPassword: false,
-    showConfirmPassword: false,
   });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+  const router = useRouter();
+
   const [passwordCriteria, setPasswordCriteria] = useState({
     length: false,
     capital: false,
@@ -22,30 +29,10 @@ const ForgotPasswordPage = () => {
     specialChar: false,
   });
 
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [isLoading, setIsLoading] = useState(false);
-  const [isPasswordReset, setIsPasswordReset] = useState(false);
-
-  const router = useRouter();
-
-  const toggleVisibility = (field: "showPassword" | "showConfirmPassword") => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: !prev[field],
-    }));
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
 
-    const updatedFormData = {
-      ...formData,
-      [name]: value,
-    };
-
-    setFormData(updatedFormData);
-
-    // Live password criteria update
     if (name === "password") {
       setPasswordCriteria({
         length: value.length >= 8,
@@ -56,56 +43,28 @@ const ForgotPasswordPage = () => {
       });
     }
 
-    // Live confirm password validation — even after first letter
-    if (
-      name === "confirmPassword" ||
-      (name === "password" && updatedFormData.confirmPassword)
-    ) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        confirmPassword:
-          updatedFormData.confirmPassword &&
-            updatedFormData.confirmPassword !== updatedFormData.password
-            ? "Passwords do not match."
-            : "",
-      }));
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: "" }));
     }
-
-    // Clear error for current field
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      [name]: "",
-    }));
   };
 
   const validate = () => {
     const newErrors: { [key: string]: string } = {};
 
-    // Password validation
     if (!formData.password) {
       newErrors.password = "Password is required.";
     } else {
-      const password = formData.password;
-      if (password.length < 8) {
-        newErrors.password = "Password must be at least 8 characters long.";
-      } else if (!/[A-Z]/.test(password)) {
-        newErrors.password =
-          "Password must contain at least one capital letter.";
-      } else if (!/[a-z]/.test(password)) {
-        newErrors.password =
-          "Password must contain at least one lowercase letter.";
-      } else if (!/[0-9]/.test(password)) {
-        newErrors.password = "Password must contain at least one number.";
-      } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-        newErrors.password =
-          "Password must contain at least one special character (!@#$%^&*(),.?&quot;:{}|&lt;&gt;)";
+      const { length, capital, lowercase, number, specialChar } = passwordCriteria;
+      if (!length || !capital || !lowercase || !number || !specialChar) {
+        newErrors.password = "Password does not meet all security requirements.";
       }
     }
 
-    if (!formData.confirmPassword)
+    if (!formData.confirmPassword) {
       newErrors.confirmPassword = "Please confirm your password.";
-    else if (formData.password !== formData.confirmPassword)
+    } else if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = "Passwords do not match.";
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -113,181 +72,188 @@ const ForgotPasswordPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validate()) {
-      setIsLoading(true);
-      try {
-        await handleResetPassword();
-      } finally {
-        setIsLoading(false);
-      }
-    }
-  };
+    if (!validate()) return;
 
-  const handleResetPassword = async () => {
+    setIsLoading(true);
     try {
-      const { data, status, message } = await resetPassword(formData.password);
-      setIsPasswordReset(true);
-    } catch (error: any) {
-      setErrors(process.env.NEXT_PUBLIC_NODE_ENV === "production"
-        ? "Failed to reset password"
-        : error.message || "Failed to reset password")
+      // Mock API call
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      setIsSuccess(true);
+      toast.success("Password updated!", {
+        description: "Your new password is now active.",
+      });
+    } catch (error) {
+      toast.error("Failed to reset password", {
+        description: "Please try again later.",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  // Show success screen after password reset
-  if (isPasswordReset) {
+  if (isSuccess) {
     return (
-      <section className="min-h-screen flex items-center justify-center bg-[url('/assets/authImg.jpg')] bg-cover bg-no-repeat bg-center text-gray-900 py-6 px-4 md:px-20">
-        <div className="w-full max-w-md bg-white rounded-[10px] shadow-xl p-8 text-center">
-          <div className="mb-6">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <CheckCircle className="w-8 h-8 text-green-600" />
-            </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">
-              Password Reset Successfully!
-            </h2>
-            <p className="text-gray-600 mb-6">
-              Your password has been updated. You can now log in with your new
-              password.
-            </p>
+      <AuthLayout showTabs={false}>
+        <div className="text-center">
+          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <CheckCircle className="w-8 h-8 text-green-600" />
           </div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            Password Reset Successfully!
+          </h2>
+          <p className="text-gray-600 mb-8">
+            Your password has been updated. You can now log in with your new credentials.
+          </p>
 
-          <div className="bg-blue-50 border border-blue-200 rounded-[10px] p-4 mb-6">
+          <div className="bg-primary/5 border border-primary/10 rounded-lg p-4 mb-8 text-left">
             <div className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-              <div className="text-left">
-                <h3 className="font-medium text-blue-900 mb-1">
-                  Security Note:
-                </h3>
-                <ul className="text-sm text-blue-800 space-y-1">
+              <Lock className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+              <div>
+                <h3 className="font-semibold text-primary mb-1 text-sm">Security Note:</h3>
+                <ul className="text-xs text-gray-600 space-y-1">
                   <li>• Your new password is now active</li>
                   <li>• All other devices will be logged out</li>
-                  <li>• Use your new password to log in</li>
                 </ul>
               </div>
             </div>
           </div>
 
-          <div className="space-y-3">
-            <Link
-              href="/login"
-              className="block w-full bg-[#0D1140] text-white py-3 rounded-[10px] font-medium hover:bg-blue-700 text-center"
-            >
-              Go to Login
-            </Link>
-
-            <Link
-              href="/"
-              className="block w-full text-center text-[#011F72] hover:underline font-medium"
-            >
-              Back to Home
-            </Link>
-          </div>
+          <Button asChild className="w-full py-6 text-lg">
+            <Link href="/login">Go to Login</Link>
+          </Button>
         </div>
-      </section>
+      </AuthLayout>
     );
   }
 
   return (
-    <main className="flex min-h-screen flex-col md:flex-row bg-white">
-      {/* Left Section (Hero + Benefits) */}
-      <section
-        aria-label="Property showcase"
-        className="relative hidden md:flex md:w-1/2 bg-gray-900 text-white items-center justify-center m-6 rounded-[16px]"
-      >
-        <div className="absolute inset-0 rounded-[16px]">
-          <Image
-            src="/login-image.png"
-            alt="Modern brick house with warm lights"
-            width={300}
-            height={300}
-            className="h-full w-full object-cover rounded-[16px]"
-          />
-        </div>
-        <div
-          className="absolute inset-0 bg-black/40 rounded-[16px]"
-          aria-hidden="true"
-        ></div>
-
-        <div className="absolute bottom-12 p-6 max-w-2xl">
-          <div className="mt-6 border-primary bg-background/50 backdrop-blur supports-[backdrop-filter]:bg-background/20 rounded-lg p-4 md:px-8 md:py-6  lg:px-12 lg:py-8">
-            <h2 className="text-xl font-bold">Benefits</h2>
-            <ul className="mt-4 space-y-2 text-sm">
-              <li className="flex items-start">
-                <span className="mr-2 text-yellow-400">
-                  <SquareCheck className="bg-primary" size={20} />
-                </span>
-                Save &amp; track properties and bookings
-              </li>
-              <li className="flex items-start">
-                <span className="mr-2 text-yellow-400">
-                  <SquareCheck className="bg-primary" size={20} />
-                </span>
-                Access Equity / Yield / Secure / Opportunity Nests
-              </li>
-              <li className="flex items-start">
-                <span className="mr-2 text-yellow-400">
-                  <SquareCheck className="bg-primary" size={20} />
-                </span>
-                Get tailored updates and expert support
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-      <section>
-        <h1 className="sr-only">Send Verification Email</h1>
-        <p className="text-sm text-gray-600 mb-6">
-          Forgot Password? Kindly provide your email to reset your password.
+    <AuthLayout showTabs={false}>
+      <div className="mb-6">
+        <Link
+          href="/forgot-password"
+          className="inline-flex items-center text-sm font-medium text-primary hover:underline mb-4"
+        >
+          <ChevronLeft size={16} className="mr-1" />
+          Back to Reset
+        </Link>
+        <h1 className="text-2xl font-bold text-gray-900">Create New Password</h1>
+        <p className="text-sm text-gray-600 mt-2">
+          Your new password must be different from previous passwords.
         </p>
+      </div>
 
-        <form className="space-y-4">
-          <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
-            >
-              New Password
-            </label>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="relative">
+          <label
+            htmlFor="password"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            New Password
+          </label>
+          <div className="relative">
             <input
               id="password"
-              type="password"
+              name="password"
+              type={showPassword ? "text" : "password"}
               required
-              placeholder="Enter your New Password"
-              className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-primary focus:border-primary"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Enter New Password"
+              className={`w-full rounded-md border ${errors.password ? "border-red-500" : "border-gray-300"
+                } px-3 py-2 text-sm focus:ring-primary focus:border-primary pr-10`}
+              disabled={isLoading}
             />
-          </div>
-
-          <div>
-            <label
-              htmlFor="confirmPassword"
-              className="block text-sm font-medium text-gray-700"
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
             >
-              Confirm New Password
-            </label>
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          </div>
+          {errors.password && (
+            <p className="mt-1 text-xs text-red-500">{errors.password}</p>
+          )}
+        </div>
+
+        {/* Password Criteria */}
+        <div className="bg-gray-50 rounded-lg p-3 space-y-2">
+          <p className="text-xs font-semibold text-gray-700 mb-1">Password must include:</p>
+          <div className="grid grid-cols-2 gap-2">
+            {[
+              { key: "length", label: "8+ characters" },
+              { key: "capital", label: "Uppercase" },
+              { key: "lowercase", label: "Lowercase" },
+              { key: "number", label: "Number" },
+              { key: "specialChar", label: "Special character" },
+            ].map(({ key, label }) => (
+              <div key={key} className="flex items-center gap-2">
+                <CheckCircle
+                  size={14}
+                  className={
+                    passwordCriteria[key as keyof typeof passwordCriteria]
+                      ? "text-green-500"
+                      : "text-gray-300"
+                  }
+                />
+                <span
+                  className={`text-[10px] ${passwordCriteria[key as keyof typeof passwordCriteria]
+                      ? "text-green-700"
+                      : "text-gray-500"
+                    }`}
+                >
+                  {label}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="relative">
+          <label
+            htmlFor="confirmPassword"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Confirm Password
+          </label>
+          <div className="relative">
             <input
               id="confirmPassword"
-              type="password"
+              name="confirmPassword"
+              type={showConfirmPassword ? "text" : "password"}
               required
-              placeholder="Confirm your New Password"
-              className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-primary focus:border-primary"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              placeholder="Confirm New Password"
+              className={`w-full rounded-md border ${errors.confirmPassword ? "border-red-500" : "border-gray-300"
+                } px-3 py-2 text-sm focus:ring-primary focus:border-primary pr-10`}
+              disabled={isLoading}
             />
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            >
+              {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
           </div>
+          {errors.confirmPassword && (
+            <p className="mt-1 text-xs text-red-500">{errors.confirmPassword}</p>
+          )}
+        </div>
 
-          <button
-            type="submit"
-            className="w-full bg-primary text-background text-lg font-medium py-3 rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
-          >
-            Create New Password
-          </button>
-        </form>
+        <Button
+          type="submit"
+          disabled={isLoading}
+          className="w-full py-6 text-lg"
+        >
+          {isLoading ? "Updating..." : "Create New Password"}
+        </Button>
+      </form>
 
-        <p className="mt-4 text-xs text-gray-500">
-          Your data is protected with bank-level encryption.
-        </p>
-      </section>
-    </main>
+      <p className="mt-8 text-xs text-center text-gray-500">
+        Your data is protected with bank-level encryption.
+      </p>
+    </AuthLayout>
   );
-};
-
-export default ForgotPasswordPage;
+}

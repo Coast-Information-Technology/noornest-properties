@@ -6,7 +6,13 @@ import { ReactNode } from "react";
 import Image from "next/image";
 import { SquareCheck } from "lucide-react";
 
-export default function AuthLayout({ children }: { children: ReactNode }) {
+export default function AuthLayout({
+  children,
+  showTabs = true,
+}: {
+  children: ReactNode;
+  showTabs?: boolean;
+}) {
   const pathname = usePathname();
 
   return (
@@ -20,8 +26,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
           <Image
             src="/login-image.png"
             alt="Modern brick house with warm lights"
-            width={300}
-            height={300}
+            fill
             className="h-full w-full object-cover rounded-[16px]"
           />
         </div>
@@ -31,7 +36,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
         ></div>
 
         <div className="absolute bottom-12 p-6 max-w-2xl">
-          <div className="mt-6 border-primary bg-background/50 backdrop-blur supports-[backdrop-filter]:bg-background/20 rounded-lg p-4 md:px-8 md:py-6  lg:px-12 lg:py-8">
+          <div className="mt-6 border-primary bg-background/50 backdrop-blur supports-[backdrop-filter]:bg-background/20 rounded-lg p-4 md:px-8 md:py-6 lg:px-12 lg:py-8">
             <h2 className="text-xl font-bold">Benefits</h2>
             <ul className="mt-4 space-y-2 text-sm">
               <li className="flex items-start">
@@ -60,50 +65,49 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
       {/* Right Section (Form + Social login) */}
       <section
         aria-label="Authentication section"
-        className="flex flex-col w-full md:w-1/2 items-center justify-center p-6 md:p-12"
+        className="flex flex-col w-full md:w-1/2 items-center justify-center p-6 md:p-12 overflow-y-auto"
       >
-        <Link href="/" className="flex justify-end max-w-md w-full">
+        <Link href="/" className="flex justify-center max-w-md w-full mb-8">
           <Image
             src="/noornest-logo.png"
             alt="Noornest"
             width={120}
             height={120}
-            className="mb-6"
           />
         </Link>
         <div className="w-full max-w-md">
           {/* Tabs */}
-          <div
-            role="tablist"
-            className="flex rounded-md overflow-hidden border mb-6 p-2 bg-accent gap-2"
-          >
-            <Link
-              role="tab"
-              aria-selected={pathname === "/login"}
-              href="/login"
-              className={`flex-1 text-center py-2 text-sm font-medium ${
-                pathname === "/login"
-                  ? "bg-primary text-background rounded-md"
-                  : "text-gray-700 hover:bg-gray-200 rounded-md"
-              }`}
+          {showTabs && (
+            <div
+              role="tablist"
+              className="flex rounded-md overflow-hidden border mb-6 p-2 bg-accent gap-2"
             >
-              Login
-            </Link>
-            <Link
-              role="tab"
-              aria-selected={pathname === "/register"}
-              href="/register"
-              className={`flex-1 text-center py-2 text-sm font-medium ${
-                pathname === "/register"
-                  ? "bg-primary text-background rounded-md"
-                  : "text-gray-700 hover:bg-gray-200 rounded-md"
-              }`}
-            >
-              Register
-            </Link>
-          </div>
+              <Link
+                role="tab"
+                aria-selected={pathname === "/login"}
+                href="/login"
+                className={`flex-1 text-center py-2 text-sm font-medium ${pathname === "/login"
+                    ? "bg-primary text-background rounded-md"
+                    : "text-gray-700 hover:bg-gray-200 rounded-md"
+                  }`}
+              >
+                Login
+              </Link>
+              <Link
+                role="tab"
+                aria-selected={pathname === "/register"}
+                href="/register"
+                className={`flex-1 text-center py-2 text-sm font-medium ${pathname === "/register"
+                    ? "bg-primary text-background rounded-md"
+                    : "text-gray-700 hover:bg-gray-200 rounded-md"
+                  }`}
+              >
+                Register
+              </Link>
+            </div>
+          )}
 
-          {/* Dynamic Content (Login/Register form) */}
+          {/* Dynamic Content */}
           {children}
 
           {/* Divider */}
