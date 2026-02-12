@@ -60,13 +60,16 @@ export default function LoginPage() {
   };
 
   const quickLogin = (role: string) => {
+    // Ensure this only works in development
+    if (process.env.NODE_ENV !== "development") return;
+
     const credentials = {
-      super_admin: { email: "superadmin@noornest.com", password: "super123" },
-      admin: { email: "admin@noornest.com", password: "admin123" },
-      agent: { email: "agent@noornest.com", password: "agent123" },
-      investor: { email: "investor@noornest.com", password: "investor123" },
-      client: { email: "client@noornest.com", password: "client123" },
-      guest: { email: "guest@noornest.com", password: "guest123" },
+      super_admin: { email: "superadmin@noornest.com", password: process.env.NEXT_PUBLIC_DUMMY_SUPER_ADMIN_PASSWORD || "super123" },
+      admin: { email: "admin@noornest.com", password: process.env.NEXT_PUBLIC_DUMMY_ADMIN_PASSWORD || "admin123" },
+      agent: { email: "agent@noornest.com", password: process.env.NEXT_PUBLIC_DUMMY_AGENT_PASSWORD || "agent123" },
+      investor: { email: "investor@noornest.com", password: process.env.NEXT_PUBLIC_DUMMY_INVESTOR_PASSWORD || "investor123" },
+      client: { email: "client@noornest.com", password: process.env.NEXT_PUBLIC_DUMMY_CLIENT_PASSWORD || "client123" },
+      guest: { email: "guest@noornest.com", password: process.env.NEXT_PUBLIC_DUMMY_GUEST_PASSWORD || "guest123" },
     };
 
     const creds = credentials[role as keyof typeof credentials];
