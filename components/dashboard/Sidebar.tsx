@@ -66,6 +66,9 @@ const getNavigationByRole = (role: UserRole) => {
         { name: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
       ];
 
+    case "guest":
+      return []; // Guests should not be in dashboard, but fail-safe to empty nav
+
     default:
       return baseNav;
   }
@@ -77,17 +80,14 @@ export function Sidebar({ mobileMenuOpen, onClose, collapsed, onToggleCollapse, 
 
   return (
     <aside
-      className={`fixed inset-y-0 left-0 z-50 bg-white border-r transform transition-all duration-300 ease-in-out ${
-        mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-      } md:translate-x-0 ${
-        collapsed ? "w-20" : "w-64"
-      }`}
+      className={`fixed inset-y-0 left-0 z-50 bg-white border-r transform transition-all duration-300 ease-in-out ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+        } md:translate-x-0 ${collapsed ? "w-20" : "w-64"
+        }`}
     >
       <div className="flex flex-col h-full">
         {/* Logo */}
-        <div className={`flex items-center justify-between h-16 border-b ${
-          collapsed ? "px-4" : "px-6"
-        }`}>
+        <div className={`flex items-center justify-between h-16 border-b ${collapsed ? "px-4" : "px-6"
+          }`}>
           {!collapsed ? (
             <Link href="/" className="flex items-center">
               <Image
@@ -129,13 +129,11 @@ export function Sidebar({ mobileMenuOpen, onClose, collapsed, onToggleCollapse, 
                 <li key={item.name}>
                   <Link
                     href={item.href}
-                    className={`flex items-center ${
-                      collapsed ? "justify-center px-2" : "space-x-3 px-3"
-                    } py-2 rounded-md text-sm font-medium transition-colors group relative ${
-                      isActive
+                    className={`flex items-center ${collapsed ? "justify-center px-2" : "space-x-3 px-3"
+                      } py-2 rounded-md text-sm font-medium transition-colors group relative ${isActive
                         ? "bg-primary/10 text-primary"
                         : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-                    }`}
+                      }`}
                     onClick={onClose}
                     title={collapsed ? item.name : undefined}
                   >

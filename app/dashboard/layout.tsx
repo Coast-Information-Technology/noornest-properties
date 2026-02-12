@@ -49,6 +49,18 @@ function DashboardLayoutContent({ children }: ClientDashboardLayoutProps) {
     router.push("/login");
   };
 
+  // Redirect guests to home if they try to access dashboard
+  if (user && user.role === "guest") {
+    // Wrap in setTimeout to avoid immediate state update conflicts if any
+    setTimeout(() => {
+      toast.error("Access Denied", {
+        description: "Guest users do not have access to the dashboard.",
+      });
+      router.push("/");
+    }, 0);
+    return null; // Don't render dashboard for guests
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Sidebar */}

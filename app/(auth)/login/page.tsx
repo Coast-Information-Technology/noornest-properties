@@ -23,13 +23,25 @@ export default function LoginPage() {
       const result = await login(email, password);
 
       if (result.success) {
+        // Get the user role from the dummy credentials or context
+        // Since login updates the context asynchronously, we might not have the updated user immediately here
+        // For this implementation with dummy data, we can infer the role from the email for immediate redirection
+        // In a real app, the login response would return the user/role
+
+        let targetPath = "/dashboard";
+        if (email.includes("guest")) {
+          targetPath = "/";
+        }
+
         toast.success("Login successful!", {
-          description: "Redirecting to your dashboard...",
+          description: email.includes("guest")
+            ? "Welcome back! Redirecting to home..."
+            : "Redirecting to your dashboard...",
         });
 
-        // Redirect to dashboard
+        // Redirect based on role
         setTimeout(() => {
-          router.push("/dashboard");
+          router.push(targetPath);
         }, 500);
       } else {
         toast.error("Login failed", {
