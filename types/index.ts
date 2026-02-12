@@ -13,8 +13,6 @@ export interface User {
 }
 
 export type UserRole =
-  | "super_admin"
-  | "admin"
   | "agent"
   | "investor"
   | "client"
