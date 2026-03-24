@@ -84,9 +84,9 @@ export default function AuthLayout({
             >
               <Link
                 role="tab"
-                aria-selected={pathname === "/login"}
+                aria-selected={pathname === "/login" || pathname.startsWith("/login/")}
                 href="/login"
-                className={`flex-1 text-center py-2 text-sm font-medium ${pathname === "/login"
+                className={`flex-1 text-center py-2 text-sm font-medium ${pathname === "/login" || pathname.startsWith("/login/")
                     ? "bg-primary text-background rounded-md"
                     : "text-gray-700 hover:bg-gray-200 rounded-md"
                   }`}
@@ -95,9 +95,9 @@ export default function AuthLayout({
               </Link>
               <Link
                 role="tab"
-                aria-selected={pathname === "/register"}
+                aria-selected={pathname === "/register" || pathname.startsWith("/register/")}
                 href="/register"
-                className={`flex-1 text-center py-2 text-sm font-medium ${pathname === "/register"
+                className={`flex-1 text-center py-2 text-sm font-medium ${pathname === "/register" || pathname.startsWith("/register/")
                     ? "bg-primary text-background rounded-md"
                     : "text-gray-700 hover:bg-gray-200 rounded-md"
                   }`}

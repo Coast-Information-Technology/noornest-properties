@@ -1,19 +1,12 @@
 import type { Metadata } from "next";
 import { Montserrat, Roboto } from "next/font/google";
 import "./globals.css";
-import dynamic from "next/dynamic";
-import Header from "@/components/layout/Header";
 import { Toaster } from "@/components/ui/sonner";
 import { AnimationProvider } from "@/components/providers/AnimationProvider";
 import JsonLd from "@/components/seo/JsonLd";
 import { UserProvider } from "@/contexts/UserContext";
 import BackToTopButton from "@/components/ui/BackToTopButton";
-
-// Dynamically import heavy components
-const Footer = dynamic(() => import("@/components/layout/Footer"), {
-  loading: () => null,
-  ssr: true,
-});
+import PageShell from "@/components/layout/PageShell";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -118,9 +111,7 @@ export default function RootLayout({
         <JsonLd data={organizationSchema} id="organization-schema" />
         <UserProvider>
           <AnimationProvider>
-            <Header />
-            {children}
-            <Footer />
+            <PageShell>{children}</PageShell>
             <BackToTopButton />
             <Toaster richColors closeButton />
           </AnimationProvider>
