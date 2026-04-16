@@ -2,40 +2,20 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import AuthLayout from "../../App-layout";
 import StepIndicator from "@/components/auth/StepIndicator";
 import OtpInput from "@/components/ui/OtpInput";
 import { useRegisterFlowStore } from "@/store/registerFlowStore";
-
-const otpSchema = z.object({
-  code: z
-    .string()
-    .length(6, "OTP code must be exactly 6 digits")
-    .regex(/^\d{6}$/, "OTP code must contain only digits"),
-});
-
-type OtpValues = z.infer<typeof otpSchema>;
+import { resendVerificationEmail, verifyEmail } from "@/lib/apiServices/authServices";
 
 export default function EmailVerificationPage() {
   const router = useRouter();
   const { email, emailVerified, markEmailVerified } = useRegisterFlowStore();
   const [verificationError, setVerificationError] = useState("");
+  const [resendMessage, setResendMessage] = useState("");
   const [isVerifying, setIsVerifying] = useState(false);
+  const [isResending, setIsResending] = useState(false);
   const [otpValue, setOtpValue] = useState("");
-
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm<OtpValues>({
-    resolver: zodResolver(otpSchema),
-    mode: "onChange",
-    defaultValues: { code: "" },
-  });
 
   const isValid = otpValue.length === 6 && /^\d{6}$/.test(otpValue);
 
@@ -54,18 +34,34 @@ export default function EmailVerificationPage() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setVerificationError("");
+    setResendMessage("");
     setIsVerifying(true);
 
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    if (otpValue === "123456") {
+    try {
+      await verifyEmail(otpValue);
       markEmailVerified();
       router.push("/register/accept-policies");
-    } else {
-      setVerificationError("Incorrect OTP code. Use 123456 for the mock.");
+    } catch (error: any) {
+      setVerificationError(error?.message || "Verification failed. Please try again.");
+    } finally {
+      setIsVerifying(false);
     }
+  };
 
-    setIsVerifying(false);
+  const handleResend = async () => {
+    if (!email) return;
+    setVerificationError("");
+    setResendMessage("");
+    setIsResending(true);
+
+    try {
+      const response = await resendVerificationEmail(email);
+      setResendMessage(response?.message || "Verification email sent. Please check your inbox.");
+    } catch (error: any) {
+      setVerificationError(error?.message || "Could not resend verification email.");
+    } finally {
+      setIsResending(false);
+    }
   };
 
   return (
@@ -75,23 +71,25 @@ export default function EmailVerificationPage() {
         <h1 className="text-2xl font-bold text-gray-900">Email Verification</h1>
         <p className="text-sm text-gray-600">
           We have sent a 6-digit code to <strong>{email || "your email"}</strong>.
-          Use <code className="rounded bg-gray-100 px-1 py-0.5">123456</code> for demo.
         </p>
 
         <form onSubmit={onSubmit} className="space-y-4">
           <OtpInput
             value={otpValue}
             onChange={setOtpValue}
-            error={errors.code?.message || verificationError}
+            error={verificationError}
           />
+
+          {resendMessage && <p className="text-sm text-green-600">{resendMessage}</p>}
 
           <div className="grid grid-cols-2 gap-2">
             <button
               type="button"
-              onClick={() => router.push("/register/create-account")}
+              onClick={handleResend}
+              disabled={isResending}
               className="w-full rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
             >
-              Back
+              {isResending ? "Sending..." : "Resend Code"}
             </button>
             <button
               type="submit"

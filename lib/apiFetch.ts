@@ -10,9 +10,9 @@ import {
 import { safeConsole } from "@/lib/console";
 import { getDeviceInfo } from "@/utils/getDeviceInfo";
 /**
- * Base URL for API requests. For Next.js API routes, we use relative URLs
+ * Base URL for API requests. Defaults to the backend host if not configured.
  */
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL; // Empty string for relative URLs to Next.js API routes
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://asancha.144.91.88.139.sslip.io";
 
 /**
  * Generic API response type
@@ -37,7 +37,6 @@ export interface ApiError {
  * User registration data type
  */
 export interface UserRegistrationData {
-  fullName?: string;
   email: string;
   password: string;
   role: string;
@@ -87,13 +86,17 @@ export const apiRequest = async <T = any>(
   headers: Record<string, string> = {}
 ): Promise<ApiResponse<T>> => {
   const requestHeaders = createHeaders(token, headers);
+  const requestUrl =
+    endpoint.startsWith("/api/") || !BASE_URL
+      ? endpoint
+      : `${BASE_URL}${endpoint}`;
   const requestOptions: RequestInit = {
     method,
     headers: requestHeaders,
     body: method !== "GET" && body ? JSON.stringify(body) : undefined,
   };
   try {
-    const response = await fetch(`${BASE_URL}${endpoint}`, requestOptions);
+    const response = await fetch(requestUrl, requestOptions);
     const contentType = response.headers.get("content-type");
     const isJson = contentType && contentType.includes("application/json");
     const responseText = await response.text();

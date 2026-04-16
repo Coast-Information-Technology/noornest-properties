@@ -3,7 +3,13 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
-type Role = "client" | "agent" | "investor" | "";
+type Role =
+  | "property_owner"
+  | "property_sourcer"
+  | "agent"
+  | "investor"
+  | "service_provider"
+  | "";
 
 export type RegisterFlowState = {
   role: Role;

@@ -10,11 +10,22 @@ import StepIndicator from "@/components/auth/StepIndicator";
 import { useRegisterFlowStore } from "@/store/registerFlowStore";
 
 type RoleValues = {
-  role: "client" | "agent" | "investor";
+  role:
+    | "property_owner"
+    | "property_sourcer"
+    | "agent"
+    | "investor"
+    | "service_provider";
 };
 
 const roleSchema = z.object({
-  role: z.enum(["client", "agent", "investor"]),
+  role: z.enum([
+    "property_owner",
+    "property_sourcer",
+    "agent",
+    "investor",
+    "service_provider",
+  ]),
 });
 
 export default function RoleSelectionPage() {
@@ -28,7 +39,7 @@ export default function RoleSelectionPage() {
   } = useForm<RoleValues>({
     resolver: zodResolver(roleSchema),
     mode: "onChange",
-    defaultValues: { role: role || "client" },
+    defaultValues: { role: (role as RoleValues["role"]) || "property_owner" },
   });
 
   useEffect(() => {
@@ -56,9 +67,11 @@ export default function RoleSelectionPage() {
             <legend className="text-sm font-medium text-gray-700">I am a</legend>
             <div className="mt-3 space-y-2">
               {[
-                { value: "client", text: "Client (Looking for properties)" },
-                { value: "agent", text: "Agent (Listing properties)" },
-                { value: "investor", text: "Investor (Opportunity seeker)" },
+                { value: "property_owner", text: "Property Owner" },
+                { value: "property_sourcer", text: "Property Sourcer" },
+                { value: "agent", text: "Agent" },
+                { value: "investor", text: "Investor" },
+                { value: "service_provider", text: "Service Provider" },
               ].map((option) => (
                 <label
                   key={option.value}

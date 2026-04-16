@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import AuthLayout from "../../App-layout";
 import StepIndicator from "@/components/auth/StepIndicator";
 import { useRegisterFlowStore } from "@/store/registerFlowStore";
+import { registerUser } from "@/lib/apiServices/authServices";
 
 type CreateAccountValues = {
   email: string;
@@ -22,6 +23,8 @@ const createAccountSchema = z.object({
 export default function CreateAccountPage() {
   const router = useRouter();
   const { role, email, setEmail } = useRegisterFlowStore();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   const {
     register,
@@ -39,9 +42,30 @@ export default function CreateAccountPage() {
     }
   }, [role, router]);
 
-  const onSubmit = (data: CreateAccountValues) => {
-    setEmail(data.email);
-    router.push("/register/email-verification");
+  const onSubmit = async (data: CreateAccountValues) => {
+    setSubmitError("");
+    setIsSubmitting(true);
+
+    try {
+      const response = await registerUser({
+        email: data.email,
+        password: data.password,
+        role: role || "property_owner",
+      });
+
+      if (!response?.data?.success) {
+        throw new Error(
+          response?.data?.message || "Registration failed. Please try again."
+        );
+      }
+
+      setEmail(data.email);
+      router.push("/register/email-verification");
+    } catch (error: any) {
+      setSubmitError(error?.message || "Registration failed. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -82,6 +106,8 @@ export default function CreateAccountPage() {
             )}
           </div>
 
+          {submitError && <p className="text-sm text-red-600">{submitError}</p>}
+
           <div className="grid grid-cols-2 gap-2">
             <button
               type="button"
@@ -92,10 +118,10 @@ export default function CreateAccountPage() {
             </button>
             <button
               type="submit"
-              disabled={!isValid}
+              disabled={!isValid || isSubmitting}
               className="w-full rounded-md bg-primary px-4 py-2 text-sm font-medium text-background disabled:cursor-not-allowed disabled:opacity-60"
             >
-              Next
+              {isSubmitting ? "Creating..." : "Next"}
             </button>
           </div>
         </form>

@@ -12,7 +12,6 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [showCredentials, setShowCredentials] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const { login } = useUser();
   const router = useRouter();
@@ -25,25 +24,12 @@ export default function LoginPage() {
       const result = await login(email, password);
 
       if (result.success) {
-        // Get the user role from the dummy credentials or context
-        // Since login updates the context asynchronously, we might not have the updated user immediately here
-        // For this implementation with dummy data, we can infer the role from the email for immediate redirection
-        // In a real app, the login response would return the user/role
-
-        let targetPath = "/dashboard";
-        if (email.includes("guest")) {
-          targetPath = "/";
-        }
-
         toast.success("Login successful!", {
-          description: email.includes("guest")
-            ? "Welcome back! Redirecting to home..."
-            : "Redirecting to your dashboard...",
+          description: "Redirecting to your dashboard...",
         });
 
-        // Redirect based on role
         setTimeout(() => {
-          router.push(targetPath);
+          router.push("/dashboard");
         }, 500);
       } else {
         toast.error("Login failed", {
@@ -56,26 +42,6 @@ export default function LoginPage() {
       });
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const quickLogin = (role: string) => {
-    // Ensure this only works in development
-    if (process.env.NODE_ENV !== "development") return;
-
-    const credentials = {
-      super_admin: { email: "superadmin@noornest.com", password: process.env.NEXT_PUBLIC_DUMMY_SUPER_ADMIN_PASSWORD || "super123" },
-      admin: { email: "admin@noornest.com", password: process.env.NEXT_PUBLIC_DUMMY_ADMIN_PASSWORD || "admin123" },
-      agent: { email: "agent@noornest.com", password: process.env.NEXT_PUBLIC_DUMMY_AGENT_PASSWORD || "agent123" },
-      investor: { email: "investor@noornest.com", password: process.env.NEXT_PUBLIC_DUMMY_INVESTOR_PASSWORD || "investor123" },
-      client: { email: "client@noornest.com", password: process.env.NEXT_PUBLIC_DUMMY_CLIENT_PASSWORD || "client123" },
-      guest: { email: "guest@noornest.com", password: process.env.NEXT_PUBLIC_DUMMY_GUEST_PASSWORD || "guest123" },
-    };
-
-    const creds = credentials[role as keyof typeof credentials];
-    if (creds) {
-      setEmail(creds.email);
-      setPassword(creds.password);
     }
   };
 
@@ -163,63 +129,6 @@ export default function LoginPage() {
           {isLoading ? "Logging in..." : "Login"}
         </button>
       </form>
-
-      {/* Demo Credentials Section - Development Only */}
-      {process.env.NODE_ENV === "development" && (
-        <div className="mt-6 border-t pt-6">
-          <button
-            type="button"
-            onClick={() => setShowCredentials(!showCredentials)}
-            className="w-full text-sm text-gray-600 hover:text-gray-800 font-medium mb-3"
-          >
-            {showCredentials ? "Hide" : "Show"} Demo Credentials
-          </button>
-
-          {showCredentials && (
-            <div className="space-y-3">
-              <p className="text-xs text-gray-500 mb-3">
-                Click any role below to auto-fill credentials:
-              </p>
-
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  onClick={() => quickLogin("agent")}
-                  className="px-3 py-2 text-xs bg-green-50 text-green-700 rounded-md hover:bg-green-100 border border-green-200"
-                >
-                  Agent
-                </button>
-                <button
-                  type="button"
-                  onClick={() => quickLogin("investor")}
-                  className="px-3 py-2 text-xs bg-yellow-50 text-yellow-700 rounded-md hover:bg-yellow-100 border border-yellow-200"
-                >
-                  Investor
-                </button>
-                <button
-                  type="button"
-                  onClick={() => quickLogin("client")}
-                  className="px-3 py-2 text-xs bg-pink-50 text-pink-700 rounded-md hover:bg-pink-100 border border-pink-200"
-                >
-                  Client
-                </button>
-                <button
-                  type="button"
-                  onClick={() => quickLogin("guest")}
-                  className="px-3 py-2 text-xs bg-gray-50 text-gray-700 rounded-md hover:bg-gray-100 border border-gray-200"
-                >
-                  Guest
-                </button>
-              </div>
-
-              <div className="mt-4 p-3 bg-gray-50 rounded-md text-xs space-y-1">
-                <p className="font-semibold text-gray-700">All passwords: [role]123</p>
-                <p className="text-gray-600">Example: admin123, agent123, etc.</p>
-              </div>
-            </div>
-          )}
-        </div>
-      )}
 
       <p className="mt-4 text-xs text-gray-500">
         Secure login—your data is protected with bank-level encryption.

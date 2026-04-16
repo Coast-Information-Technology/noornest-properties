@@ -3,6 +3,8 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { UserRole } from "@/types";
 import safeConsole from "@/lib/console";
+import { getTokenFromCookies, saveRefreshTokenToCookies, saveSessionIdToCookies, saveTokenToCookies } from "@/lib/cookies";
+import { getUserMe, loginUser, logoutUser } from "@/lib/apiServices/authServices";
 
 interface User {
   id: string;
@@ -22,83 +24,110 @@ interface UserContextType {
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
-// Dummy user credentials for each role
-// Passwords are stored in environment variables for security
-const DUMMY_USERS = [
-  {
-    id: "3",
-    name: "Agent Smith",
-    email: "agent@noornest.com",
-    password: process.env.NEXT_PUBLIC_DUMMY_AGENT_PASSWORD || "",
-    role: "agent" as UserRole,
-    avatar: "/avatars/agent.jpg",
-  },
-  {
-    id: "4",
-    name: "Investor Johnson",
-    email: "investor@noornest.com",
-    password: process.env.NEXT_PUBLIC_DUMMY_INVESTOR_PASSWORD || "",
-    role: "investor" as UserRole,
-    avatar: "/avatars/investor.jpg",
-  },
-  {
-    id: "5",
-    name: "Client Williams",
-    email: "client@noornest.com",
-    password: process.env.NEXT_PUBLIC_DUMMY_CLIENT_PASSWORD || "",
-    role: "client" as UserRole,
-    avatar: "/avatars/client.jpg",
-  },
-  {
-    id: "6",
-    name: "Guest User",
-    email: "guest@noornest.com",
-    password: process.env.NEXT_PUBLIC_DUMMY_GUEST_PASSWORD || "",
-    role: "guest" as UserRole,
-    avatar: "/avatars/guest.jpg",
-  },
-];
+const normalizeUserRole = (role: unknown): UserRole => {
+  const value = String(role || "").toLowerCase();
+  if (value === "agent" || value === "investor" || value === "client" || value === "guest") {
+    return value as UserRole;
+  }
+  return "client";
+};
+
+const mapBackendUser = (rawUser: any): User => {
+  const firstName = rawUser?.firstName || rawUser?.first_name || "";
+  const lastName = rawUser?.lastName || rawUser?.last_name || "";
+  const fullName = rawUser?.name || `${firstName} ${lastName}`.trim();
+
+  return {
+    id: String(rawUser?.id || rawUser?.userPublicId || rawUser?.publicId || ""),
+    name: fullName || "User",
+    email: rawUser?.email || "",
+    role: normalizeUserRole(rawUser?.role),
+    avatar: rawUser?.avatar,
+  };
+};
 
 export function UserProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is stored in localStorage
-    const storedUser = localStorage.getItem("currentUser");
-    if (storedUser) {
-      try {
-        const parsedUser = JSON.parse(storedUser);
-        setUser(parsedUser);
-      } catch (error) {
-        safeConsole.error("Error parsing stored user:", error);
-        localStorage.removeItem("currentUser");
+    const bootstrapAuth = async () => {
+      const token = getTokenFromCookies();
+      if (!token) {
+        setIsLoading(false);
+        return;
       }
-    }
-    setIsLoading(false);
+
+      try {
+        const response = await getUserMe(token);
+        const rawUser = response?.data?.data || response?.data;
+        const mappedUser = mapBackendUser(rawUser);
+        setUser(mappedUser);
+        localStorage.setItem("currentUser", JSON.stringify(mappedUser));
+      } catch (error) {
+        safeConsole.error("Error restoring session:", error);
+        localStorage.removeItem("currentUser");
+        setUser(null);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    void bootstrapAuth();
   }, []);
 
   const login = async (email: string, password: string): Promise<{ success: boolean; message?: string }> => {
-    // Simulate API call delay
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    try {
+      const loginResponse = await loginUser({ email, password });
+      if (loginResponse?.data?.success === false) {
+        return {
+          success: false,
+          message: loginResponse?.data?.message || "Invalid email or password",
+        };
+      }
 
-    const foundUser = DUMMY_USERS.find(
-      (u) => u.email === email && u.password === password
-    );
+      const payload = loginResponse?.data?.data || loginResponse?.data || {};
 
-    if (foundUser) {
-      const { password: _, ...userWithoutPassword } = foundUser;
-      setUser(userWithoutPassword);
-      localStorage.setItem("currentUser", JSON.stringify(userWithoutPassword));
+      const accessToken =
+        payload?.access_token || payload?.accessToken || payload?.token;
+      const refreshToken =
+        payload?.refresh_token || payload?.refreshToken;
+      const sessionId = payload?.sessionId || payload?.session_id;
+
+      if (accessToken) {
+        saveTokenToCookies(accessToken);
+      }
+      if (refreshToken) {
+        saveRefreshTokenToCookies(refreshToken);
+      }
+      if (sessionId) {
+        saveSessionIdToCookies(sessionId);
+      }
+
+      let rawUser = payload?.user || payload?.profile;
+      if (!rawUser && accessToken) {
+        const meResponse = await getUserMe(accessToken);
+        rawUser = meResponse?.data?.data || meResponse?.data;
+      }
+
+      if (!rawUser) {
+        return { success: false, message: "Login succeeded but user profile was not returned." };
+      }
+
+      const mappedUser = mapBackendUser(rawUser);
+      setUser(mappedUser);
+      localStorage.setItem("currentUser", JSON.stringify(mappedUser));
+
       return { success: true };
+    } catch (error: any) {
+      return { success: false, message: error?.message || "Invalid email or password" };
     }
-
-    return { success: false, message: "Invalid email or password" };
   };
 
   const logout = () => {
     setUser(null);
     localStorage.removeItem("currentUser");
+    void logoutUser();
   };
 
   return (

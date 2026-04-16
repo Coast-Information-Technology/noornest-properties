@@ -6,6 +6,7 @@ import { safeConsole } from "@/lib/console";
  */
 const TOKEN_KEY = "token";
 const REFRESH_TOKEN_KEY = "refreshToken";
+const SESSION_ID_KEY = "sessionId";
 const USER_DATA_KEY = "userData";
 
 const isProd = process.env.NODE_ENV === "production";
@@ -133,6 +134,51 @@ export const getRefreshTokenFromCookies = (): string | null => {
   const cookies = parse(document.cookie || "");
   const token = cookies[REFRESH_TOKEN_KEY];
   return token ? decodeURIComponent(token) : null;
+};
+
+export const saveSessionIdToCookies = (sessionId: string): boolean => {
+  try {
+    if (typeof document === "undefined") return false;
+
+    const cookie = serialize(SESSION_ID_KEY, encodeURIComponent(sessionId), {
+      httpOnly: false,
+      secure: isProd,
+      sameSite: "lax",
+      maxAge: 7 * 24 * 60 * 60,
+      path: "/",
+    });
+
+    document.cookie = cookie;
+    return true;
+  } catch (error) {
+    safeConsole.error("Failed to save sessionId to cookies:", error);
+    return false;
+  }
+};
+
+export const getSessionIdFromCookies = (): string | null => {
+  if (typeof document === "undefined") return null;
+
+  const cookies = parse(document.cookie || "");
+  const sessionId = cookies[SESSION_ID_KEY];
+  return sessionId ? decodeURIComponent(sessionId) : null;
+};
+
+export const deleteSessionIdFromCookies = (): boolean => {
+  try {
+    if (typeof document === "undefined") return false;
+
+    const expiredCookie = serialize(SESSION_ID_KEY, "", {
+      maxAge: -1,
+      path: "/",
+    });
+
+    document.cookie = expiredCookie;
+    return true;
+  } catch (error) {
+    safeConsole.error("Failed to delete sessionId from cookies:", error);
+    return false;
+  }
 };
 
 /**

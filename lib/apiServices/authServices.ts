@@ -4,7 +4,7 @@
 
 import { getDeviceInfo } from "@/utils/getDeviceInfo";
 import { apiRequest, ApiResponse, getApiRequest, postApiRequest, updateApiRequest, UserLoginData, UserRegistrationData, UserUpdateData } from "../apiFetch";
-import { deleteRefreshTokenFromCookies, deleteTokenFromCookies, getCookie, saveTokenToCookies, setCookie } from "../cookies";
+import { deleteRefreshTokenFromCookies, deleteSessionIdFromCookies, deleteTokenFromCookies, getCookie, getSessionIdFromCookies, saveSessionIdToCookies, saveTokenToCookies, setCookie } from "../cookies";
 import safeConsole from "../console";
 
 /**
@@ -29,7 +29,10 @@ export const verifyEmail = async (token: string): Promise<ApiResponse<any>> => {
 export const loginUser = async (
   formData: UserLoginData
 ): Promise<ApiResponse<any>> => {
-  return postApiRequest("/api/auth/login", formData);
+  return postApiRequest("/api/auth/login", {
+    ...formData,
+    deviceName: getDeviceInfo(),
+  });
 };
 
 /**
@@ -126,6 +129,7 @@ export const logoutUser = async (): Promise<ApiResponse<any>> => {
     // Always clear cookies on logout attempt
     deleteTokenFromCookies();
     deleteRefreshTokenFromCookies();
+    deleteSessionIdFromCookies();
   }
 };
 
@@ -178,12 +182,18 @@ export const checkTokenValidity = async (
 };
 
 /**
- * Refresh access token using refresh token
+ * Refresh access token using refresh token and session ID
  */
 export const refreshAccessToken = async (
-  refreshToken: string
+  refreshToken: string,
+  sessionId?: string
 ): Promise<ApiResponse<any>> => {
-  return postApiRequest("/api/auth/refresh-token", { refreshToken });
+  const payload: Record<string, any> = { refreshToken };
+  if (sessionId) {
+    payload.sessionId = sessionId;
+  }
+
+  return postApiRequest("/api/auth/refresh", payload);
 };
 
 /**
@@ -211,21 +221,30 @@ export const apiRequestWithRefresh = async <T = any>(
     if (error.status === 401 && token) {
       try {
         const refreshToken = getCookie("refreshToken");
+        const sessionId = getSessionIdFromCookies();
         if (refreshToken) {
-          const refreshResponse = await refreshAccessToken(refreshToken);
+          const refreshResponse = await refreshAccessToken(refreshToken, sessionId);
 
           if (refreshResponse.data && refreshResponse.data.data) {
             const newAccessToken = refreshResponse.data.data.access_token;
             const newRefreshToken = refreshResponse.data.data.refresh_token;
+            const newSessionId =
+              refreshResponse.data.data.sessionId ||
+              refreshResponse.data.data.session_id;
 
-            // Save new tokens
-            saveTokenToCookies(newAccessToken);
+            // Save new tokens and session ID
+            if (newAccessToken) {
+              saveTokenToCookies(newAccessToken);
+            }
             if (newRefreshToken) {
               setCookie("refreshToken", newRefreshToken, {
                 maxAge: 7 * 24 * 60 * 60, // 7 days
                 secure: process.env.NODE_ENV === "production",
                 sameSite: "strict",
               });
+            }
+            if (newSessionId) {
+              saveSessionIdToCookies(newSessionId);
             }
 
             // Retry the original request with new token
