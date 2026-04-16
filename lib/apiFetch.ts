@@ -9,10 +9,7 @@ import {
 
 import { safeConsole } from "@/lib/console";
 import { getDeviceInfo } from "@/utils/getDeviceInfo";
-/**
- * Base URL for API requests. Defaults to the backend host if not configured.
- */
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://asancha.144.91.88.139.sslip.io";
+import { getBackendBaseUrl } from "@/lib/config/backendBaseUrl";
 
 /**
  * Generic API response type
@@ -86,10 +83,13 @@ export const apiRequest = async <T = any>(
   headers: Record<string, string> = {}
 ): Promise<ApiResponse<T>> => {
   const requestHeaders = createHeaders(token, headers);
-  const requestUrl =
-    endpoint.startsWith("/api/") || !BASE_URL
-      ? endpoint
-      : `${BASE_URL}${endpoint}`;
+  let requestUrl = endpoint;
+  if (!endpoint.startsWith("/api/")) {
+    // Resolve env on-demand (avoid module-load-time `""`/`undefined` baking).
+    const baseUrl = getBackendBaseUrl();
+    requestUrl = `${baseUrl}${endpoint}`;
+  }
+
   const requestOptions: RequestInit = {
     method,
     headers: requestHeaders,
@@ -103,8 +103,13 @@ export const apiRequest = async <T = any>(
     const data = isJson && responseText ? JSON.parse(responseText) : {};
 
     if (!response.ok) {
-      // Throw the entire backend error object if available
-      throw data;
+      // Ensure callers (like refresh-token retry logic) can reliably inspect
+      // HTTP status from the thrown error.
+      const status = response.status;
+      if (data && typeof data === "object") {
+        throw { ...data, status };
+      }
+      throw { message: (data as any)?.message || "Request failed", status };
     }
 
     return { data, status: response.status, message: data.message };

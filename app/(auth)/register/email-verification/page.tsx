@@ -4,20 +4,20 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import AuthLayout from "../../App-layout";
 import StepIndicator from "@/components/auth/StepIndicator";
-import OtpInput from "@/components/ui/OtpInput";
 import { useRegisterFlowStore } from "@/store/registerFlowStore";
 import { resendVerificationEmail, verifyEmail } from "@/lib/apiServices/authServices";
 
 export default function EmailVerificationPage() {
   const router = useRouter();
-  const { email, emailVerified, markEmailVerified } = useRegisterFlowStore();
+  const { email, userPublicId, emailVerified, markEmailVerified } = useRegisterFlowStore();
   const [verificationError, setVerificationError] = useState("");
   const [resendMessage, setResendMessage] = useState("");
   const [isVerifying, setIsVerifying] = useState(false);
   const [isResending, setIsResending] = useState(false);
-  const [otpValue, setOtpValue] = useState("");
+  const [tokenValue, setTokenValue] = useState("");
 
-  const isValid = otpValue.length === 6 && /^\d{6}$/.test(otpValue);
+  const tokenTrimmed = tokenValue.trim();
+  const isValid = tokenTrimmed.length > 0;
 
   useEffect(() => {
     if (!email) {
@@ -27,7 +27,7 @@ export default function EmailVerificationPage() {
 
   useEffect(() => {
     if (emailVerified) {
-      router.replace("/register/accept-policies");
+      router.replace("/login");
     }
   }, [emailVerified, router]);
 
@@ -38,9 +38,19 @@ export default function EmailVerificationPage() {
     setIsVerifying(true);
 
     try {
-      await verifyEmail(otpValue);
+      if (!userPublicId) {
+        throw new Error(
+          "Cannot verify email because the registration user ID is missing."
+        );
+      }
+
+      if (!tokenTrimmed) {
+        throw new Error("Please enter the verification token.");
+      }
+
+      await verifyEmail(userPublicId, tokenTrimmed);
       markEmailVerified();
-      router.push("/register/accept-policies");
+      router.push("/login");
     } catch (error: any) {
       setVerificationError(error?.message || "Verification failed. Please try again.");
     } finally {
@@ -70,15 +80,31 @@ export default function EmailVerificationPage() {
         <StepIndicator currentStep={3} />
         <h1 className="text-2xl font-bold text-gray-900">Email Verification</h1>
         <p className="text-sm text-gray-600">
-          We have sent a 6-digit code to <strong>{email || "your email"}</strong>.
+          Paste the verification token sent to <strong>{email || "your email"}</strong>.
         </p>
 
         <form onSubmit={onSubmit} className="space-y-4">
-          <OtpInput
-            value={otpValue}
-            onChange={setOtpValue}
-            error={verificationError}
-          />
+          <div>
+            <label
+              htmlFor="verificationToken"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Verification Token
+            </label>
+            <input
+              id="verificationToken"
+              type="text"
+              value={tokenValue}
+              onChange={(e) => setTokenValue(e.target.value)}
+              placeholder="Enter the opaque token from the email"
+              className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-primary focus:border-primary"
+              autoComplete="one-time-code"
+              disabled={isVerifying}
+            />
+            {verificationError && (
+              <p className="mt-1 text-sm text-red-600">{verificationError}</p>
+            )}
+          </div>
 
           {resendMessage && <p className="text-sm text-green-600">{resendMessage}</p>}
 

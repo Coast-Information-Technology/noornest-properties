@@ -1,3 +1,5 @@
+import { CanonicalUserRole } from "./auth";
+
 // User and Authentication Types
 export interface User {
   id: string;
@@ -12,11 +14,7 @@ export interface User {
   updatedAt: string;
 }
 
-export type UserRole =
-  | "agent"
-  | "investor"
-  | "client"
-  | "guest";
+export type UserRole = CanonicalUserRole;
 
 export interface AuthResponse {
   user: User;

@@ -4,9 +4,11 @@ import { UserRole, PropertyType, PropertyStatus } from "@/types";
 export const USER_ROLES: Record<UserRole, string> = {
   super_admin: "Super Admin",
   admin: "Admin",
+  property_owner: "Property Owner",
+  property_sourcer: "Property Sourcer",
+  service_provider: "Service Provider",
   agent: "Real Estate Agent",
   investor: "Investor",
-  client: "Client",
   guest: "Guest",
 };
 
@@ -19,6 +21,21 @@ export const ROLE_PERMISSIONS = {
     "manage_users",
     "view_analytics",
   ],
+  property_owner: [
+    "book_viewings",
+    "save_properties",
+    "limited_bmv_access",
+    "view_own_bookings",
+  ],
+  property_sourcer: [
+    "manage_own_listings",
+    "manage_own_bookings",
+    "view_own_analytics",
+  ],
+  service_provider: [
+    "manage_own_bookings",
+    "view_own_analytics",
+  ],
   agent: [
     "manage_own_listings",
     "manage_own_bookings",
@@ -30,12 +47,6 @@ export const ROLE_PERMISSIONS = {
     "save_analyses",
     "receive_payouts",
     "view_investment_analytics",
-  ],
-  client: [
-    "book_viewings",
-    "save_properties",
-    "limited_bmv_access",
-    "view_own_bookings",
   ],
   guest: ["browse_properties", "limited_bmv_access"],
 };

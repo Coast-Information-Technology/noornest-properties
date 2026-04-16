@@ -133,7 +133,8 @@ export default function AnalyticsPage() {
   }
 
   const isAgent = user.role === "agent";
-  const analytics = isAgent ? mockAgentAnalytics : mockInvestorAnalytics;
+  const agentAnalytics = mockAgentAnalytics;
+  const investorAnalytics = mockInvestorAnalytics;
 
   return (
     <div className="space-y-6">
@@ -172,11 +173,11 @@ export default function AnalyticsPage() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
-                  {analytics.overview.totalViews.toLocaleString()}
+                  {agentAnalytics.overview.totalViews.toLocaleString()}
                 </div>
                 <div className="flex items-center text-xs text-green-600 mt-1">
                   <ArrowUp className="w-3 h-3 mr-1" />
-                  {analytics.overview.viewsChange}% from last period
+                  {agentAnalytics.overview.viewsChange}% from last period
                 </div>
               </CardContent>
             </Card>
@@ -187,10 +188,10 @@ export default function AnalyticsPage() {
                 <Users className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{analytics.overview.totalLeads}</div>
+                <div className="text-2xl font-bold">{agentAnalytics.overview.totalLeads}</div>
                 <div className="flex items-center text-xs text-green-600 mt-1">
                   <ArrowUp className="w-3 h-3 mr-1" />
-                  {analytics.overview.leadsChange}% from last period
+                  {agentAnalytics.overview.leadsChange}% from last period
                 </div>
               </CardContent>
             </Card>
@@ -202,11 +203,11 @@ export default function AnalyticsPage() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
-                  {analytics.overview.conversionRate}%
+                  {agentAnalytics.overview.conversionRate}%
                 </div>
                 <div className="flex items-center text-xs text-red-600 mt-1">
                   <ArrowDown className="w-3 h-3 mr-1" />
-                  {Math.abs(analytics.overview.conversionChange)}% from last period
+                  {Math.abs(agentAnalytics.overview.conversionChange)}% from last period
                 </div>
               </CardContent>
             </Card>
@@ -218,11 +219,11 @@ export default function AnalyticsPage() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
-                  {formatPrice(analytics.overview.revenue)}
+                  {formatPrice(agentAnalytics.overview.revenue)}
                 </div>
                 <div className="flex items-center text-xs text-green-600 mt-1">
                   <ArrowUp className="w-3 h-3 mr-1" />
-                  {analytics.overview.revenueChange}% from last period
+                  {agentAnalytics.overview.revenueChange}% from last period
                 </div>
               </CardContent>
             </Card>
@@ -235,7 +236,7 @@ export default function AnalyticsPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {analytics.propertyPerformance.map((property) => (
+                {agentAnalytics.propertyPerformance.map((property) => (
                   <div
                     key={property.id}
                     className="flex items-center justify-between p-4 border rounded-lg"
@@ -279,11 +280,11 @@ export default function AnalyticsPage() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
-                  {formatPrice(analytics.overview.totalPortfolioValue)}
+                  {formatPrice(investorAnalytics.overview.totalPortfolioValue)}
                 </div>
                 <div className="flex items-center text-xs text-green-600 mt-1">
                   <ArrowUp className="w-3 h-3 mr-1" />
-                  {analytics.overview.valueChange}% from last period
+                  {investorAnalytics.overview.valueChange}% from last period
                 </div>
               </CardContent>
             </Card>
@@ -295,11 +296,11 @@ export default function AnalyticsPage() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
-                  {formatPrice(analytics.overview.monthlyReturns)}
+                  {formatPrice(investorAnalytics.overview.monthlyReturns)}
                 </div>
                 <div className="flex items-center text-xs text-green-600 mt-1">
                   <ArrowUp className="w-3 h-3 mr-1" />
-                  {analytics.overview.returnsChange}% from last period
+                  {investorAnalytics.overview.returnsChange}% from last period
                 </div>
               </CardContent>
             </Card>
@@ -311,11 +312,11 @@ export default function AnalyticsPage() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
-                  {analytics.overview.activeInvestments}
+                  {investorAnalytics.overview.activeInvestments}
                 </div>
                 <div className="flex items-center text-xs text-green-600 mt-1">
                   <ArrowUp className="w-3 h-3 mr-1" />
-                  +{analytics.overview.investmentsChange} from last period
+                  +{investorAnalytics.overview.investmentsChange} from last period
                 </div>
               </CardContent>
             </Card>
@@ -327,11 +328,11 @@ export default function AnalyticsPage() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
-                  {analytics.overview.averageROI}%
+                  {investorAnalytics.overview.averageROI}%
                 </div>
                 <div className="flex items-center text-xs text-green-600 mt-1">
                   <ArrowUp className="w-3 h-3 mr-1" />
-                  +{analytics.overview.roiChange}% from last period
+                  +{investorAnalytics.overview.roiChange}% from last period
                 </div>
               </CardContent>
             </Card>
@@ -344,7 +345,7 @@ export default function AnalyticsPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {analytics.investmentPerformance.map((investment) => (
+                {investorAnalytics.investmentPerformance.map((investment) => (
                   <div
                     key={investment.id}
                     className="flex items-center justify-between p-4 border rounded-lg"

@@ -19,15 +19,15 @@ const VerifyEmailContent = () => {
 
   useEffect(() => {
     const token = searchParams.get("token");
-    const role = searchParams.get("role");
-    if (!token) {
+    const userPublicId = searchParams.get("userPublicId");
+    if (!token || !userPublicId) {
       setStatus("error");
-      setMessage("Invalid or missing verification token.");
+      setMessage("Invalid or missing verification token or user ID.");
       return;
     }
     const verify = async () => {
       try {
-        const { data, message } = await verifyEmail(token);
+        const { data, message } = await verifyEmail(userPublicId, token);
         setStatus("success");
         setMessage(message || "Your email has been successfully verified!");
         setTimeout(() => router.push("/login"), 3000);
@@ -57,7 +57,7 @@ const VerifyEmailContent = () => {
       ;
     } catch (err: any) {
       setResendError(
-        process.env.NEXT_PUBLIC_NODE_ENV === "production"
+        process.env.NODE_ENV === "production"
           ? "Failed to resend verification email. Try again later."
           : err?.message || "Failed to resend verification email."
       );

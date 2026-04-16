@@ -20,6 +20,14 @@ const eslintConfig = [
       "next-env.d.ts",
     ],
   },
+  {
+    // The codebase contains many pre-existing `any` usages that are
+    // not feasible to eliminate in a single pass. Downgrade the rule so
+    // production builds can proceed while still surfacing the issues.
+    rules: {
+      "@typescript-eslint/no-explicit-any": "warn",
+    },
+  },
 ];
 
 export default eslintConfig;

@@ -10,9 +10,11 @@ import StepIndicator from "@/components/auth/StepIndicator";
 import { useRegisterFlowStore } from "@/store/registerFlowStore";
 
 const policySchema = z.object({
-  accepted: z.literal(true, {
-    errorMap: () => ({ message: "You must accept the policies to continue." }),
-  }),
+  accepted: z
+    .boolean()
+    .refine((v) => v === true, {
+      message: "You must accept the policies to continue.",
+    }),
 });
 
 type PolicyValues = z.infer<typeof policySchema>;

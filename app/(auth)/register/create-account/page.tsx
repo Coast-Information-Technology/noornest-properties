@@ -22,7 +22,7 @@ const createAccountSchema = z.object({
 
 export default function CreateAccountPage() {
   const router = useRouter();
-  const { role, email, setEmail } = useRegisterFlowStore();
+  const { role, email, setEmail, setUserPublicId } = useRegisterFlowStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
 
@@ -59,7 +59,14 @@ export default function CreateAccountPage() {
         );
       }
 
+      const userPublicId =
+        response?.data?.data?.userPublicId || "";
+      if (!userPublicId) {
+        throw new Error("Registration succeeded but no user ID was returned.");
+      }
+
       setEmail(data.email);
+      setUserPublicId(userPublicId);
       router.push("/register/email-verification");
     } catch (error: any) {
       setSubmitError(error?.message || "Registration failed. Please try again.");

@@ -27,7 +27,7 @@ const UserOnboardingPage = () => {
       <div>
         <h1 className="text-2xl font-bold text-gray-900">Welcome to Noornest!</h1>
         <p className="text-gray-600 mt-2">
-          Tell us what you're looking for so we can find the perfect property for you.
+          Tell us what you&apos;re looking for so we can find the perfect property for you.
         </p>
       </div>
 

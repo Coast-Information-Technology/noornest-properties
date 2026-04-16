@@ -1,15 +1,13 @@
 /**
- * Dashboard API Service
- * 
- * This file contains all API functions for dashboard pages.
- * Replace mock data calls with actual API endpoints.
+ * Dashboard API service stubs.
+ *
+ * This module intentionally does not fake successful network behavior.
+ * Until the real dashboard backend contracts are wired, these functions fail
+ * fast with typed "not implemented" errors so production code cannot
+ * accidentally rely on placeholder data paths.
  */
 
-import { endpoints, api } from "../api";
-import safeConsole from "../console";
-
-// Types
-export interface ApiResponse<T> {
+export interface DashboardApiResponse<T> {
   data: T;
   message?: string;
   success: boolean;
@@ -25,37 +23,19 @@ export interface PaginatedResponse<T> {
   };
 }
 
-// Generic API call wrapper with error handling
-async function apiCall<T>(
-  endpoint: string,
-  options?: { method?: string; data?: any; params?: any }
-): Promise<ApiResponse<T>> {
-  try {
-    let response;
-    if (options?.method === "POST" || options?.method === "PUT") {
-      response = await api[options.method.toLowerCase() as "post" | "put"]<T>(
-        endpoint,
-        options.data
-      );
-    } else if (options?.method === "DELETE") {
-      response = await api.delete<T>(endpoint);
-    } else {
-      response = await api.get<T>(endpoint, { params: options?.params });
-    }
-    return {
-      data: response.data as T,
-      success: true,
-    };
-  } catch (error: any) {
-    safeConsole.error(`API Error (${endpoint}):`, error);
-    throw {
-      message: error.response?.data?.message || "An error occurred",
-      status: error.response?.status || 500,
-      data: null,
-      success: false,
-    };
+export class DashboardApiNotImplementedError extends Error {
+  readonly status = 501;
+  readonly success = false;
+
+  constructor(feature: string) {
+    super(`${feature} is not implemented yet.`);
+    this.name = "DashboardApiNotImplementedError";
   }
 }
+
+const notImplemented = (feature: string): never => {
+  throw new DashboardApiNotImplementedError(feature);
+};
 
 // ==================== CLIENT DASHBOARD APIs ====================
 
@@ -65,23 +45,14 @@ export const clientDashboardApi = {
     page?: number;
     limit?: number;
     search?: string;
-  }): Promise<PaginatedResponse<any>> => {
-    // TODO: Replace with actual API call
-    // return apiCall<PaginatedResponse<any>>(
-    //   `${endpoints.dashboard.properties}?saved=true`,
-    //   { params }
-    // );
-    throw new Error("API not implemented");
+  }): Promise<PaginatedResponse<unknown>> => {
+    notImplemented("clientDashboardApi.getSavedProperties");
   },
 
   // Save/unsave property
-  toggleSaveProperty: async (propertyId: number): Promise<ApiResponse<boolean>> => {
-    // TODO: Replace with actual API call
-    // return apiCall<boolean>(
-    //   `${endpoints.dashboard.properties}/${propertyId}/save`,
-    //   { method: "POST" }
-    // );
-    throw new Error("API not implemented");
+  toggleSaveProperty: async (propertyId: number): Promise<DashboardApiResponse<boolean>> => {
+    void propertyId;
+    notImplemented("clientDashboardApi.toggleSaveProperty");
   },
 
   // Get bookings
@@ -90,13 +61,8 @@ export const clientDashboardApi = {
     limit?: number;
     status?: string;
     type?: string;
-  }): Promise<PaginatedResponse<any>> => {
-    // TODO: Replace with actual API call
-    // return apiCall<PaginatedResponse<any>>(
-    //   endpoints.dashboard.bookings,
-    //   { params }
-    // );
-    throw new Error("API not implemented");
+  }): Promise<PaginatedResponse<unknown>> => {
+    notImplemented("clientDashboardApi.getBookings");
   },
 
   // Create booking
@@ -106,13 +72,9 @@ export const clientDashboardApi = {
     time: string;
     type: "in-person" | "virtual";
     notes?: string;
-  }): Promise<ApiResponse<any>> => {
-    // TODO: Replace with actual API call
-    // return apiCall<any>(
-    //   endpoints.dashboard.bookings,
-    //   { method: "POST", data }
-    // );
-    throw new Error("API not implemented");
+  }): Promise<DashboardApiResponse<unknown>> => {
+    void data;
+    notImplemented("clientDashboardApi.createBooking");
   },
 
   // Get payments
@@ -120,26 +82,16 @@ export const clientDashboardApi = {
     page?: number;
     limit?: number;
     status?: string;
-  }): Promise<PaginatedResponse<any>> => {
-    // TODO: Replace with actual API call
-    // return apiCall<PaginatedResponse<any>>(
-    //   `${endpoints.dashboard.payments}`,
-    //   { params }
-    // );
-    throw new Error("API not implemented");
+  }): Promise<PaginatedResponse<unknown>> => {
+    notImplemented("clientDashboardApi.getPayments");
   },
 
   // Get BMV analyses
   getBMVAnalyses: async (params?: {
     page?: number;
     limit?: number;
-  }): Promise<PaginatedResponse<any>> => {
-    // TODO: Replace with actual API call
-    // return apiCall<PaginatedResponse<any>>(
-    //   `${endpoints.bmv.history}`,
-    //   { params }
-    // );
-    throw new Error("API not implemented");
+  }): Promise<PaginatedResponse<unknown>> => {
+    notImplemented("clientDashboardApi.getBMVAnalyses");
   },
 };
 
@@ -152,46 +104,30 @@ export const agentDashboardApi = {
     limit?: number;
     status?: string;
     search?: string;
-  }): Promise<PaginatedResponse<any>> => {
-    // TODO: Replace with actual API call
-    // return apiCall<PaginatedResponse<any>>(
-    //   `${endpoints.dashboard.properties}`,
-    //   { params }
-    // );
-    throw new Error("API not implemented");
+  }): Promise<PaginatedResponse<unknown>> => {
+    notImplemented("agentDashboardApi.getListings");
   },
 
   // Create listing
-  createListing: async (data: any): Promise<ApiResponse<any>> => {
-    // TODO: Replace with actual API call
-    // return apiCall<any>(
-    //   endpoints.properties.create,
-    //   { method: "POST", data }
-    // );
-    throw new Error("API not implemented");
+  createListing: async (data: unknown): Promise<DashboardApiResponse<unknown>> => {
+    void data;
+    notImplemented("agentDashboardApi.createListing");
   },
 
   // Update listing
   updateListing: async (
     id: number,
-    data: any
-  ): Promise<ApiResponse<any>> => {
-    // TODO: Replace with actual API call
-    // return apiCall<any>(
-    //   endpoints.properties.update(id.toString()),
-    //   { method: "PUT", data }
-    // );
-    throw new Error("API not implemented");
+    data: unknown
+  ): Promise<DashboardApiResponse<unknown>> => {
+    void id;
+    void data;
+    notImplemented("agentDashboardApi.updateListing");
   },
 
   // Delete listing
   deleteListing: async (id: number): Promise<ApiResponse<boolean>> => {
-    // TODO: Replace with actual API call
-    // return apiCall<boolean>(
-    //   endpoints.properties.delete(id.toString()),
-    //   { method: "DELETE" }
-    // );
-    throw new Error("API not implemented");
+    void id;
+    notImplemented("agentDashboardApi.deleteListing");
   },
 
   // Get clients
@@ -201,12 +137,7 @@ export const agentDashboardApi = {
     status?: string;
     search?: string;
   }): Promise<PaginatedResponse<any>> => {
-    // TODO: Replace with actual API call
-    // return apiCall<PaginatedResponse<any>>(
-    //   `${endpoints.dashboard.users}?role=client`,
-    //   { params }
-    // );
-    throw new Error("API not implemented");
+    notImplemented("agentDashboardApi.getClients");
   },
 
   // Get analytics
@@ -214,13 +145,8 @@ export const agentDashboardApi = {
     startDate?: string;
     endDate?: string;
     period?: string;
-  }): Promise<ApiResponse<any>> => {
-    // TODO: Replace with actual API call
-    // return apiCall<any>(
-    //   `${endpoints.dashboard.stats}/analytics`,
-    //   { params }
-    // );
-    throw new Error("API not implemented");
+  }): Promise<DashboardApiResponse<unknown>> => {
+    notImplemented("agentDashboardApi.getAnalytics");
   },
 
   // Generate report
@@ -228,13 +154,9 @@ export const agentDashboardApi = {
     type: string;
     period: string;
     format?: string;
-  }): Promise<ApiResponse<any>> => {
-    // TODO: Replace with actual API call
-    // return apiCall<any>(
-    //   `${endpoints.dashboard.reports}`,
-    //   { method: "POST", data }
-    // );
-    throw new Error("API not implemented");
+  }): Promise<DashboardApiResponse<unknown>> => {
+    void data;
+    notImplemented("agentDashboardApi.generateReport");
   },
 };
 
@@ -247,12 +169,7 @@ export const investorDashboardApi = {
     limit?: number;
     status?: string;
   }): Promise<PaginatedResponse<any>> => {
-    // TODO: Replace with actual API call
-    // return apiCall<PaginatedResponse<any>>(
-    //   `${endpoints.dashboard.portfolio}`,
-    //   { params }
-    // );
-    throw new Error("API not implemented");
+    notImplemented("investorDashboardApi.getPortfolio");
   },
 
   // Get opportunities
@@ -262,12 +179,7 @@ export const investorDashboardApi = {
     riskLevel?: string;
     minROI?: number;
   }): Promise<PaginatedResponse<any>> => {
-    // TODO: Replace with actual API call
-    // return apiCall<PaginatedResponse<any>>(
-    //   `${endpoints.dashboard.opportunities}`,
-    //   { params }
-    // );
-    throw new Error("API not implemented");
+    notImplemented("investorDashboardApi.getOpportunities");
   },
 
   // Get payouts
@@ -276,12 +188,7 @@ export const investorDashboardApi = {
     limit?: number;
     status?: string;
   }): Promise<PaginatedResponse<any>> => {
-    // TODO: Replace with actual API call
-    // return apiCall<PaginatedResponse<any>>(
-    //   `${endpoints.dashboard.payouts}`,
-    //   { params }
-    // );
-    throw new Error("API not implemented");
+    notImplemented("investorDashboardApi.getPayouts");
   },
 
   // Get analytics
@@ -289,13 +196,8 @@ export const investorDashboardApi = {
     startDate?: string;
     endDate?: string;
     period?: string;
-  }): Promise<ApiResponse<any>> => {
-    // TODO: Replace with actual API call
-    // return apiCall<any>(
-    //   `${endpoints.dashboard.stats}/analytics`,
-    //   { params }
-    // );
-    throw new Error("API not implemented");
+  }): Promise<DashboardApiResponse<unknown>> => {
+    notImplemented("investorDashboardApi.getAnalytics");
   },
 };
 
@@ -303,10 +205,8 @@ export const investorDashboardApi = {
 
 export const sharedDashboardApi = {
   // Get dashboard stats
-  getStats: async (): Promise<ApiResponse<any>> => {
-    // TODO: Replace with actual API call
-    // return apiCall<any>(endpoints.dashboard.stats);
-    throw new Error("API not implemented");
+  getStats: async (): Promise<DashboardApiResponse<unknown>> => {
+    notImplemented("sharedDashboardApi.getStats");
   },
 };
 

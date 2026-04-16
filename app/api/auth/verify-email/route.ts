@@ -1,24 +1,28 @@
 import { NextResponse } from "next/server";
-
-const BACKEND_BASE_URL =
-  process.env.API_BASE_URL || process.env.NEXT_PUBLIC_API_URL || "";
+import { getBackendBaseUrl } from "@/lib/config/backendBaseUrl";
 
 export async function POST(request: Request) {
-  if (!BACKEND_BASE_URL) {
+  let backendBaseUrl: string;
+  try {
+    backendBaseUrl = getBackendBaseUrl();
+  } catch (error: any) {
     return NextResponse.json(
-      { message: "Missing API base URL configuration." },
+      { message: error?.message || "Missing API base URL configuration." },
       { status: 500 }
     );
   }
 
   try {
     const body = await request.json();
-    const upstreamResponse = await fetch(`${BACKEND_BASE_URL}/auth/verify-email`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-      cache: "no-store",
-    });
+    const upstreamResponse = await fetch(
+      `${backendBaseUrl}/auth/verify-email`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+        cache: "no-store",
+      }
+    );
 
     const contentType = upstreamResponse.headers.get("content-type") || "";
     const payload = contentType.includes("application/json")

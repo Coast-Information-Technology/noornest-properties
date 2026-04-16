@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { UserRole } from "@/types";
+import { BackendUser, CurrentUserResponseBody, LoginResponseBody } from "@/types/auth";
 import safeConsole from "@/lib/console";
 import { getTokenFromCookies, saveRefreshTokenToCookies, saveSessionIdToCookies, saveTokenToCookies } from "@/lib/cookies";
 import { getUserMe, loginUser, logoutUser } from "@/lib/apiServices/authServices";
@@ -26,13 +27,29 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 const normalizeUserRole = (role: unknown): UserRole => {
   const value = String(role || "").toLowerCase();
-  if (value === "agent" || value === "investor" || value === "client" || value === "guest") {
+  if (
+    value === "super_admin" ||
+    value === "admin" ||
+    value === "property_owner" ||
+    value === "property_sourcer" ||
+    value === "service_provider" ||
+    value === "agent" ||
+    value === "investor" ||
+    value === "guest"
+  ) {
     return value as UserRole;
   }
-  return "client";
+
+  // Legacy alias support until backend/frontend are fully aligned.
+  if (value === "client") {
+    return "property_owner";
+  }
+
+  safeConsole.warn("Unknown backend role received; defaulting to guest", value);
+  return "guest";
 };
 
-const mapBackendUser = (rawUser: any): User => {
+const mapBackendUser = (rawUser: BackendUser): User => {
   const firstName = rawUser?.firstName || rawUser?.first_name || "";
   const lastName = rawUser?.lastName || rawUser?.last_name || "";
   const fullName = rawUser?.name || `${firstName} ${lastName}`.trim();
@@ -60,13 +77,12 @@ export function UserProvider({ children }: { children: ReactNode }) {
 
       try {
         const response = await getUserMe(token);
+        const responseBody = response?.data as CurrentUserResponseBody | BackendUser;
         const rawUser = response?.data?.data || response?.data;
         const mappedUser = mapBackendUser(rawUser);
         setUser(mappedUser);
-        localStorage.setItem("currentUser", JSON.stringify(mappedUser));
       } catch (error) {
         safeConsole.error("Error restoring session:", error);
-        localStorage.removeItem("currentUser");
         setUser(null);
       } finally {
         setIsLoading(false);
@@ -79,14 +95,15 @@ export function UserProvider({ children }: { children: ReactNode }) {
   const login = async (email: string, password: string): Promise<{ success: boolean; message?: string }> => {
     try {
       const loginResponse = await loginUser({ email, password });
-      if (loginResponse?.data?.success === false) {
+      const responseBody = loginResponse?.data as LoginResponseBody;
+      if (responseBody?.success === false) {
         return {
           success: false,
-          message: loginResponse?.data?.message || "Invalid email or password",
+          message: responseBody?.message || "Invalid email or password",
         };
       }
 
-      const payload = loginResponse?.data?.data || loginResponse?.data || {};
+      const payload = responseBody?.data || {};
 
       const accessToken =
         payload?.access_token || payload?.accessToken || payload?.token;
@@ -116,17 +133,18 @@ export function UserProvider({ children }: { children: ReactNode }) {
 
       const mappedUser = mapBackendUser(rawUser);
       setUser(mappedUser);
-      localStorage.setItem("currentUser", JSON.stringify(mappedUser));
 
       return { success: true };
-    } catch (error: any) {
-      return { success: false, message: error?.message || "Invalid email or password" };
+    } catch (error: unknown) {
+      return {
+        success: false,
+        message: error instanceof Error ? error.message : "Invalid email or password",
+      };
     }
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem("currentUser");
     void logoutUser();
   };
 

@@ -4,23 +4,34 @@
 
 import { getDeviceInfo } from "@/utils/getDeviceInfo";
 import { apiRequest, ApiResponse, getApiRequest, postApiRequest, updateApiRequest, UserLoginData, UserRegistrationData, UserUpdateData } from "../apiFetch";
-import { deleteRefreshTokenFromCookies, deleteSessionIdFromCookies, deleteTokenFromCookies, getCookie, getSessionIdFromCookies, saveSessionIdToCookies, saveTokenToCookies, setCookie } from "../cookies";
+import { deleteRefreshTokenFromCookies, deleteSessionIdFromCookies, deleteTokenFromCookies, getRefreshTokenFromCookies, getSessionIdFromCookies, getTokenFromCookies, saveSessionIdToCookies, saveTokenToCookies, setCookie } from "../cookies";
 import safeConsole from "../console";
+import {
+  CurrentUserResponseBody,
+  LoginResponseBody,
+  LogoutResponseBody,
+  RefreshTokenResponseBody,
+  RegisterResponseBody,
+  VerifyEmailResponseBody,
+} from "@/types/auth";
 
 /**
  * Register a new user
  */
 export const registerUser = async (
   formData: UserRegistrationData
-): Promise<ApiResponse<any>> => {
-  return postApiRequest("/api/auth/register", formData);
+): Promise<ApiResponse<RegisterResponseBody>> => {
+  return postApiRequest<RegisterResponseBody>("/api/auth/register", formData);
 };
 
 /**
- * Verify email with token
+ * Verify email with userPublicId and token
  */
-export const verifyEmail = async (token: string): Promise<ApiResponse<any>> => {
-  return postApiRequest("/api/auth/verify-email", { token });
+export const verifyEmail = async (
+  userPublicId: string,
+  token: string
+): Promise<ApiResponse<VerifyEmailResponseBody>> => {
+  return postApiRequest<VerifyEmailResponseBody>("/api/auth/verify-email", { userPublicId, token });
 };
 
 /**
@@ -28,8 +39,8 @@ export const verifyEmail = async (token: string): Promise<ApiResponse<any>> => {
  */
 export const loginUser = async (
   formData: UserLoginData
-): Promise<ApiResponse<any>> => {
-  return postApiRequest("/api/auth/login", {
+): Promise<ApiResponse<LoginResponseBody>> => {
+  return postApiRequest<LoginResponseBody>("/api/auth/login", {
     ...formData,
     deviceName: getDeviceInfo(),
   });
@@ -87,46 +98,42 @@ export const resetPassword = async (
  * Get single user-me
  */
 export const getUserMe = async (token: string): Promise<ApiResponse<any>> => {
-  return getApiRequest("/api/users/me", token);
+  return getApiRequest<CurrentUserResponseBody>("/api/users/me", token);
 };
 
 /**
  * Logout user (with metadata)
  */
-export const logoutUser = async (): Promise<ApiResponse<any>> => {
-  // Use the correct cookie keys that match how tokens are saved
-  const accessToken = getCookie("token");
-  const refreshToken = getCookie("refreshToken");
+export const logoutUser = async (): Promise<ApiResponse<LogoutResponseBody>> => {
+  const accessToken = getTokenFromCookies();
+  const refreshToken = getRefreshTokenFromCookies();
+  const sessionId = getSessionIdFromCookies() ?? undefined;
 
   const requestBody = {
     reason: "user_initiated",
     deviceInfo: getDeviceInfo(),
-    location: "New York, NY, USA", // Replace with real location if you implement IP-based lookup
-    accessToken,
-    refreshToken,
+    ...(refreshToken ? { refreshToken } : {}),
+    ...(sessionId ? { sessionId } : {}),
   };
 
   try {
-    if (!accessToken) {
-      throw new Error("No access token found for logout");
-    }
-
-    const response = await postApiRequest(
-      "/api/auth/logout",
-      accessToken,
-      requestBody
-    );
+    const response = accessToken
+      ? await postApiRequest<LogoutResponseBody>(
+          "/api/auth/logout",
+          accessToken,
+          requestBody
+        )
+      : await postApiRequest<LogoutResponseBody>("/api/auth/logout", requestBody);
     return response;
-  } catch (error) {
+  } catch (error: unknown) {
     safeConsole.error("Logout API error:", error);
-    // Don't re-throw the error, just return a failed response
     return {
       data: { success: false, message: "Logout failed" },
       status: 500,
       message: error instanceof Error ? error.message : "Unknown logout error",
     };
   } finally {
-    // Always clear cookies on logout attempt
+    // Always clear client-side state as a fallback, even if backend logout fails.
     deleteTokenFromCookies();
     deleteRefreshTokenFromCookies();
     deleteSessionIdFromCookies();
@@ -187,13 +194,13 @@ export const checkTokenValidity = async (
 export const refreshAccessToken = async (
   refreshToken: string,
   sessionId?: string
-): Promise<ApiResponse<any>> => {
-  const payload: Record<string, any> = { refreshToken };
+): Promise<ApiResponse<RefreshTokenResponseBody>> => {
+  const payload: { refreshToken: string; sessionId?: string } = { refreshToken };
   if (sessionId) {
     payload.sessionId = sessionId;
   }
 
-  return postApiRequest("/api/auth/refresh", payload);
+  return postApiRequest<RefreshTokenResponseBody>("/api/auth/refresh", payload);
 };
 
 /**
@@ -221,7 +228,7 @@ export const apiRequestWithRefresh = async <T = any>(
     if (error.status === 401 && token) {
       try {
         const refreshToken = getCookie("refreshToken");
-        const sessionId = getSessionIdFromCookies();
+        const sessionId = getSessionIdFromCookies() ?? undefined;
         if (refreshToken) {
           const refreshResponse = await refreshAccessToken(refreshToken, sessionId);
 

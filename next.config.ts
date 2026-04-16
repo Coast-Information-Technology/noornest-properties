@@ -4,14 +4,14 @@ const nextConfig: NextConfig = {
   eslint: {
     // Warning: This allows production builds to successfully complete even if
     // your project has ESLint errors.
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: false,
   },
   typescript: {
     // !! WARN !!
     // Dangerously allow production builds to successfully complete even if
     // your project has type errors.
     // !! WARN !!
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
   // Performance optimizations
   compress: true,
@@ -32,9 +32,15 @@ const nextConfig: NextConfig = {
   // Remove console statements in production (SWC compiler)
   compiler: {
     removeConsole: process.env.NODE_ENV === "production" ? {
-      exclude: [], // Remove all console statements
+      // Next requires at least one entry in `exclude`.
+      // Keep `error`/`warn` so debugging remains possible in production logs.
+      exclude: ["error", "warn"],
     } : false,
   },
+
+  // Intentionally do not inline env vars via `next.config.env`.
+  // This prevents build-time "undefined" values from getting baked into server code,
+  // which can cause runtime failures like missing API base URL configuration.
 
   // Fallback: Remove console statements via webpack/Terser if SWC is not used
   webpack: (config, { dev, isServer }) => {

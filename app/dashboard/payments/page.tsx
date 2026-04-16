@@ -549,7 +549,7 @@ export default function PaymentsPage() {
                       No deposits found
                     </h3>
                     <p className="text-gray-500">
-                      You haven't made any deposit payments yet.
+                      You haven&apos;t made any deposit payments yet.
                     </p>
                   </CardContent>
                 </Card>
@@ -571,7 +571,7 @@ export default function PaymentsPage() {
                       No installments found
                     </h3>
                     <p className="text-gray-500">
-                      You haven't made any installment payments yet.
+                      You haven&apos;t made any installment payments yet.
                     </p>
                   </CardContent>
                 </Card>
@@ -593,7 +593,7 @@ export default function PaymentsPage() {
                       No fees found
                     </h3>
                     <p className="text-gray-500">
-                      You haven't paid any fees yet.
+                      You haven&apos;t paid any fees yet.
                     </p>
                   </CardContent>
                 </Card>

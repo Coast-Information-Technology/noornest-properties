@@ -102,7 +102,7 @@ const strategies = [
   },
 ];
 
-export const faqData = [
+const faqData = [
   {
     question: "Can I invest in more than one plan?",
     answer:

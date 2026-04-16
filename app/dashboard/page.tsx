@@ -950,14 +950,16 @@ export default function Dashboard() {
     case "admin":
       return <AdminDashboard />;
     case "agent":
+    case "property_sourcer":
       return <AgentDashboard />;
     case "investor":
       return <InvestorDashboard />;
-    case "client":
+    case "property_owner":
+    case "service_provider":
       return <ClientDashboard />;
     case "guest":
       return <GuestDashboard />;
     default:
-      return <ClientDashboard />;
+      return <GuestDashboard />;
   }
 }
