@@ -7,21 +7,25 @@ export async function POST(request: Request) {
 
     const { status, payload } = await proxyRequestJson({
       method: "POST",
-      upstreamPath: "/users/change-password",
+      upstreamPath: "/auth/change-password",
       incomingRequest: request,
       body,
     });
 
     return NextResponse.json(payload, { status });
-  } catch (error: any) {
+  } catch (error: unknown) {
     if (error instanceof ApiProxyError) {
       return NextResponse.json({ message: error.message }, { status: error.status });
     }
 
     return NextResponse.json(
-      { message: error?.message || "Upstream change-password request failed." },
+      {
+        message:
+          error instanceof Error
+            ? error.message
+            : "Upstream change-password request failed.",
+      },
       { status: 502 }
     );
   }
 }
-

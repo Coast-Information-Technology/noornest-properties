@@ -1,11 +1,3 @@
-/**
- * Backend base URL resolution for the app's Next.js API proxy routes and helpers.
- *
- * IMPORTANT:
- * - Avoid resolving env at module-load time so changes in dev/serverless runtime
- *   don't result in `""` being baked into server code.
- * - Do not hardcode fallbacks like localhost.
- */
 export function getBackendBaseUrl(): string {
   const raw =
     process.env.API_BASE_URL ?? process.env.NEXT_PUBLIC_API_URL ?? "";

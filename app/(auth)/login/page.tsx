@@ -21,7 +21,7 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      const result = await login(email, password);
+      const result = await login(email.trim(), password);
 
       if (result.success) {
         toast.success("Login successful!", {
@@ -29,14 +29,21 @@ export default function LoginPage() {
         });
 
         setTimeout(() => {
-          router.push("/dashboard");
+          const params = new URLSearchParams(window.location.search);
+          const next = params.get("next");
+          const safeNext =
+            next && next.startsWith("/") && !next.startsWith("//")
+              ? next
+              : "/dashboard";
+
+          router.push(safeNext);
         }, 500);
       } else {
         toast.error("Login failed", {
           description: result.message || "Invalid credentials",
         });
       }
-    } catch (error) {
+    } catch {
       toast.error("An error occurred", {
         description: "Please try again later",
       });

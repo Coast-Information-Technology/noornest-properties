@@ -63,6 +63,16 @@ const mapBackendUser = (rawUser: BackendUser): User => {
   };
 };
 
+const unwrapCurrentUser = (
+  responseBody: CurrentUserResponseBody | BackendUser | undefined
+): BackendUser | undefined => {
+  if (!responseBody) return undefined;
+  if ("data" in responseBody && responseBody.data) {
+    return responseBody.data;
+  }
+  return responseBody as BackendUser;
+};
+
 export function UserProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -77,8 +87,11 @@ export function UserProvider({ children }: { children: ReactNode }) {
 
       try {
         const response = await getUserMe(token);
-        const responseBody = response?.data as CurrentUserResponseBody | BackendUser;
-        const rawUser = response?.data?.data || response?.data;
+        const rawUser = unwrapCurrentUser(response?.data);
+        if (!rawUser) {
+          setUser(null);
+          return;
+        }
         const mappedUser = mapBackendUser(rawUser);
         setUser(mappedUser);
       } catch (error) {
@@ -124,7 +137,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
       let rawUser = payload?.user || payload?.profile;
       if (!rawUser && accessToken) {
         const meResponse = await getUserMe(accessToken);
-        rawUser = meResponse?.data?.data || meResponse?.data;
+        rawUser = unwrapCurrentUser(meResponse?.data);
       }
 
       if (!rawUser) {

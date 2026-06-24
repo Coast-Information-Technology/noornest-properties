@@ -1,7 +1,6 @@
 import {
   postApiRequest,
   getApiRequest,
-  deleteApiRequest,
   putApiRequest,
 } from "../apiFetch";
 import type {
@@ -12,11 +11,11 @@ import type {
   InstructorAvailability,
   ServiceCategory,
   ServiceLevel,
-  ApiResponse,
   RescheduleRequest,
   RescheduleRequestResponse,
   CreateRescheduleRequestData,
-} from "@/types";
+} from "@/types/booking";
+import type { ApiResponse } from "@/types";
 
 export class BookingService {
   private static baseUrl = "/api/academic-services";

@@ -46,13 +46,13 @@ export const clientDashboardApi = {
     limit?: number;
     search?: string;
   }): Promise<PaginatedResponse<unknown>> => {
-    notImplemented("clientDashboardApi.getSavedProperties");
+    return notImplemented("clientDashboardApi.getSavedProperties");
   },
 
   // Save/unsave property
   toggleSaveProperty: async (propertyId: number): Promise<DashboardApiResponse<boolean>> => {
     void propertyId;
-    notImplemented("clientDashboardApi.toggleSaveProperty");
+    return notImplemented("clientDashboardApi.toggleSaveProperty");
   },
 
   // Get bookings
@@ -62,7 +62,7 @@ export const clientDashboardApi = {
     status?: string;
     type?: string;
   }): Promise<PaginatedResponse<unknown>> => {
-    notImplemented("clientDashboardApi.getBookings");
+    return notImplemented("clientDashboardApi.getBookings");
   },
 
   // Create booking
@@ -74,7 +74,7 @@ export const clientDashboardApi = {
     notes?: string;
   }): Promise<DashboardApiResponse<unknown>> => {
     void data;
-    notImplemented("clientDashboardApi.createBooking");
+    return notImplemented("clientDashboardApi.createBooking");
   },
 
   // Get payments
@@ -83,7 +83,7 @@ export const clientDashboardApi = {
     limit?: number;
     status?: string;
   }): Promise<PaginatedResponse<unknown>> => {
-    notImplemented("clientDashboardApi.getPayments");
+    return notImplemented("clientDashboardApi.getPayments");
   },
 
   // Get BMV analyses
@@ -91,7 +91,7 @@ export const clientDashboardApi = {
     page?: number;
     limit?: number;
   }): Promise<PaginatedResponse<unknown>> => {
-    notImplemented("clientDashboardApi.getBMVAnalyses");
+    return notImplemented("clientDashboardApi.getBMVAnalyses");
   },
 };
 
@@ -105,13 +105,13 @@ export const agentDashboardApi = {
     status?: string;
     search?: string;
   }): Promise<PaginatedResponse<unknown>> => {
-    notImplemented("agentDashboardApi.getListings");
+    return notImplemented("agentDashboardApi.getListings");
   },
 
   // Create listing
   createListing: async (data: unknown): Promise<DashboardApiResponse<unknown>> => {
     void data;
-    notImplemented("agentDashboardApi.createListing");
+    return notImplemented("agentDashboardApi.createListing");
   },
 
   // Update listing
@@ -121,13 +121,13 @@ export const agentDashboardApi = {
   ): Promise<DashboardApiResponse<unknown>> => {
     void id;
     void data;
-    notImplemented("agentDashboardApi.updateListing");
+    return notImplemented("agentDashboardApi.updateListing");
   },
 
   // Delete listing
-  deleteListing: async (id: number): Promise<ApiResponse<boolean>> => {
+  deleteListing: async (id: number): Promise<DashboardApiResponse<boolean>> => {
     void id;
-    notImplemented("agentDashboardApi.deleteListing");
+    return notImplemented("agentDashboardApi.deleteListing");
   },
 
   // Get clients
@@ -137,7 +137,7 @@ export const agentDashboardApi = {
     status?: string;
     search?: string;
   }): Promise<PaginatedResponse<any>> => {
-    notImplemented("agentDashboardApi.getClients");
+    return notImplemented("agentDashboardApi.getClients");
   },
 
   // Get analytics
@@ -146,7 +146,7 @@ export const agentDashboardApi = {
     endDate?: string;
     period?: string;
   }): Promise<DashboardApiResponse<unknown>> => {
-    notImplemented("agentDashboardApi.getAnalytics");
+    return notImplemented("agentDashboardApi.getAnalytics");
   },
 
   // Generate report
@@ -156,7 +156,7 @@ export const agentDashboardApi = {
     format?: string;
   }): Promise<DashboardApiResponse<unknown>> => {
     void data;
-    notImplemented("agentDashboardApi.generateReport");
+    return notImplemented("agentDashboardApi.generateReport");
   },
 };
 
@@ -169,7 +169,7 @@ export const investorDashboardApi = {
     limit?: number;
     status?: string;
   }): Promise<PaginatedResponse<any>> => {
-    notImplemented("investorDashboardApi.getPortfolio");
+    return notImplemented("investorDashboardApi.getPortfolio");
   },
 
   // Get opportunities
@@ -179,7 +179,7 @@ export const investorDashboardApi = {
     riskLevel?: string;
     minROI?: number;
   }): Promise<PaginatedResponse<any>> => {
-    notImplemented("investorDashboardApi.getOpportunities");
+    return notImplemented("investorDashboardApi.getOpportunities");
   },
 
   // Get payouts
@@ -188,7 +188,7 @@ export const investorDashboardApi = {
     limit?: number;
     status?: string;
   }): Promise<PaginatedResponse<any>> => {
-    notImplemented("investorDashboardApi.getPayouts");
+    return notImplemented("investorDashboardApi.getPayouts");
   },
 
   // Get analytics
@@ -197,7 +197,7 @@ export const investorDashboardApi = {
     endDate?: string;
     period?: string;
   }): Promise<DashboardApiResponse<unknown>> => {
-    notImplemented("investorDashboardApi.getAnalytics");
+    return notImplemented("investorDashboardApi.getAnalytics");
   },
 };
 
@@ -206,7 +206,7 @@ export const investorDashboardApi = {
 export const sharedDashboardApi = {
   // Get dashboard stats
   getStats: async (): Promise<DashboardApiResponse<unknown>> => {
-    notImplemented("sharedDashboardApi.getStats");
+    return notImplemented("sharedDashboardApi.getStats");
   },
 };
 

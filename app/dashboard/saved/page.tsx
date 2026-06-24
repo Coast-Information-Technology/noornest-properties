@@ -42,9 +42,39 @@ import Link from "next/link";
 import { clientDashboardApi } from "@/lib/api/dashboard";
 import { getSavedProperties } from "@/lib/mock-data";
 
+type SavedProperty = {
+  id: number;
+  title: string;
+  price: number;
+  pricePerSqft?: number;
+  location: string;
+  address?: string;
+  image: string;
+  bedrooms: number;
+  bathrooms: number;
+  sqft: number;
+  yearBuilt: number;
+  propertyType: string;
+  status?: string;
+  savedDate?: string;
+  savedAt?: string;
+  lastViewed: string;
+  views?: number;
+  bmvScore: number;
+  agent: {
+    name: string;
+    phone: string;
+    email: string;
+    avatar?: string;
+  };
+  features?: string[];
+  description?: string;
+  notes?: string;
+};
+
 // Mock data - replace with actual API calls
 // TODO: Remove this when API is implemented
-const mockSavedProperties = [
+const mockSavedProperties: SavedProperty[] = [
   {
     id: 1,
     title: "Modern 3BR Apartment in Downtown",
@@ -163,7 +193,7 @@ export default function SavedPropertiesPage() {
   const [filterType, setFilterType] = useState("all");
   
   // API State Management
-  const [properties, setProperties] = useState<any[]>([]);
+  const [properties, setProperties] = useState<SavedProperty[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [removing, setRemoving] = useState(false);
@@ -185,7 +215,7 @@ export default function SavedPropertiesPage() {
         
         // Temporary: Use mock data
         const mockData = getSavedProperties();
-        setProperties(mockData);
+        setProperties(mockData as SavedProperty[]);
       } catch (err: any) {
         setError(err.message || "Failed to load saved properties");
         // Error handled silently in production
@@ -265,7 +295,8 @@ export default function SavedPropertiesPage() {
           return a.price - b.price;
         case "savedDate":
           return (
-            new Date(b.savedDate).getTime() - new Date(a.savedDate).getTime()
+            new Date(b.savedDate ?? b.savedAt ?? b.lastViewed).getTime() -
+            new Date(a.savedDate ?? a.savedAt ?? a.lastViewed).getTime()
           );
         case "lastViewed":
           return (
@@ -287,7 +318,9 @@ export default function SavedPropertiesPage() {
     }).format(price);
   };
 
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString?: string) => {
+    if (!dateString) return "N/A";
+
     return new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
       month: "short",
@@ -606,14 +639,14 @@ export default function SavedPropertiesPage() {
 
                   {/* Features */}
                   <div className="flex flex-wrap gap-1">
-                    {property.features.slice(0, 3).map((feature, index) => (
+                    {(property.features ?? []).slice(0, 3).map((feature, index) => (
                       <Badge key={index} variant="outline" className="text-xs">
                         {feature}
                       </Badge>
                     ))}
-                    {property.features.length > 3 && (
+                    {(property.features?.length ?? 0) > 3 && (
                       <Badge variant="outline" className="text-xs">
-                        +{property.features.length - 3} more
+                        +{(property.features?.length ?? 0) - 3} more
                       </Badge>
                     )}
                   </div>

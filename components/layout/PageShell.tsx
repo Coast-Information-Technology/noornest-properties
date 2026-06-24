@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import Header from "@/components/layout/Header";
 import dynamic from "next/dynamic";
+import GuestTouchTracker from "@/components/providers/GuestTouchTracker";
 
 const Footer = dynamic(() => import("@/components/layout/Footer"), {
   loading: () => null,
@@ -19,6 +20,7 @@ export default function PageShell({ children }: { children: ReactNode }) {
 
   return (
     <>
+      <GuestTouchTracker enabled={shouldShowHeaderFooter} />
       {shouldShowHeaderFooter && <Header />}
       {children}
       {shouldShowHeaderFooter && <Footer />}

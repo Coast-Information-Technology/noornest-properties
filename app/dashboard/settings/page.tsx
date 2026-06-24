@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { type FormEvent, useState } from "react";
 import { Save, Eye, EyeOff } from "lucide-react";
+import { toast } from "sonner";
 import {
   Card,
   CardContent,
@@ -22,6 +23,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { changePassword } from "@/lib/apiServices/authServices";
+
+type PasswordFormState = {
+  oldPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+};
+
+type SearchPreferences = typeof mockUserData.preferences.search;
 
 // Mock user data - replace with actual API calls
 const mockUserData = {
@@ -62,8 +72,9 @@ export default function SettingsPage() {
     mockUserData.preferences.search
   );
   const [showPassword, setShowPassword] = useState(false);
-  const [passwordData, setPasswordData] = useState({
-    currentPassword: "",
+  const [isPasswordSubmitting, setIsPasswordSubmitting] = useState(false);
+  const [passwordData, setPasswordData] = useState<PasswordFormState>({
+    oldPassword: "",
     newPassword: "",
     confirmPassword: "",
   });
@@ -82,14 +93,17 @@ export default function SettingsPage() {
     }));
   };
 
-  const handleSearchChange = (key: string, value: any) => {
+  const handleSearchChange = <K extends keyof SearchPreferences>(
+    key: K,
+    value: SearchPreferences[K]
+  ) => {
     setSearchPreferences((prev) => ({
       ...prev,
       [key]: value,
     }));
   };
 
-  const handlePasswordChange = (field: string, value: string) => {
+  const handlePasswordChange = (field: keyof PasswordFormState, value: string) => {
     setPasswordData((prev) => ({
       ...prev,
       [field]: value,
@@ -99,6 +113,59 @@ export default function SettingsPage() {
   const handleSave = () => {
     // TODO: Implement API call to save settings
     // Removed console.log for production
+  };
+
+  const handlePasswordSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const oldPassword = passwordData.oldPassword.trim();
+    const newPassword = passwordData.newPassword.trim();
+    const confirmPassword = passwordData.confirmPassword.trim();
+
+    if (!oldPassword || !newPassword || !confirmPassword) {
+      toast.error("All password fields are required.");
+      return;
+    }
+
+    if (newPassword.length < 8) {
+      toast.error("New password must be at least 8 characters.");
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      toast.error("New password and confirmation do not match.");
+      return;
+    }
+
+    if (oldPassword === newPassword) {
+      toast.error("New password must be different from your current password.");
+      return;
+    }
+
+    setIsPasswordSubmitting(true);
+    try {
+      const response = await changePassword({ oldPassword, newPassword });
+      toast.success("Password updated", {
+        description:
+          response.message ||
+          response.data?.message ||
+          "Your password has been changed successfully.",
+      });
+      setPasswordData({
+        oldPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+      });
+    } catch (error: unknown) {
+      toast.error("Password update failed", {
+        description:
+          error instanceof Error
+            ? error.message
+            : "Please check your current password and try again.",
+      });
+    } finally {
+      setIsPasswordSubmitting(false);
+    }
   };
 
   return (
@@ -455,20 +522,22 @@ export default function SettingsPage() {
                 Update your password to keep your account secure
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent>
+              <form onSubmit={handlePasswordSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="currentPassword">
+                  <Label htmlFor="oldPassword">
                     Current Password
                   </Label>
                   <div className="relative">
                     <Input
-                      id="currentPassword"
+                      id="oldPassword"
                       type={showPassword ? "text" : "password"}
-                      value={passwordData.currentPassword}
+                      value={passwordData.oldPassword}
                       onChange={(e) =>
-                        handlePasswordChange("currentPassword", e.target.value)
+                        handlePasswordChange("oldPassword", e.target.value)
                       }
+                      autoComplete="current-password"
                     />
                     <Button
                       type="button"
@@ -494,6 +563,7 @@ export default function SettingsPage() {
                     onChange={(e) =>
                       handlePasswordChange("newPassword", e.target.value)
                     }
+                    autoComplete="new-password"
                   />
                 </div>
                 <div className="space-y-2">
@@ -507,15 +577,17 @@ export default function SettingsPage() {
                     onChange={(e) =>
                       handlePasswordChange("confirmPassword", e.target.value)
                     }
+                    autoComplete="new-password"
                   />
                 </div>
               </div>
               <div className="pt-4 border-t">
-                <Button onClick={handleSave}>
+                <Button type="submit" disabled={isPasswordSubmitting}>
                   <Save className="w-4 h-4 mr-2" />
-                  Update Password
+                  {isPasswordSubmitting ? "Updating..." : "Update Password"}
                 </Button>
               </div>
+              </form>
             </CardContent>
           </Card>
         </TabsContent>

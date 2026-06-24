@@ -1,23 +1,16 @@
-import {
-  getTokenFromCookies,
-  saveTokenToCookies,
-  getCookie,
-  setCookie,
-  deleteTokenFromCookies,
-  deleteRefreshTokenFromCookies,
-} from "@/lib/cookies";
-
-import { safeConsole } from "@/lib/console";
-import { getDeviceInfo } from "@/utils/getDeviceInfo";
 import { getBackendBaseUrl } from "@/lib/config/backendBaseUrl";
 
 /**
  * Generic API response type
  */
-export interface ApiResponse<T = any> {
+export type ApiResponseErrors = string[] | Record<string, string[]>;
+
+export interface ApiResponse<T = unknown> {
+  success: boolean;
   data: T;
   status: number;
   message?: string;
+  errors?: ApiResponseErrors;
 }
 
 /**
@@ -30,13 +23,38 @@ export interface ApiError {
   detail?: string;
 }
 
+export class ApiRequestError extends Error implements ApiError {
+  status: number;
+  errors?: Record<string, string[]>;
+  detail?: string;
+  payload?: unknown;
+
+  constructor(message: string, status: number, payload?: unknown) {
+    super(message);
+    this.name = "ApiRequestError";
+    this.status = status;
+    this.payload = payload;
+
+    if (isRecord(payload)) {
+      if (isRecordOfStringArrays(payload.errors)) {
+        this.errors = payload.errors;
+      }
+      if (typeof payload.detail === "string") {
+        this.detail = payload.detail;
+      }
+    }
+  }
+}
+
 /**
  * User registration data type
  */
 export interface UserRegistrationData {
   email: string;
-  password: string;
   role: string;
+  password: string;
+  firstName: string;
+  lastName: string;
 }
 
 /**
@@ -72,13 +90,70 @@ const createHeaders = (
   return headers;
 };
 
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === "object" && value !== null && !Array.isArray(value);
+
+const isRecordOfStringArrays = (
+  value: unknown
+): value is Record<string, string[]> => {
+  if (!isRecord(value)) return false;
+  return Object.values(value).every(
+    (item) =>
+      Array.isArray(item) &&
+      item.every((entry) => typeof entry === "string")
+  );
+};
+
+const parseResponseBody = async (response: Response): Promise<unknown> => {
+  const contentType = response.headers.get("content-type") || "";
+  const responseText = await response.text();
+
+  if (!responseText) return {};
+  if (!contentType.includes("application/json")) {
+    return { message: responseText };
+  }
+
+  try {
+    return JSON.parse(responseText);
+  } catch {
+    return { message: responseText };
+  }
+};
+
+const getPayloadMessage = (payload: unknown): string | undefined => {
+  if (!isRecord(payload)) return undefined;
+  if (typeof payload.message === "string") return payload.message;
+  if (typeof payload.detail === "string") return payload.detail;
+  if (typeof payload.error === "string") return payload.error;
+  return undefined;
+};
+
+const getPayloadErrors = (payload: unknown): ApiResponseErrors | undefined => {
+  if (!isRecord(payload)) return undefined;
+  if (Array.isArray(payload.errors)) {
+    return payload.errors.filter((entry): entry is string => typeof entry === "string");
+  }
+  if (isRecordOfStringArrays(payload.errors)) return payload.errors;
+  return undefined;
+};
+
+const toQueryString = (
+  params: Record<string, string | number | boolean>
+): string => {
+  const search = new URLSearchParams();
+  Object.entries(params).forEach(([key, value]) => {
+    search.append(key, String(value));
+  });
+  return search.toString();
+};
+
 /**
  * Generic API request function
  */
-export const apiRequest = async <T = any>(
+export const apiRequest = async <T = unknown>(
   endpoint: string,
   method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH" = "GET",
-  body?: Record<string, any>,
+  body?: unknown,
   token?: string,
   headers: Record<string, string> = {}
 ): Promise<ApiResponse<T>> => {
@@ -97,59 +172,63 @@ export const apiRequest = async <T = any>(
   };
   try {
     const response = await fetch(requestUrl, requestOptions);
-    const contentType = response.headers.get("content-type");
-    const isJson = contentType && contentType.includes("application/json");
-    const responseText = await response.text();
-    const data = isJson && responseText ? JSON.parse(responseText) : {};
+    const data = await parseResponseBody(response);
 
     if (!response.ok) {
       // Ensure callers (like refresh-token retry logic) can reliably inspect
       // HTTP status from the thrown error.
-      const status = response.status;
-      if (data && typeof data === "object") {
-        throw { ...data, status };
-      }
-      throw { message: (data as any)?.message || "Request failed", status };
+      throw new ApiRequestError(
+        getPayloadMessage(data) || "Request failed",
+        response.status,
+        data
+      );
     }
 
-    return { data, status: response.status, message: data.message };
-  } catch (error: any) {
-    // If error is already an object from backend, just throw it
-    if (error && typeof error === "object") {
+    return {
+      success:
+        isRecord(data) && typeof data.success === "boolean"
+          ? data.success
+          : response.ok,
+      data: data as T,
+      status: response.status,
+      message: getPayloadMessage(data),
+      errors: getPayloadErrors(data),
+    };
+  } catch (error: unknown) {
+    if (error instanceof ApiRequestError) {
       throw error;
     }
-    // Otherwise, throw a generic error
-    throw {
-      message: error.message || "Network error occurred",
-      status: error.status || 0,
-    };
+    if (error instanceof Error) {
+      throw new ApiRequestError(error.message, 0);
+    }
+    throw new ApiRequestError("Network error occurred", 0, error);
   }
 };
 
 // Convenience helpers
-export const getApiRequest = async <T = any>(
+export const getApiRequest = async <T = unknown>(
   endpoint: string,
   token?: string,
   params?: Record<string, string | number | boolean>
 ): Promise<ApiResponse<T>> => {
   let url = endpoint;
   if (params) {
-    const search = new URLSearchParams(params as any).toString();
+    const search = toQueryString(params);
     url += (endpoint.includes("?") ? "&" : "?") + search;
   }
   return apiRequest<T>(url, "GET", undefined, token);
 };
 
-export const postApiRequest = async <T = any>(
+export const postApiRequest = async <T = unknown>(
   endpoint: string,
-  bodyOrToken: Record<string, any> | string,
-  headersOrBody?: Record<string, any> | Record<string, string>
+  bodyOrToken: unknown | string,
+  headersOrBody?: unknown | Record<string, string>
 ): Promise<ApiResponse<T>> => {
   // Check if the second parameter is a token string
   if (typeof bodyOrToken === "string") {
     // Pattern: postApiRequest(endpoint, token, body)
     const token = bodyOrToken;
-    const body = (headersOrBody as Record<string, any>) || {};
+    const body = headersOrBody || {};
     return apiRequest<T>(endpoint, "POST", body, token);
   } else {
     // Pattern: postApiRequest(endpoint, body, headers)
@@ -159,33 +238,33 @@ export const postApiRequest = async <T = any>(
   }
 };
 
-export const updateApiRequest = async <T = any>(
+export const updateApiRequest = async <T = unknown>(
   endpoint: string,
   token: string,
-  data: any
+  data: unknown
 ): Promise<ApiResponse<T>> => {
   return apiRequest<T>(endpoint, "PUT", data, token);
 };
 
-export const deleteApiRequest = async <T = any>(
+export const deleteApiRequest = async <T = unknown>(
   endpoint: string,
   token: string
 ): Promise<ApiResponse<T>> => {
   return apiRequest<T>(endpoint, "DELETE", undefined, token);
 };
 
-export const putApiRequest = async <T = any>(
+export const putApiRequest = async <T = unknown>(
   endpoint: string,
-  data: any,
+  data: unknown,
   token: string
 ): Promise<ApiResponse<T>> => {
   return apiRequest<T>(endpoint, "PUT", data, token);
 };
 
-export const patchApiRequest = async <T = any>(
+export const patchApiRequest = async <T = unknown>(
   endpoint: string,
   token: string,
-  data: any
+  data: unknown
 ): Promise<ApiResponse<T>> => {
   return apiRequest<T>(endpoint, "PATCH", data, token);
 };

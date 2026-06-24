@@ -1,38 +1,30 @@
 import { NextResponse } from "next/server";
-import { getBackendBaseUrl } from "@/lib/config/backendBaseUrl";
+import { ApiProxyError, proxyRequestJson } from "@/lib/apiProxy";
 
 export async function POST(request: Request) {
-  let backendBaseUrl: string;
   try {
-    backendBaseUrl = getBackendBaseUrl();
-  } catch (error: any) {
-    return NextResponse.json(
-      { message: error?.message || "Missing API base URL configuration." },
-      { status: 500 }
-    );
-  }
+    const body = await request.json().catch(() => ({}));
 
-  try {
-    const body = await request.json();
-    const upstreamResponse = await fetch(
-      `${backendBaseUrl}/auth/resend-verification`,
+    const { status, payload } = await proxyRequestJson({
+      method: "POST",
+      upstreamPath: "/auth/resend-verification",
+      incomingRequest: request,
+      body,
+    });
+
+    return NextResponse.json(payload, { status });
+  } catch (error: unknown) {
+    if (error instanceof ApiProxyError) {
+      return NextResponse.json({ message: error.message }, { status: error.status });
+    }
+
+    return NextResponse.json(
       {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-        cache: "no-store",
-      }
-    );
-
-    const contentType = upstreamResponse.headers.get("content-type") || "";
-    const payload = contentType.includes("application/json")
-      ? await upstreamResponse.json()
-      : { message: await upstreamResponse.text() };
-
-    return NextResponse.json(payload, { status: upstreamResponse.status });
-  } catch (error: any) {
-    return NextResponse.json(
-      { message: error?.message || "Upstream resend request failed." },
+        message:
+          error instanceof Error
+            ? error.message
+            : "Upstream resend request failed.",
+      },
       { status: 502 }
     );
   }

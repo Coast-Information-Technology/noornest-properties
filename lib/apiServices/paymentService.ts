@@ -24,8 +24,29 @@ import type {
   SavedPaymentMethod,
 } from "@/types/payment";
 import safeConsole from "../console";
-import { toMinor } from "../constants/currency";
-import { PriceModel } from "../constants/pricing";
+
+const toMinor = (amountMajor: number, currency: string): number => {
+  const zeroDecimalCurrencies = new Set([
+    "bif",
+    "clp",
+    "djf",
+    "gnf",
+    "jpy",
+    "kmf",
+    "krw",
+    "mga",
+    "pyg",
+    "rwf",
+    "ugx",
+    "vnd",
+    "vuv",
+    "xaf",
+    "xof",
+    "xpf",
+  ]);
+  const exponent = zeroDecimalCurrencies.has(currency.toLowerCase()) ? 0 : 2;
+  return Math.round(amountMajor * 10 ** exponent);
+};
 
 export class PaymentService {
   /* -------------------------------------------------------------- *
@@ -109,7 +130,7 @@ export class PaymentService {
       hasToken: !!token,
     });
 
-    const response = await postApiRequest(
+    const response = await postApiRequest<PaymentResponse>(
       `/api/payments/create-intent`,
       payload,
       { Authorization: `Bearer ${token}` }

@@ -1,4 +1,13 @@
-import { Currency, Pricing } from "@/lib/constants/pricing";
+export type Currency = "gbp" | "usd" | "eur" | (string & {});
+
+export interface Pricing {
+  model?: string;
+  currency?: Currency;
+  basePrice?: number;
+  unitPrice?: number;
+  total?: number;
+  [key: string]: unknown;
+}
 
 export interface Booking {
   _id: string;

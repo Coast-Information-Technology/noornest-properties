@@ -1,384 +1,415 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import {
+  Activity,
   BarChart3,
-  TrendingUp,
-  TrendingDown,
-  Eye,
-  Building2,
+  ClipboardList,
+  RefreshCw,
+  ShieldCheck,
   Users,
-  Calendar,
-  PoundSterling,
-  ArrowUp,
-  ArrowDown,
+  type LucideIcon,
 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { CardContent } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+  AdminMetricCard,
+  AdminPageHeader,
+  AdminPageShell,
+  AdminPanel,
+  adminErrorMessageClass,
+} from "@/components/dashboard/AdminSurface";
 import { useUser } from "@/contexts/UserContext";
+import {
+  getAdminAuditLogs,
+  getAdminErrorMessage,
+  getAdminUsers,
+} from "@/lib/apiServices/adminService";
+import {
+  getAdminUserEmailVerified,
+  getAdminUserStatus,
+} from "@/lib/adminUsers";
+import { isAdminRole } from "@/lib/auth/roles";
+import { cn } from "@/lib/utils";
+import type { AdminAuditLog, NormalizedAdminAuditLogs, NormalizedAdminUsers } from "@/types/admin";
 
-// Mock data - replace with actual API calls
-const mockAgentAnalytics = {
-  overview: {
-    totalViews: 12450,
-    viewsChange: 12.5,
-    totalLeads: 342,
-    leadsChange: 8.3,
-    conversionRate: 2.75,
-    conversionChange: -0.5,
-    revenue: 125000,
-    revenueChange: 15.2,
-  },
-  propertyPerformance: [
-    {
-      id: 1,
-      title: "Modern 3BR Apartment",
-      views: 1245,
-      leads: 34,
-      bookings: 8,
-      conversionRate: 0.64,
-    },
-    {
-      id: 2,
-      title: "Luxury Villa with Pool",
-      views: 980,
-      leads: 28,
-      bookings: 6,
-      conversionRate: 0.61,
-    },
-    {
-      id: 3,
-      title: "Cozy 2BR Condo",
-      views: 756,
-      leads: 19,
-      bookings: 4,
-      conversionRate: 0.53,
-    },
-  ],
-  monthlyStats: [
-    { month: "Jan", views: 3200, leads: 89, bookings: 12 },
-    { month: "Feb", views: 3800, leads: 105, bookings: 15 },
-    { month: "Mar", views: 4200, leads: 118, bookings: 18 },
-    { month: "Apr", views: 4500, leads: 125, bookings: 20 },
-  ],
+const formatRoleLabel = (role?: string): string =>
+  role ? role.replace(/_/g, " ") : "user";
+
+const getPercent = (value: number, total: number): number =>
+  total > 0 ? Math.round((value / total) * 100) : 0;
+
+const getLogStatusCode = (log: AdminAuditLog): number | undefined =>
+  log.statusCode ?? log.status_code;
+
+const getLogResult = (statusCode: number | undefined): string => {
+  if (statusCode === undefined) return "Unknown";
+  if (statusCode >= 400) return "Failed";
+  if (statusCode >= 300) return "Redirect";
+  return "Success";
 };
 
-const mockInvestorAnalytics = {
-  overview: {
-    totalPortfolioValue: 1200000,
-    valueChange: 5.2,
-    monthlyReturns: 8500,
-    returnsChange: 12.3,
-    activeInvestments: 7,
-    investmentsChange: 2,
-    averageROI: 8.5,
-    roiChange: 0.8,
-  },
-  investmentPerformance: [
-    {
-      id: 1,
-      property: "High-Yield Apartment",
-      investment: 150000,
-      currentValue: 165000,
-      roi: 10.0,
-      monthlyReturn: 1250,
-    },
-    {
-      id: 2,
-      property: "Commercial Unit",
-      investment: 200000,
-      currentValue: 218000,
-      roi: 9.0,
-      monthlyReturn: 1500,
-    },
-    {
-      id: 3,
-      property: "Residential Complex",
-      investment: 300000,
-      currentValue: 324000,
-      roi: 8.0,
-      monthlyReturn: 2000,
-    },
-  ],
-  monthlyReturns: [
-    { month: "Jan", returns: 7200, investments: 6 },
-    { month: "Feb", returns: 7800, investments: 6 },
-    { month: "Mar", returns: 8200, investments: 7 },
-    { month: "Apr", returns: 8500, investments: 7 },
-  ],
-};
+function AnalyticsAction({
+  href,
+  title,
+  description,
+  icon: Icon,
+}: {
+  href: string;
+  title: string;
+  description: string;
+  icon: LucideIcon;
+}) {
+  return (
+    <Link
+      href={href}
+      className="rounded-lg border border-border bg-background p-4 shadow-sm transition-colors hover:border-primary/40 hover:bg-muted"
+    >
+      <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg border border-primary/20 bg-primary/10 text-primary">
+        <Icon className="h-5 w-5" />
+      </div>
+      <h3 className="font-semibold text-foreground">{title}</h3>
+      <p className="mt-1 text-sm leading-6 text-muted-foreground">
+        {description}
+      </p>
+    </Link>
+  );
+}
 
-const formatPrice = (price: number) => {
-  return new Intl.NumberFormat("en-GB", {
-    style: "currency",
-    currency: "GBP",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(price);
-};
+function EmptyAnalytics({ role }: { role?: string }) {
+  return (
+    <AdminPageShell>
+      <AdminPageHeader
+        eyebrow="Analytics"
+        title="Analytics"
+        description="This page no longer renders fabricated charts. Role-specific analytics will appear after the real analytics backend contract is connected."
+        badge={
+          <Badge className="border border-border bg-muted text-foreground capitalize">
+            {formatRoleLabel(role)}
+          </Badge>
+        }
+      />
 
-export default function AnalyticsPage() {
-  const { user } = useUser();
-  const [timeRange, setTimeRange] = useState("3months");
+      <AdminPanel className="bg-background">
+        <CardContent className="p-6">
+          <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+            <div className="max-w-2xl">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg border border-border bg-muted text-primary">
+                <BarChart3 className="h-5 w-5" />
+              </div>
+              <h2 className="text-xl font-semibold text-foreground">
+                No live analytics data is connected for this role yet.
+              </h2>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                The dashboard analytics service is intentionally not mocked.
+                Once the real analytics endpoint is available, this page can
+                render KPI cards and charts from that payload.
+              </p>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2 lg:min-w-[460px]">
+              <AnalyticsAction
+                href="/dashboard"
+                title="Dashboard"
+                description="Return to the role dashboard."
+                icon={Activity}
+              />
+              <AnalyticsAction
+                href="/dashboard/reports"
+                title="Reports"
+                description="Review report modules prepared for backend integration."
+                icon={ClipboardList}
+              />
+            </div>
+          </div>
+        </CardContent>
+      </AdminPanel>
+    </AdminPageShell>
+  );
+}
 
-  if (!user) {
-    return <div>Loading...</div>;
-  }
+function AnalysisPanel({
+  title,
+  description,
+  children,
+  icon: Icon,
+}: {
+  title: string;
+  description: string;
+  children: React.ReactNode;
+  icon: LucideIcon;
+}) {
+  return (
+    <AdminPanel className="bg-background">
+      <CardContent className="p-5">
+        <div className="mb-5 flex items-start justify-between gap-4">
+          <div>
+            <h2 className="text-lg font-semibold text-foreground">{title}</h2>
+            <p className="mt-1 text-sm leading-6 text-muted-foreground">
+              {description}
+            </p>
+          </div>
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-primary/20 bg-primary/10 text-primary">
+            <Icon className="h-4 w-4" />
+          </span>
+        </div>
+        {children}
+      </CardContent>
+    </AdminPanel>
+  );
+}
 
-  const isAgent = user.role === "agent";
-  const agentAnalytics = mockAgentAnalytics;
-  const investorAnalytics = mockInvestorAnalytics;
+function DistributionRow({
+  label,
+  value,
+  total,
+  tone = "primary",
+}: {
+  label: string;
+  value: number;
+  total: number;
+  tone?: "primary" | "secondary" | "destructive";
+}) {
+  const percent = getPercent(value, total);
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Analytics</h1>
-          <p className="text-gray-600">
-            {isAgent
-              ? "Track your property listings performance and client engagement"
-              : "Monitor your investment portfolio performance and returns"}
-          </p>
-        </div>
-        <Select value={timeRange} onValueChange={setTimeRange}>
-          <SelectTrigger className="w-40">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="7days">Last 7 Days</SelectItem>
-            <SelectItem value="30days">Last 30 Days</SelectItem>
-            <SelectItem value="3months">Last 3 Months</SelectItem>
-            <SelectItem value="6months">Last 6 Months</SelectItem>
-            <SelectItem value="1year">Last Year</SelectItem>
-          </SelectContent>
-        </Select>
+    <div>
+      <div className="mb-2 flex items-center justify-between text-sm">
+        <span className="font-medium text-foreground">{label}</span>
+        <span className="text-muted-foreground">
+          {value} / {total}
+        </span>
       </div>
-
-      {isAgent ? (
-        <>
-          {/* Overview Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Total Views</CardTitle>
-                <Eye className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  {agentAnalytics.overview.totalViews.toLocaleString()}
-                </div>
-                <div className="flex items-center text-xs text-green-600 mt-1">
-                  <ArrowUp className="w-3 h-3 mr-1" />
-                  {agentAnalytics.overview.viewsChange}% from last period
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Total Leads</CardTitle>
-                <Users className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{agentAnalytics.overview.totalLeads}</div>
-                <div className="flex items-center text-xs text-green-600 mt-1">
-                  <ArrowUp className="w-3 h-3 mr-1" />
-                  {agentAnalytics.overview.leadsChange}% from last period
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Conversion Rate</CardTitle>
-                <TrendingUp className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  {agentAnalytics.overview.conversionRate}%
-                </div>
-                <div className="flex items-center text-xs text-red-600 mt-1">
-                  <ArrowDown className="w-3 h-3 mr-1" />
-                  {Math.abs(agentAnalytics.overview.conversionChange)}% from last period
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Revenue</CardTitle>
-                <PoundSterling className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  {formatPrice(agentAnalytics.overview.revenue)}
-                </div>
-                <div className="flex items-center text-xs text-green-600 mt-1">
-                  <ArrowUp className="w-3 h-3 mr-1" />
-                  {agentAnalytics.overview.revenueChange}% from last period
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Property Performance */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Property Performance</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {agentAnalytics.propertyPerformance.map((property) => (
-                  <div
-                    key={property.id}
-                    className="flex items-center justify-between p-4 border rounded-lg"
-                  >
-                    <div className="flex-1">
-                      <h3 className="font-semibold">{property.title}</h3>
-                      <div className="grid grid-cols-4 gap-4 mt-2 text-sm text-gray-600">
-                        <div>
-                          <span className="text-gray-500">Views:</span>{" "}
-                          {property.views.toLocaleString()}
-                        </div>
-                        <div>
-                          <span className="text-gray-500">Leads:</span> {property.leads}
-                        </div>
-                        <div>
-                          <span className="text-gray-500">Bookings:</span>{" "}
-                          {property.bookings}
-                        </div>
-                        <div>
-                          <span className="text-gray-500">Conversion:</span>{" "}
-                          {property.conversionRate}%
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </>
-      ) : (
-        <>
-          {/* Overview Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Portfolio Value
-                </CardTitle>
-                <TrendingUp className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  {formatPrice(investorAnalytics.overview.totalPortfolioValue)}
-                </div>
-                <div className="flex items-center text-xs text-green-600 mt-1">
-                  <ArrowUp className="w-3 h-3 mr-1" />
-                  {investorAnalytics.overview.valueChange}% from last period
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Monthly Returns</CardTitle>
-                <PoundSterling className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  {formatPrice(investorAnalytics.overview.monthlyReturns)}
-                </div>
-                <div className="flex items-center text-xs text-green-600 mt-1">
-                  <ArrowUp className="w-3 h-3 mr-1" />
-                  {investorAnalytics.overview.returnsChange}% from last period
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Active Investments</CardTitle>
-                <Building2 className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  {investorAnalytics.overview.activeInvestments}
-                </div>
-                <div className="flex items-center text-xs text-green-600 mt-1">
-                  <ArrowUp className="w-3 h-3 mr-1" />
-                  +{investorAnalytics.overview.investmentsChange} from last period
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Average ROI</CardTitle>
-                <BarChart3 className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  {investorAnalytics.overview.averageROI}%
-                </div>
-                <div className="flex items-center text-xs text-green-600 mt-1">
-                  <ArrowUp className="w-3 h-3 mr-1" />
-                  +{investorAnalytics.overview.roiChange}% from last period
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Investment Performance */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Investment Performance</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {investorAnalytics.investmentPerformance.map((investment) => (
-                  <div
-                    key={investment.id}
-                    className="flex items-center justify-between p-4 border rounded-lg"
-                  >
-                    <div className="flex-1">
-                      <h3 className="font-semibold">{investment.property}</h3>
-                      <div className="grid grid-cols-4 gap-4 mt-2 text-sm text-gray-600">
-                        <div>
-                          <span className="text-gray-500">Investment:</span>{" "}
-                          {formatPrice(investment.investment)}
-                        </div>
-                        <div>
-                          <span className="text-gray-500">Current Value:</span>{" "}
-                          {formatPrice(investment.currentValue)}
-                        </div>
-                        <div>
-                          <span className="text-gray-500">ROI:</span>{" "}
-                          {investment.roi}%
-                        </div>
-                        <div>
-                          <span className="text-gray-500">Monthly Return:</span>{" "}
-                          {formatPrice(investment.monthlyReturn)}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </>
-      )}
+      <Progress
+        value={percent}
+        className={cn(
+          "h-2 bg-muted",
+          tone === "secondary" && "[&_[data-slot=progress-indicator]]:bg-secondary",
+          tone === "destructive" && "[&_[data-slot=progress-indicator]]:bg-destructive"
+        )}
+      />
     </div>
   );
 }
 
+function AdminAnalytics() {
+  const [usersData, setUsersData] = useState<NormalizedAdminUsers | null>(null);
+  const [auditLogsData, setAuditLogsData] =
+    useState<NormalizedAdminAuditLogs | null>(null);
+  const [isFetching, setIsFetching] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const loadAnalytics = async () => {
+    setIsFetching(true);
+    setErrorMessage("");
+
+    try {
+      const [users, auditLogs] = await Promise.all([
+        getAdminUsers({ page: 1, limit: 50 }),
+        getAdminAuditLogs({ page: 1, limit: 50 }),
+      ]);
+      setUsersData(users);
+      setAuditLogsData(auditLogs);
+    } catch (error: unknown) {
+      setErrorMessage(
+        getAdminErrorMessage(error, "Unable to load admin analytics data.")
+      );
+    } finally {
+      setIsFetching(false);
+    }
+  };
+
+  useEffect(() => {
+    void loadAnalytics();
+  }, []);
+
+  const users = useMemo(() => usersData?.users ?? [], [usersData?.users]);
+  const logs = useMemo(
+    () => auditLogsData?.logs ?? [],
+    [auditLogsData?.logs]
+  );
+
+  const stats = useMemo(() => {
+    const activeUsers = users.filter(
+      (adminUser) => getAdminUserStatus(adminUser) === "active"
+    ).length;
+    const verifiedUsers = users.filter(
+      (adminUser) => getAdminUserEmailVerified(adminUser) === true
+    ).length;
+    const adminUsers = users.filter((adminUser) =>
+      ["admin", "super_admin"].includes(adminUser.role || "")
+    ).length;
+    const failedLogs = logs.filter(
+      (log) => (getLogStatusCode(log) ?? 0) >= 400
+    ).length;
+    const successfulLogs = logs.filter(
+      (log) => getLogResult(getLogStatusCode(log)) === "Success"
+    ).length;
+    const unknownLogs = logs.filter(
+      (log) => getLogResult(getLogStatusCode(log)) === "Unknown"
+    ).length;
+
+    return {
+      activeUsers,
+      verifiedUsers,
+      adminUsers,
+      failedLogs,
+      successfulLogs,
+      unknownLogs,
+    };
+  }, [logs, users]);
+
+  return (
+    <AdminPageShell>
+      <AdminPageHeader
+        eyebrow="Real data only"
+        title="Analytics"
+        description="Admin analytics are derived only from the currently integrated Users and Audit Logs endpoints."
+        badge={
+          <Badge className="border border-border bg-muted text-foreground">
+            Live admin endpoints
+          </Badge>
+        }
+        actions={
+          <Button
+            type="button"
+            variant="outline"
+            disabled={isFetching}
+            onClick={() => void loadAnalytics()}
+            className="border-border bg-background"
+          >
+            <RefreshCw className="h-4 w-4" />
+            Refresh
+          </Button>
+        }
+      />
+
+      {errorMessage ? (
+        <div className={adminErrorMessageClass}>{errorMessage}</div>
+      ) : null}
+
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <AdminMetricCard
+          label="Total Users"
+          value={usersData ? usersData.total.toLocaleString() : "Not loaded"}
+          helper="Backend total"
+          icon={Users}
+          featured
+        />
+        <AdminMetricCard
+          label="Active Loaded Users"
+          value={usersData ? stats.activeUsers.toLocaleString() : "Not loaded"}
+          helper="From loaded user rows"
+          icon={Users}
+          tone="gold"
+        />
+        <AdminMetricCard
+          label="Audit Events"
+          value={auditLogsData ? auditLogsData.total.toLocaleString() : "Not loaded"}
+          helper="Backend total"
+          icon={ClipboardList}
+          tone="slate"
+        />
+        <AdminMetricCard
+          label="Failed Loaded Events"
+          value={auditLogsData ? stats.failedLogs.toLocaleString() : "Not loaded"}
+          helper="From loaded audit rows"
+          icon={ShieldCheck}
+          tone="emerald"
+        />
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
+        <AnalysisPanel
+          title="User Access Breakdown"
+          description="Distribution from the loaded users returned by the admin users endpoint."
+          icon={Users}
+        >
+          {users.length ? (
+            <div className="space-y-5">
+              <DistributionRow
+                label="Active users"
+                value={stats.activeUsers}
+                total={users.length}
+                tone="primary"
+              />
+              <DistributionRow
+                label="Verified email"
+                value={stats.verifiedUsers}
+                total={users.length}
+                tone="secondary"
+              />
+              <DistributionRow
+                label="Admin roles"
+                value={stats.adminUsers}
+                total={users.length}
+                tone="primary"
+              />
+            </div>
+          ) : (
+            <div className="rounded-lg border border-border bg-muted p-5 text-sm text-muted-foreground">
+              No user rows were returned.
+            </div>
+          )}
+        </AnalysisPanel>
+
+        <AnalysisPanel
+          title="Audit Result Breakdown"
+          description="Distribution from the loaded events returned by the admin audit endpoint."
+          icon={ClipboardList}
+        >
+          {logs.length ? (
+            <div className="space-y-5">
+              <DistributionRow
+                label="Successful events"
+                value={stats.successfulLogs}
+                total={logs.length}
+                tone="primary"
+              />
+              <DistributionRow
+                label="Failed events"
+                value={stats.failedLogs}
+                total={logs.length}
+                tone="destructive"
+              />
+              <DistributionRow
+                label="Unknown status"
+                value={stats.unknownLogs}
+                total={logs.length}
+                tone="secondary"
+              />
+            </div>
+          ) : (
+            <div className="rounded-lg border border-border bg-muted p-5 text-sm text-muted-foreground">
+              No audit rows were returned.
+            </div>
+          )}
+        </AnalysisPanel>
+      </div>
+    </AdminPageShell>
+  );
+}
+
+export default function AnalyticsPage() {
+  const { user, isLoading } = useUser();
+
+  if (isLoading) {
+    return (
+      <div className="flex h-64 items-center justify-center text-sm text-muted-foreground">
+        Loading analytics...
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <EmptyAnalytics />;
+  }
+
+  if (isAdminRole(user.role)) {
+    return <AdminAnalytics />;
+  }
+
+  return <EmptyAnalytics role={user.role} />;
+}

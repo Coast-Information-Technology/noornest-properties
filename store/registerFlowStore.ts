@@ -1,7 +1,7 @@
 "use client";
 
 import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
+import { persist, createJSONStorage, type StateStorage } from "zustand/middleware";
 
 type Role =
   | "property_owner"
@@ -38,6 +38,12 @@ const initialState: RegisterFlowState = {
   acceptedPolicies: false,
 };
 
+const noopStorage: StateStorage = {
+  getItem: () => null,
+  setItem: () => undefined,
+  removeItem: () => undefined,
+};
+
 export const useRegisterFlowStore = create<RegisterFlowStore>()(
   persist(
     (set) => ({
@@ -52,7 +58,7 @@ export const useRegisterFlowStore = create<RegisterFlowStore>()(
     {
       name: "register-flow-store",
       storage: createJSONStorage(() =>
-        typeof window !== "undefined" ? window.localStorage : undefined
+        typeof window !== "undefined" ? window.localStorage : noopStorage
       ),
     }
   )

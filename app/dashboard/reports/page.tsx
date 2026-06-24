@@ -1,17 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
-  FileText,
-  Download,
-  Calendar,
+  BarChart3,
   Building2,
-  Users,
+  Download,
+  FileText,
   PoundSterling,
-  TrendingUp,
-  Filter,
+  Users,
+  type LucideIcon,
 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -20,320 +19,218 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
+import {
+  AdminPageHeader,
+  AdminPageShell,
+  AdminPanel,
+} from "@/components/dashboard/AdminSurface";
+import { CardContent } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
-// Mock data - replace with actual API calls
-const mockReports = [
+type ReportCategory = "all" | "sales" | "activity" | "performance" | "revenue";
+
+interface ReportModule {
+  id: string;
+  title: string;
+  category: Exclude<ReportCategory, "all">;
+  description: string;
+  icon: LucideIcon;
+  endpoint: string;
+  tone: "primary" | "secondary" | "accent" | "muted";
+}
+
+const reportModules: ReportModule[] = [
   {
-    id: 1,
-    title: "Monthly Sales Report - January 2024",
-    type: "sales",
-    period: "2024-01",
-    generatedDate: "2024-02-01",
-    status: "completed",
-    propertiesSold: 12,
-    totalRevenue: 5400000,
-    averagePrice: 450000,
-    topPerformingProperty: "Modern 3BR Apartment",
+    id: "sales",
+    title: "Sales Report",
+    category: "sales",
+    description:
+      "Property sale volume, transaction totals, and average sale price once sales reporting is connected.",
+    icon: PoundSterling,
+    endpoint: "Report generation API required",
+    tone: "primary",
   },
   {
-    id: 2,
-    title: "Client Activity Report - Q4 2023",
-    type: "activity",
-    period: "2023-Q4",
-    generatedDate: "2024-01-05",
-    status: "completed",
-    newClients: 45,
-    totalInteractions: 234,
-    conversionRate: 3.2,
-    topClient: "Alice Smith",
+    id: "activity",
+    title: "Client Activity Report",
+    category: "activity",
+    description:
+      "Client engagement, interactions, and conversion activity once activity reporting is connected.",
+    icon: Users,
+    endpoint: "Report generation API required",
+    tone: "accent",
   },
   {
-    id: 3,
-    title: "Property Performance Report - December 2023",
-    type: "performance",
-    period: "2023-12",
-    generatedDate: "2024-01-02",
-    status: "completed",
-    totalViews: 12450,
-    totalLeads: 342,
-    averageViewsPerProperty: 415,
-    topProperty: "Luxury Villa with Pool",
+    id: "performance",
+    title: "Property Performance Report",
+    category: "performance",
+    description:
+      "Listing views, leads, bookings, and performance trends once listing analytics are connected.",
+    icon: Building2,
+    endpoint: "Report generation API required",
+    tone: "muted",
   },
   {
-    id: 4,
-    title: "Revenue Report - 2023 Annual",
-    type: "revenue",
-    period: "2023",
-    generatedDate: "2024-01-15",
-    status: "completed",
-    totalRevenue: 12500000,
-    transactions: 28,
-    averageTransaction: 446429,
-    growthRate: 15.2,
-  },
-  {
-    id: 5,
-    title: "Monthly Sales Report - February 2024",
-    type: "sales",
-    period: "2024-02",
-    generatedDate: "2024-03-01",
-    status: "generating",
-    propertiesSold: null,
-    totalRevenue: null,
-    averagePrice: null,
-    topPerformingProperty: null,
+    id: "revenue",
+    title: "Revenue Report",
+    category: "revenue",
+    description:
+      "Revenue, transaction value, and growth reporting once financial reporting endpoints are available.",
+    icon: BarChart3,
+    endpoint: "Report generation API required",
+    tone: "secondary",
   },
 ];
 
-const formatPrice = (price: number) => {
-  return new Intl.NumberFormat("en-GB", {
-    style: "currency",
-    currency: "GBP",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(price);
+const toneClasses: Record<ReportModule["tone"], string> = {
+  primary: "bg-primary text-primary-foreground",
+  secondary: "bg-secondary text-secondary-foreground",
+  accent: "bg-accent text-accent-foreground",
+  muted: "bg-muted text-foreground",
 };
 
-const formatDate = (dateString: string) => {
-  return new Date(dateString).toLocaleDateString("en-GB", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+const iconToneClasses: Record<ReportModule["tone"], string> = {
+  primary: "border-primary-foreground/20 bg-background text-primary",
+  secondary: "border-secondary-foreground/20 bg-secondary-foreground text-secondary",
+  accent: "border-accent-foreground/10 bg-background text-primary",
+  muted: "border-border bg-background text-primary",
 };
 
-export default function ReportsPage() {
-  const [reportType, setReportType] = useState("all");
-  const [period, setPeriod] = useState("all");
-
-  const filteredReports = mockReports.filter((report) => {
-    const matchesType = reportType === "all" || report.type === reportType;
-    const matchesPeriod = period === "all" || report.period.includes(period);
-    return matchesType && matchesPeriod;
-  });
-
-  const handleGenerateReport = () => {
-    // TODO: Implement report generation
-    // Removed console.log for production
-  };
-
-  const handleDownloadReport = (reportId: number) => {
-    // TODO: Implement report download
-    // Removed console.log for production
-  };
+function ReportModuleCard({ module }: { module: ReportModule }) {
+  const Icon = module.icon;
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Reports</h1>
-          <p className="text-gray-600">
-            Generate and download detailed reports about your business performance
-          </p>
+    <article className="overflow-hidden rounded-lg border border-border bg-background shadow-[0_14px_38px_rgba(37,31,18,0.06)]">
+      <div className={cn("flex h-32 items-center justify-center", toneClasses[module.tone])}>
+        <div
+          className={cn(
+            "flex h-14 w-14 items-center justify-center rounded-lg border shadow-sm",
+            iconToneClasses[module.tone]
+          )}
+        >
+          <Icon className="h-6 w-6" />
         </div>
-        <Button onClick={handleGenerateReport}>
-          <FileText className="w-4 h-4 mr-2" />
-          Generate New Report
-        </Button>
       </div>
+      <div className="-mt-3 rounded-t-lg bg-background p-5">
+        <div className="mb-3 flex items-start justify-between gap-3">
+          <div>
+            <h2 className="text-lg font-semibold text-foreground">
+              {module.title}
+            </h2>
+            <Badge
+              variant="outline"
+              className="mt-2 rounded-md border-border bg-muted text-muted-foreground capitalize"
+            >
+              {module.category}
+            </Badge>
+          </div>
+          <Badge className="rounded-md border border-border bg-muted text-foreground">
+            Pending API
+          </Badge>
+        </div>
+        <p className="min-h-[96px] text-sm leading-6 text-muted-foreground">
+          {module.description}
+        </p>
+        <div className="mt-4 rounded-lg border border-border bg-muted p-3">
+          <div className="text-xs font-semibold uppercase tracking-normal text-muted-foreground">
+            Data source
+          </div>
+          <div className="mt-1 text-sm font-medium text-foreground">
+            {module.endpoint}
+          </div>
+        </div>
+        <div className="mt-5 grid grid-cols-2 gap-2">
+          <Button disabled className="w-full">
+            <FileText className="h-4 w-4" />
+            Generate
+          </Button>
+          <Button disabled variant="outline" className="w-full border-border">
+            <Download className="h-4 w-4" />
+            Download
+          </Button>
+        </div>
+      </div>
+    </article>
+  );
+}
 
-      {/* Filters */}
-      <Card>
-        <CardContent className="p-6">
-          <div className="flex flex-col lg:flex-row lg:items-center space-y-4 lg:space-y-0 lg:space-x-4">
-            <Select value={reportType} onValueChange={setReportType}>
-              <SelectTrigger className="w-48">
-                <SelectValue placeholder="Report Type" />
+export default function ReportsPage() {
+  const [reportCategory, setReportCategory] = useState<ReportCategory>("all");
+
+  const filteredModules = useMemo(() => {
+    if (reportCategory === "all") return reportModules;
+    return reportModules.filter((module) => module.category === reportCategory);
+  }, [reportCategory]);
+
+  return (
+    <AdminPageShell>
+      <AdminPageHeader
+        eyebrow="Reports"
+        title="Reports"
+        description="Report UI is prepared without fabricated report history. Generated reports will appear only after the real report generation and download endpoints are connected."
+        badge={
+          <Badge className="border border-border bg-muted text-foreground">
+            No mock reports
+          </Badge>
+        }
+      />
+
+      <AdminPanel className="bg-background">
+        <CardContent className="p-5">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <h2 className="text-lg font-semibold text-foreground">
+                Report Modules
+              </h2>
+              <p className="mt-1 text-sm leading-6 text-muted-foreground">
+                These cards describe the report categories this page is ready to
+                support. Actions stay disabled until real report APIs exist.
+              </p>
+            </div>
+            <Select
+              value={reportCategory}
+              onValueChange={(value) => setReportCategory(value as ReportCategory)}
+            >
+              <SelectTrigger className="h-10 w-full rounded-lg border-border bg-muted shadow-none lg:w-[220px]">
+                <SelectValue placeholder="Report category" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Report Types</SelectItem>
-                <SelectItem value="sales">Sales Reports</SelectItem>
-                <SelectItem value="activity">Activity Reports</SelectItem>
-                <SelectItem value="performance">Performance Reports</SelectItem>
-                <SelectItem value="revenue">Revenue Reports</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Select value={period} onValueChange={setPeriod}>
-              <SelectTrigger className="w-48">
-                <SelectValue placeholder="Period" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Periods</SelectItem>
-                <SelectItem value="2024">2024</SelectItem>
-                <SelectItem value="2023">2023</SelectItem>
-                <SelectItem value="Q1">Q1</SelectItem>
-                <SelectItem value="Q2">Q2</SelectItem>
-                <SelectItem value="Q3">Q3</SelectItem>
-                <SelectItem value="Q4">Q4</SelectItem>
+                <SelectItem value="all">All report modules</SelectItem>
+                <SelectItem value="sales">Sales</SelectItem>
+                <SelectItem value="activity">Client activity</SelectItem>
+                <SelectItem value="performance">Property performance</SelectItem>
+                <SelectItem value="revenue">Revenue</SelectItem>
               </SelectContent>
             </Select>
           </div>
         </CardContent>
-      </Card>
+      </AdminPanel>
 
-      {/* Reports List */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredReports.map((report) => (
-          <Card key={report.id} className="hover:shadow-lg transition-shadow">
-            <CardHeader>
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <CardTitle className="text-lg mb-2">{report.title}</CardTitle>
-                  <div className="flex items-center space-x-2">
-                    <Badge variant="outline">{report.type}</Badge>
-                    <Badge
-                      variant={
-                        report.status === "completed" ? "default" : "secondary"
-                      }
-                    >
-                      {report.status}
-                    </Badge>
-                  </div>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="text-sm text-gray-600">
-                <div className="flex items-center mb-1">
-                  <Calendar className="w-4 h-4 mr-2" />
-                  Period: {report.period}
-                </div>
-                <div className="flex items-center">
-                  <FileText className="w-4 h-4 mr-2" />
-                  Generated: {formatDate(report.generatedDate)}
-                </div>
-              </div>
-
-              {report.status === "completed" && (
-                <div className="pt-4 border-t space-y-2">
-                  {report.type === "sales" && (
-                    <>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">Properties Sold:</span>
-                        <span className="font-semibold">
-                          {report.propertiesSold}
-                        </span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">Total Revenue:</span>
-                        <span className="font-semibold">
-                          {formatPrice(report.totalRevenue!)}
-                        </span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">Average Price:</span>
-                        <span className="font-semibold">
-                          {formatPrice(report.averagePrice!)}
-                        </span>
-                      </div>
-                    </>
-                  )}
-
-                  {report.type === "activity" && (
-                    <>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">New Clients:</span>
-                        <span className="font-semibold">{report.newClients}</span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">Total Interactions:</span>
-                        <span className="font-semibold">
-                          {report.totalInteractions}
-                        </span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">Conversion Rate:</span>
-                        <span className="font-semibold">
-                          {report.conversionRate}%
-                        </span>
-                      </div>
-                    </>
-                  )}
-
-                  {report.type === "performance" && (
-                    <>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">Total Views:</span>
-                        <span className="font-semibold">
-                          {report.totalViews?.toLocaleString()}
-                        </span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">Total Leads:</span>
-                        <span className="font-semibold">{report.totalLeads}</span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">Avg Views/Property:</span>
-                        <span className="font-semibold">
-                          {report.averageViewsPerProperty}
-                        </span>
-                      </div>
-                    </>
-                  )}
-
-                  {report.type === "revenue" && (
-                    <>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">Total Revenue:</span>
-                        <span className="font-semibold">
-                          {formatPrice(report.totalRevenue!)}
-                        </span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">Transactions:</span>
-                        <span className="font-semibold">{report.transactions}</span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">Growth Rate:</span>
-                        <span className="font-semibold text-green-600">
-                          {report.growthRate}%
-                        </span>
-                      </div>
-                    </>
-                  )}
-                </div>
-              )}
-
-              <div className="pt-4 border-t">
-                {report.status === "completed" ? (
-                  <Button
-                    className="w-full"
-                    onClick={() => handleDownloadReport(report.id)}
-                  >
-                    <Download className="w-4 h-4 mr-2" />
-                    Download Report
-                  </Button>
-                ) : (
-                  <Button variant="outline" className="w-full" disabled>
-                    Generating...
-                  </Button>
-                )}
-              </div>
-            </CardContent>
-          </Card>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+        {filteredModules.map((module) => (
+          <ReportModuleCard key={module.id} module={module} />
         ))}
       </div>
 
-      {filteredReports.length === 0 && (
-        <Card>
-          <CardContent className="p-12 text-center">
-            <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
-              No reports found
-            </h3>
-            <p className="text-gray-500 mb-4">
-              No reports match your filter criteria.
-            </p>
-            <Button onClick={handleGenerateReport}>
-              Generate New Report
+      <AdminPanel className="bg-background">
+        <CardContent className="p-6">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <h2 className="text-lg font-semibold text-foreground">
+                Generated Reports
+              </h2>
+              <p className="mt-1 text-sm leading-6 text-muted-foreground">
+                No generated reports are shown because this project does not yet
+                have a connected reports API or persisted report history.
+              </p>
+            </div>
+            <Button disabled variant="outline" className="border-border">
+              <Download className="h-4 w-4" />
+              Download unavailable
             </Button>
-          </CardContent>
-        </Card>
-      )}
-    </div>
+          </div>
+        </CardContent>
+      </AdminPanel>
+    </AdminPageShell>
   );
 }
-

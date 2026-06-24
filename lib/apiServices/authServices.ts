@@ -1,10 +1,30 @@
 /* ===================================================================================
-=============================USER AUTHENTICATION====================================== 
+=============================USER AUTHENTICATION======================================
 ====================================================================================== */
 
 import { getDeviceInfo } from "@/utils/getDeviceInfo";
-import { apiRequest, ApiResponse, getApiRequest, postApiRequest, updateApiRequest, UserLoginData, UserRegistrationData, UserUpdateData } from "../apiFetch";
-import { deleteRefreshTokenFromCookies, deleteSessionIdFromCookies, deleteTokenFromCookies, getRefreshTokenFromCookies, getSessionIdFromCookies, getTokenFromCookies, saveSessionIdToCookies, saveTokenToCookies, setCookie } from "../cookies";
+import {
+  apiRequest,
+  ApiRequestError,
+  ApiResponse,
+  getApiRequest,
+  postApiRequest,
+  updateApiRequest,
+  UserLoginData,
+  UserRegistrationData,
+  UserUpdateData,
+} from "../apiFetch";
+import {
+  deleteRefreshTokenFromCookies,
+  deleteSessionIdFromCookies,
+  deleteTokenFromCookies,
+  getRefreshTokenFromCookies,
+  getSessionIdFromCookies,
+  getTokenFromCookies,
+  saveRefreshTokenToCookies,
+  saveSessionIdToCookies,
+  saveTokenToCookies,
+} from "../cookies";
 import safeConsole from "../console";
 import {
   CurrentUserResponseBody,
@@ -15,11 +35,21 @@ import {
   VerifyEmailResponseBody,
 } from "@/types/auth";
 
+export interface ChangePasswordRequest {
+  oldPassword: string;
+  newPassword: string;
+}
+
+export interface ChangePasswordResponseBody {
+  success?: boolean;
+  message?: string;
+}
+
 /**
  * Register a new user
  */
 export const registerUser = async (
-  formData: UserRegistrationData
+  formData: UserRegistrationData,
 ): Promise<ApiResponse<RegisterResponseBody>> => {
   return postApiRequest<RegisterResponseBody>("/api/auth/register", formData);
 };
@@ -29,16 +59,19 @@ export const registerUser = async (
  */
 export const verifyEmail = async (
   userPublicId: string,
-  token: string
+  token: string,
 ): Promise<ApiResponse<VerifyEmailResponseBody>> => {
-  return postApiRequest<VerifyEmailResponseBody>("/api/auth/verify-email", { userPublicId, token });
+  return postApiRequest<VerifyEmailResponseBody>("/api/auth/verify-email", {
+    userPublicId,
+    token,
+  });
 };
 
 /**
  * Login user
  */
 export const loginUser = async (
-  formData: UserLoginData
+  formData: UserLoginData,
 ): Promise<ApiResponse<LoginResponseBody>> => {
   return postApiRequest<LoginResponseBody>("/api/auth/login", {
     ...formData,
@@ -52,7 +85,7 @@ export const loginUser = async (
 export const updateUser = async (
   userId: string,
   formData: UserUpdateData,
-  token: string
+  token: string,
 ): Promise<ApiResponse<any>> => {
   return updateApiRequest(`/api/users/${userId}/`, token, formData);
 };
@@ -65,7 +98,7 @@ export const getAllApiRequestWithPagination = async <T = any>(
   pageSize: number,
   pageNo: number,
   token?: string,
-  searchQuery = ""
+  searchQuery = "",
 ): Promise<ApiResponse<T>> => {
   const params = new URLSearchParams({
     page_size: String(pageSize),
@@ -80,7 +113,7 @@ export const getAllApiRequestWithPagination = async <T = any>(
  * Forgot password - send reset email
  */
 export const forgotPassword = async (
-  email: string
+  email: string,
 ): Promise<ApiResponse<any>> => {
   return postApiRequest("/api/auth/forgot-password", { email });
 };
@@ -89,7 +122,7 @@ export const forgotPassword = async (
  * Reset password with new password
  */
 export const resetPassword = async (
-  password: string
+  password: string,
 ): Promise<ApiResponse<any>> => {
   return postApiRequest("/api/auth/reset-password", { password });
 };
@@ -97,14 +130,23 @@ export const resetPassword = async (
 /**
  * Get single user-me
  */
-export const getUserMe = async (token: string): Promise<ApiResponse<any>> => {
-  return getApiRequest<CurrentUserResponseBody>("/api/users/me", token);
+export const getUserMe = async (
+  token: string,
+): Promise<ApiResponse<CurrentUserResponseBody>> => {
+  return apiRequestWithRefresh<CurrentUserResponseBody>(
+    "/api/users/me",
+    "GET",
+    undefined,
+    token,
+  );
 };
 
 /**
  * Logout user (with metadata)
  */
-export const logoutUser = async (): Promise<ApiResponse<LogoutResponseBody>> => {
+export const logoutUser = async (): Promise<
+  ApiResponse<LogoutResponseBody>
+> => {
   const accessToken = getTokenFromCookies();
   const refreshToken = getRefreshTokenFromCookies();
   const sessionId = getSessionIdFromCookies() ?? undefined;
@@ -121,13 +163,17 @@ export const logoutUser = async (): Promise<ApiResponse<LogoutResponseBody>> => 
       ? await postApiRequest<LogoutResponseBody>(
           "/api/auth/logout",
           accessToken,
-          requestBody
+          requestBody,
         )
-      : await postApiRequest<LogoutResponseBody>("/api/auth/logout", requestBody);
+      : await postApiRequest<LogoutResponseBody>(
+          "/api/auth/logout",
+          requestBody,
+        );
     return response;
   } catch (error: unknown) {
     safeConsole.error("Logout API error:", error);
     return {
+      success: false,
       data: { success: false, message: "Logout failed" },
       status: 500,
       message: error instanceof Error ? error.message : "Unknown logout error",
@@ -144,13 +190,21 @@ export const logoutUser = async (): Promise<ApiResponse<LogoutResponseBody>> => 
  * Change user password
  */
 export const changePassword = async (
-  oldPassword: string,
-  newPassword: string
-): Promise<ApiResponse<any>> => {
-  return postApiRequest("/api/users/change-password", {
-    oldPassword,
-    newPassword,
-  });
+  payload: ChangePasswordRequest,
+): Promise<ApiResponse<ChangePasswordResponseBody>> => {
+  const token = getTokenFromCookies();
+  if (!token) {
+    throw new ApiRequestError(
+      "You need to be logged in to change your password.",
+      401,
+    );
+  }
+
+  return postApiRequestWithRefresh<ChangePasswordResponseBody>(
+    "/api/auth/change-password",
+    payload,
+    token,
+  );
 };
 
 /**
@@ -159,13 +213,13 @@ export const changePassword = async (
 export const updateOnboardingStatus = async (
   userId: string,
   status: string,
-  token: string
+  token: string,
 ) => {
   const response = await apiRequest(
     `/api/onboarding/${userId}/status`,
     "PATCH",
     { status: "completed" },
-    token || ""
+    token || "",
   );
   return response.data;
 };
@@ -174,7 +228,7 @@ export const updateOnboardingStatus = async (
  * Resend verification email
  */
 export const resendVerificationEmail = async (
-  email: string
+  email: string,
 ): Promise<ApiResponse<any>> => {
   return postApiRequest("/api/auth/resend-verification", { email });
 };
@@ -183,7 +237,7 @@ export const resendVerificationEmail = async (
  * Check if JWT token is valid (for silent re-auth)
  */
 export const checkTokenValidity = async (
-  token: string
+  token: string,
 ): Promise<ApiResponse<any>> => {
   return getApiRequest("/api/auth/check-token", token);
 };
@@ -193,9 +247,11 @@ export const checkTokenValidity = async (
  */
 export const refreshAccessToken = async (
   refreshToken: string,
-  sessionId?: string
+  sessionId?: string,
 ): Promise<ApiResponse<RefreshTokenResponseBody>> => {
-  const payload: { refreshToken: string; sessionId?: string } = { refreshToken };
+  const payload: { refreshToken: string; sessionId?: string } = {
+    refreshToken,
+  };
   if (sessionId) {
     payload.sessionId = sessionId;
   }
@@ -211,7 +267,7 @@ export const apiRequestWithRefresh = async <T = any>(
   method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH" = "GET",
   body?: any,
   token?: string,
-  headers: Record<string, string> = {}
+  headers: Record<string, string> = {},
 ): Promise<ApiResponse<T>> => {
   try {
     // First attempt with current token
@@ -220,17 +276,20 @@ export const apiRequestWithRefresh = async <T = any>(
       method,
       body,
       token,
-      headers
+      headers,
     );
     return response;
-  } catch (error: any) {
+  } catch (error: unknown) {
     // If token is expired (401), try to refresh
-    if (error.status === 401 && token) {
+    if (error instanceof ApiRequestError && error.status === 401 && token) {
       try {
-        const refreshToken = getCookie("refreshToken");
+        const refreshToken = getRefreshTokenFromCookies();
         const sessionId = getSessionIdFromCookies() ?? undefined;
         if (refreshToken) {
-          const refreshResponse = await refreshAccessToken(refreshToken, sessionId);
+          const refreshResponse = await refreshAccessToken(
+            refreshToken,
+            sessionId,
+          );
 
           if (refreshResponse.data && refreshResponse.data.data) {
             const newAccessToken = refreshResponse.data.data.access_token;
@@ -244,11 +303,7 @@ export const apiRequestWithRefresh = async <T = any>(
               saveTokenToCookies(newAccessToken);
             }
             if (newRefreshToken) {
-              setCookie("refreshToken", newRefreshToken, {
-                maxAge: 7 * 24 * 60 * 60, // 7 days
-                secure: process.env.NODE_ENV === "production",
-                sameSite: "strict",
-              });
+              saveRefreshTokenToCookies(newRefreshToken);
             }
             if (newSessionId) {
               saveSessionIdToCookies(newSessionId);
@@ -260,7 +315,7 @@ export const apiRequestWithRefresh = async <T = any>(
               method,
               body,
               newAccessToken,
-              headers
+              headers,
             );
           }
         }
@@ -281,7 +336,7 @@ export const apiRequestWithRefresh = async <T = any>(
  */
 export const getApiRequestWithRefresh = async <T = any>(
   endpoint: string,
-  token?: string
+  token?: string,
 ): Promise<ApiResponse<T>> => {
   return apiRequestWithRefresh<T>(endpoint, "GET", undefined, token);
 };
@@ -292,7 +347,7 @@ export const getApiRequestWithRefresh = async <T = any>(
 export const postApiRequestWithRefresh = async <T = any>(
   endpoint: string,
   body: any,
-  token?: string
+  token?: string,
 ): Promise<ApiResponse<T>> => {
   return apiRequestWithRefresh<T>(endpoint, "POST", body, token);
 };
@@ -301,11 +356,11 @@ export const postApiRequestWithRefresh = async <T = any>(
  * Get user's current active role
  */
 export const getActiveRole = async (
-  token?: string
+  token?: string,
 ): Promise<ApiResponse<any>> => {
   const response = await getApiRequestWithRefresh(
     "/api/users/active-role",
-    token
+    token,
   );
   return response;
 };
@@ -314,12 +369,12 @@ export const getActiveRole = async (
  * Switch user role between individual and team tech professional
  */
 export const switchUserRole = async (
-  token?: string
+  token?: string,
 ): Promise<ApiResponse<any>> => {
   const response = await postApiRequestWithRefresh(
     "/api/users/switch-role",
     {},
-    token
+    token,
   );
   return response;
 };

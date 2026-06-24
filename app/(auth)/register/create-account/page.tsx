@@ -10,15 +10,14 @@ import StepIndicator from "@/components/auth/StepIndicator";
 import { useRegisterFlowStore } from "@/store/registerFlowStore";
 import { registerUser } from "@/lib/apiServices/authServices";
 
-type CreateAccountValues = {
-  email: string;
-  password: string;
-};
-
 const createAccountSchema = z.object({
   email: z.string().email("Please enter a valid email"),
   password: z.string().min(8, "Password should be at least 8 characters"),
+  firstName: z.string().trim().min(1, "First name is required"),
+  lastName: z.string().trim().min(1, "Last name is required"),
 });
+
+type CreateAccountValues = z.infer<typeof createAccountSchema>;
 
 export default function CreateAccountPage() {
   const router = useRouter();
@@ -33,7 +32,12 @@ export default function CreateAccountPage() {
   } = useForm<CreateAccountValues>({
     resolver: zodResolver(createAccountSchema),
     mode: "onChange",
-    defaultValues: { email: email || "", password: "" },
+    defaultValues: {
+      email: email || "",
+      password: "",
+      firstName: "",
+      lastName: "",
+    },
   });
 
   useEffect(() => {
@@ -49,8 +53,10 @@ export default function CreateAccountPage() {
     try {
       const response = await registerUser({
         email: data.email,
-        password: data.password,
         role: role || "property_owner",
+        password: data.password,
+        firstName: data.firstName.trim(),
+        lastName: data.lastName.trim(),
       });
 
       if (!response?.data?.success) {
@@ -68,8 +74,12 @@ export default function CreateAccountPage() {
       setEmail(data.email);
       setUserPublicId(userPublicId);
       router.push("/register/email-verification");
-    } catch (error: any) {
-      setSubmitError(error?.message || "Registration failed. Please try again.");
+    } catch (error: unknown) {
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "Registration failed. Please try again."
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -80,9 +90,47 @@ export default function CreateAccountPage() {
       <div className="space-y-5">
         <StepIndicator currentStep={2} />
         <h1 className="text-2xl font-bold text-gray-900">Create Account</h1>
-        <p className="text-sm text-gray-600">Enter your email and password.</p>
+        <p className="text-sm text-gray-600">
+          Enter your name, email, and password.
+        </p>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
+                First Name
+              </label>
+              <input
+                id="firstName"
+                type="text"
+                autoComplete="given-name"
+                {...register("firstName")}
+                className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-primary focus:border-primary"
+                placeholder="First name"
+              />
+              {errors.firstName && (
+                <p className="mt-1 text-sm text-red-600">{errors.firstName.message}</p>
+              )}
+            </div>
+
+            <div>
+              <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
+                Last Name
+              </label>
+              <input
+                id="lastName"
+                type="text"
+                autoComplete="family-name"
+                {...register("lastName")}
+                className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-primary focus:border-primary"
+                placeholder="Last name"
+              />
+              {errors.lastName && (
+                <p className="mt-1 text-sm text-red-600">{errors.lastName.message}</p>
+              )}
+            </div>
+          </div>
+
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               Email
@@ -90,6 +138,7 @@ export default function CreateAccountPage() {
             <input
               id="email"
               type="email"
+              autoComplete="email"
               {...register("email")}
               className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-primary focus:border-primary"
               placeholder="name@domain.com"
@@ -104,6 +153,7 @@ export default function CreateAccountPage() {
             <input
               id="password"
               type="password"
+              autoComplete="new-password"
               {...register("password")}
               className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-primary focus:border-primary"
               placeholder="At least 8 characters"

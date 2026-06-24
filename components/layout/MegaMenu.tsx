@@ -40,7 +40,7 @@ export default function MegaMenu() {
   };
 
   return (
-    <NavigationMenu className="hidden xl:flex z-50 relative">
+    <NavigationMenu className="relative z-[1000] hidden xl:flex">
       <NavigationMenuList className="flex space-x-1">
         {/* Home */}
         <NavigationMenuItem>
@@ -773,7 +773,7 @@ export default function MegaMenu() {
       </NavigationMenuList>
 
       {/* Anchor the viewport under the active trigger (edge-aware) */}
-      <div className="absolute left-0 top-full flex w-full justify-start z-[60] pointer-events-none">
+      <div className="pointer-events-none absolute left-0 top-full z-[1001] flex w-full justify-start">
         <NavigationMenuViewport
           className="
             pointer-events-auto

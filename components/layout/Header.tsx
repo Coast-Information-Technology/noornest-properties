@@ -4,7 +4,16 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, User, Search, ChevronDown, Calendar } from "lucide-react";
+import {
+  Menu,
+  X,
+  User,
+  Search,
+  ChevronDown,
+  Calendar,
+  LayoutDashboard,
+  Loader2,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -24,6 +33,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useUser } from "@/contexts/UserContext";
 
 type MobileLink = { label: string; href: string };
 type MobileSection = { title?: string; links: MobileLink[] };
@@ -38,6 +48,8 @@ type MobileGroup = {
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
+  const { user, isLoading } = useUser();
+  const canAccessDashboard = Boolean(user && user.role !== "guest");
 
   // Early exits (no hooks below should be conditional)
   if (pathname.startsWith("/dashboard")) return null;
@@ -204,8 +216,7 @@ export default function Header() {
 
   return (
     <header
-      className="top-full z-[10000] border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex items-center justify-between w-full px-3 lg:px-6 py-4"
-      style={{ zIndex: 10000 }}
+      className="relative z-[1000] isolate border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex items-center justify-between w-full px-3 lg:px-6 py-4"
     >
       {/* Logo */}
       <Link href="/" className="space-x-3 flex-shrink-0" aria-label="Noornest Properties Home">
@@ -229,29 +240,49 @@ export default function Header() {
           <DropdownMenuTrigger asChild>
             <button
               className="flex items-center gap-2 bg-primary py-2 px-3 rounded-[8px] text-white font-bold cursor-pointer"
-              aria-label="Get Started Options"
+              aria-label={canAccessDashboard ? "Account Options" : "Get Started Options"}
             >
-              Get Started
-              <ChevronDown className="h-4 w-4" aria-hidden="true" />
+              {canAccessDashboard ? "My Account" : isLoading ? "Account" : "Get Started"}
+              {isLoading ? (
+                <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+              ) : (
+                <ChevronDown className="h-4 w-4" aria-hidden="true" />
+              )}
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuLabel className="bg-primary rounded-[5px]">
-              Get Started
+              {canAccessDashboard ? user?.name || "Signed in" : isLoading ? "Checking session" : "Get Started"}
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
-              <Link href="/register" className="flex items-center">
-                <User className="mr-2 h-4 w-4" />
-                <span>Register</span>
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href="/login" className="flex items-center">
-                <User className="mr-2 h-4 w-4" />
-                <span>Login</span>
-              </Link>
-            </DropdownMenuItem>
+            {isLoading ? (
+              <DropdownMenuItem disabled>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <span>Checking session...</span>
+              </DropdownMenuItem>
+            ) : canAccessDashboard ? (
+              <DropdownMenuItem asChild>
+                <Link href="/dashboard" className="flex items-center">
+                  <LayoutDashboard className="mr-2 h-4 w-4" />
+                  <span>Go to Dashboard</span>
+                </Link>
+              </DropdownMenuItem>
+            ) : (
+              <>
+                <DropdownMenuItem asChild>
+                  <Link href="/register" className="flex items-center">
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Register</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/login" className="flex items-center">
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Login</span>
+                  </Link>
+                </DropdownMenuItem>
+              </>
+            )}
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
               <Link href="/booking" className="flex items-center">
@@ -282,8 +313,7 @@ export default function Header() {
       {/* Mobile/Tablet Menu */}
       {isMenuOpen && (
         <div
-          className="xl:hidden absolute top-full left-0 right-0 bg-white border-b shadow-lg z-[200] animate-in slide-in-from-top-2 duration-200"
-          style={{ zIndex: 200 }}
+          className="xl:hidden absolute top-full left-0 right-0 bg-white border-b shadow-lg z-[1001] animate-in slide-in-from-top-2 duration-200"
         >
           <div className="px-4 py-6 space-y-4 max-h-[80vh] overflow-y-auto">
             {/* Mobile Search */}

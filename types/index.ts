@@ -257,11 +257,12 @@ export interface Booking {
 }
 
 // API Response Types
-export interface ApiResponse<T> {
+export interface ApiResponse<T = unknown> {
   success: boolean;
   data: T;
+  status?: number;
   message?: string;
-  errors?: string[];
+  errors?: string[] | Record<string, string[]>;
 }
 
 export interface PaginatedResponse<T> {
@@ -371,6 +372,8 @@ export interface MockProperty {
   groundRent: number;
   serviceCharge: number;
   leaseLength: number;
+  isBmvEligible?: boolean;
+  bmvScore?: number;
   createdAt: string;
   updatedAt: string;
 }
